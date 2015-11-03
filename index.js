@@ -1,6 +1,5 @@
 /// <reference path="typings/tsd.d.ts" />
 var path = require("path");
-var pr = require("pushrocks");
 var fs = require("fs");
 var smartfile = {
     //read File to  string

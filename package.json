@@ -24,10 +24,11 @@
   },
   "homepage": "https://github.com/pushrocks/smartfile",
   "dependencies": {
-    "pushrocks": "^1.0.18"
+    "beautylog": "^1.0.2"
   },
   "devDependencies": {
     "gulp": "3.9.0",
-    "gulp-typescript": "2.9.2"
+    "gulp-typescript": "2.9.2",
+    "pushrocks": "^1.0.19"
   }
 }
