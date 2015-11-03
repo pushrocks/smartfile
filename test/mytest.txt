@@ -1,0 +1,1 @@
+This is some test text. If this is displayed when running "npm test", then the test has succeeded.

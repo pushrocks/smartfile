@@ -1,12 +1,16 @@
 /// <reference path="typings/tsd.d.ts" />
-var through = require("through2");
 var path = require("path");
+var pr = require("pushrocks");
+var fs = require("fs");
 
-module.exports = (jadeTemplate,mojo = undefined) => {
-
-    return through.obj((file, enc, cb) => {
-        
-        //run callback function to signal end of plugin process.
-        return cb(null, file);
-    });
+var smartfile:any = {
+    //read File to  string
+    readFileToString: (filePath) => {
+        var fileString;
+        fileString = fs.readFileSync(filePath, "utf8");
+        return fileString;
+    }
 };
+
+
+module.exports = smartfile;
