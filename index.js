@@ -33,7 +33,7 @@ var smartfile = {
                 }
                 break;
             case "json":
-                return require(filePath);
+                return plugins.fs.readJsonSync(filePath, {});
                 break;
         }
     }
