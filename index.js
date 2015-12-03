@@ -1,18 +1,32 @@
-/// <reference path="typings/tsd.d.ts" />
-var plugins = {
-    path: require("path"),
-    fs: require("fs-extra"),
-    yaml: require("js-yaml"),
-    beautylog: require("beautylog")("os")
-};
-var smartfile = {
-    //read File to  string
-    readFileToString: function (filePath) {
+/// <reference path="./index.ts" />
+var SmartfilePlugins;
+(function (SmartfilePlugins) {
+    SmartfilePlugins.init = function () {
+        var plugins = {
+            beautylog: require("beautylog")("os"),
+            fs: require("fs-extra"),
+            path: require("path"),
+            vinyl: require("vinyl"),
+            vinylFile: require("vinyl-file"),
+            yaml: require("js-yaml")
+        };
+        return plugins;
+    };
+})(SmartfilePlugins || (SmartfilePlugins = {}));
+/// <reference path="./index.ts" />
+var SmartfileSimple;
+(function (SmartfileSimple) {
+    /**
+     * reads a file content to a String
+     * @param filePath
+     * @returns {string|Buffer|any}
+     */
+    var readFileToString = function (filePath) {
         var fileString;
         fileString = plugins.fs.readFileSync(filePath, "utf8");
         return fileString;
-    },
-    readFileToObject: function (filePath, fileTypeArg) {
+    };
+    var readFileToObject = function (filePath, fileTypeArg) {
         if (fileTypeArg === void 0) { fileTypeArg = "undefined"; }
         var fileType;
         if (fileTypeArg == "undefined") {
@@ -36,6 +50,29 @@ var smartfile = {
                 return plugins.fs.readJsonSync(filePath, {});
                 break;
         }
-    }
-};
+    };
+    SmartfileSimple.init = function (objectArg) {
+        objectArg.readFileToString = readFileToString;
+        objectArg.readFileToObject = readFileToObject;
+    };
+})(SmartfileSimple || (SmartfileSimple = {}));
+/// <reference path="./index.ts" />
+var SmartfileVinyl;
+(function (SmartfileVinyl) {
+    var readFileToVinyl = function (filePathArg, options) {
+        if (options === void 0) { options = {}; }
+        return plugins.vinylFile.readSync(filePathArg, options);
+    };
+    SmartfileVinyl.init = function (objectArg) {
+        objectArg.readFileToVinyl = readFileToVinyl;
+    };
+})(SmartfileVinyl || (SmartfileVinyl = {}));
+/// <reference path="./typings/tsd.d.ts" />
+/// <reference path="./smartfile.plugins.ts" />
+/// <reference path="./smartfile.simple.ts" />
+/// <reference path="./smartfile.vinyl.ts" />
+var plugins = SmartfilePlugins.init();
+var smartfile = {};
+SmartfileSimple.init(smartfile);
+SmartfileVinyl.init(smartfile);
 module.exports = smartfile;
