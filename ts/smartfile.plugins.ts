@@ -7,7 +7,8 @@ module SmartfilePlugins {
             path: require("path"),
             vinyl: require("vinyl"),
             vinylFile: require("vinyl-file"),
-            yaml: require("js-yaml")
+            yaml: require("js-yaml"),
+            requireReload: require("require-reload")
         };
         return plugins;
     }

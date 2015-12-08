@@ -6,3 +6,4 @@ console.log(smartfile.readFileToObject("./test/mytest.yaml"));
 console.log(smartfile.readFileToObject("./test/mytest.json"));
 console.log(smartfile.readFileToVinyl("./test/mytest.json"));
 //var thisIsAnError = smartfile.readFileToObject("./test/mytestDoesNotExist.json");
+beautylog.success("Test passed!");
