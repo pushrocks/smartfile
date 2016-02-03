@@ -4,3 +4,4 @@ node_modules/
 
 ts/*.js
 ts/*.js.map
+ts/typings/

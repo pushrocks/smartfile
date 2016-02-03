@@ -2,7 +2,7 @@
 module SmartfilePlugins {
     export var init = function() {
         var plugins = {
-            beautylog: require("beautylog")("os"),
+            beautylog: require("beautylog"),
             fs: require("fs-extra"),
             path: require("path"),
             vinyl: require("vinyl"),

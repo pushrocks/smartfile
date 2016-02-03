@@ -1,9 +1,11 @@
+#!/usr/bin/env node
+
 /// <reference path="./index.ts" />
 var SmartfilePlugins;
 (function (SmartfilePlugins) {
     SmartfilePlugins.init = function () {
         var plugins = {
-            beautylog: require("beautylog")("os"),
+            beautylog: require("beautylog"),
             fs: require("fs-extra"),
             path: require("path"),
             vinyl: require("vinyl"),
@@ -78,7 +80,7 @@ var SmartfileRequire;
         objectArg.requireReload = requireReload;
     };
 })(SmartfileRequire || (SmartfileRequire = {}));
-/// <reference path="./typings/tsd.d.ts" />
+/// <reference path="./typings/main.d.ts" />
 /// <reference path="./smartfile.plugins.ts" />
 /// <reference path="./smartfile.simple.ts" />
 /// <reference path="./smartfile.vinyl.ts" />
