@@ -4,11 +4,15 @@ declare module SmartfilePlugins {
         beautylog: any;
         fs: any;
         path: any;
+        q: any;
         vinyl: any;
         vinylFile: any;
         yaml: any;
         requireReload: any;
     };
+}
+declare module SmartfileCheck {
+    var init: (objectArg: any) => void;
 }
 declare module SmartfileSimple {
     var init: (objectArg: any) => void;
@@ -23,6 +27,7 @@ declare var plugins: {
     beautylog: any;
     fs: any;
     path: any;
+    q: any;
     vinyl: any;
     vinylFile: any;
     yaml: any;

@@ -28,6 +28,7 @@
     "beautylog": "2.0.6",
     "fs-extra": "0.26.5",
     "js-yaml": "3.5.2",
+    "q": "^1.4.1",
     "require-reload": "0.2.2",
     "vinyl": "1.1.1",
     "vinyl-file": "2.0.0"

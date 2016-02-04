@@ -33,4 +33,19 @@ describe("smartfile",function(){
 
         });
     });
+    describe(".checks".yellow,function(){
+        describe(".fileExistsSync".yellow,function(){
+            it("should return an accurate boolean",function(){
+                (smartfile.checks.fileExistsSync("./test/mytest.json")).should.be.true();
+                (smartfile.checks.fileExistsSync("./test/notthere.json")).should.be.false();
+            });
+        });
+        describe(".fileExists".yellow,function(){
+            it("should return a working promise",function(){
+                (smartfile.checks.fileExists("./test/mytest.json")).should.be.Promise();
+                (smartfile.checks.fileExists("./test/mytest.json")).should.be.fulfilled();
+                (smartfile.checks.fileExists("./test/notthere.json")).should.not.be.fulfilled();
+            });
+        })
+    });
 });

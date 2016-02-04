@@ -5,6 +5,7 @@ module SmartfilePlugins {
             beautylog: require("beautylog"),
             fs: require("fs-extra"),
             path: require("path"),
+            q: require("q"),
             vinyl: require("vinyl"),
             vinylFile: require("vinyl-file"),
             yaml: require("js-yaml"),

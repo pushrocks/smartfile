@@ -1,11 +1,9 @@
 language: node_js
 node_js:
-- '4.1'
-before_install:
-- npm install -g tsd
+- '4.2.4'
 deploy:
   provider: npm
-  email: npm@smart-coordination.com
+  email: npm@lossless.digital
   api_key:
     secure: 3RdzAcS9d6sLJs3tHM2uCVU2wV2NsKiLiYWue98DevgijIqTFDHtYuoP29p7fbB4SV87JRbTK1y41QM2u/CCjnbB+mrAUg/Pn08dTibmzi9liom67sLczIPD4eZeMznXPRaddESQdzqrtQfc/6P+1JQO7XWexLNebgYtMrUzYcOrHPWf/Uktk2cKiYfrO8piSR+HOFh2rzC5HjVZ/7fKDIa9bqTlBETkNc7s2NgB++jKRF9LNMVGI/9EmxjBzSSE1juOz26Ahp4+/+P3Lc5LngnTFOYsPoW5iWNY+AQltZxhu9K+rrtfn90rmQDnO7RCGO5yZgMS2+0UjJedwV+4ancU3nzoNmiuoIL7DjQ7NQlt0QKMmIqZuBFBc3tdxqotxNoJDk8/Ui0yfHWzJz0Fd22OI+VdTWNH1y5Vyywsql6wwkl2+Da1WhZf/Mn2gPgLPI0lssPTIl/u3Bey+167tZ3HvX0yqlvPO/JbqK02+5VrRBaV67vT00DG+dh4nnwqcX14Umx2a3JHt3tSGkDnDKpsLbvqjhPhkMRsCIloju+wMnyKjtScMZW+2FeO2n4PgbjNhF+5SG8pDmTS8p0Vy7iohUOiGIJty7K/1r6sQ1FNluhO5Ol3mBDs6wjg6S5QCSNL9eylpV52FV0UX4cRCijmzso+n48I2BbSwjghTB8=
   on:
