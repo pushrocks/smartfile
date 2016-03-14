@@ -1,8 +1,9 @@
-/// <reference path="typings/main.d.ts" />
-var smartfile = require("../index.js");
+/// <reference path="../ts/typings/main.d.ts" />
+var smartfile = require("../dist/index.js");
 var beautylog = require("beautylog");
 var should = require("should");
 var vinyl = require("vinyl");
+
 describe("smartfile",function(){
     describe(".readFileToString".yellow,function(){
         it("should read a file to a string",function(){
@@ -18,6 +19,9 @@ describe("smartfile",function(){
             testData.should.have.property("key1","this works");
             testData.should.have.property("key2","this works too");
 
+        });
+        it("should state unknown file type for unknown file types",function(){
+            var testData = smartfile.readFileToObject("./test/mytest.txt");
         });
         it("should read an " + ".json".blue + " file to an object",function(){
             var testData = smartfile.readFileToObject("./test/mytest.json");
@@ -47,5 +51,16 @@ describe("smartfile",function(){
                 (smartfile.checks.fileExists("./test/notthere.json")).should.not.be.fulfilled();
             });
         })
+    });
+    describe("copy",function(){
+        it("should copy a directory",function(){
+            smartfile.copy("./test/testfolder/","./test/assets/")
+        });
+        it("should copy a file",function(){
+            smartfile.copy("./test/mytest.yaml","./test/assets/")
+        });
+        it("should copy a file and rename it",function(){
+            smartfile.copy("./test/mytest.yaml","./test/assets/mytestRenamed.yaml")
+        });
     });
 });

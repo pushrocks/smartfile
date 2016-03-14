@@ -1,16 +1,10 @@
-/// <reference path="./index.ts" />
-module SmartfilePlugins {
-    export var init = function() {
-        var plugins = {
-            beautylog: require("beautylog"),
-            fs: require("fs-extra"),
-            path: require("path"),
-            q: require("q"),
-            vinyl: require("vinyl"),
-            vinylFile: require("vinyl-file"),
-            yaml: require("js-yaml"),
-            requireReload: require("require-reload")
-        };
-        return plugins;
-    }
-}
+/// <reference path="./typings/main.d.ts" />
+export let beautylog = require("beautylog");
+export let fs = require("fs-extra");
+export let path = require("path");
+export let q = require("q");
+export let vinyl = require("vinyl");
+export let vinylFile = require("vinyl-file");
+export let yaml = require("js-yaml");
+export let requireReload = require("require-reload");
+export let shelljs = require("shelljs");

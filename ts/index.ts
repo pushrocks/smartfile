@@ -1,19 +1,17 @@
 /// <reference path="./typings/main.d.ts" />
-/// <reference path="./smartfile.plugins.ts" />
-/// <reference path="./smartfile.check.ts" />
-/// <reference path="./smartfile.simple.ts" />
-/// <reference path="./smartfile.vinyl.ts" />
-/// <reference path="./smartfile.require.ts" />
-var plugins = SmartfilePlugins.init();
+
+import plugins = require("./smartfile.plugins");
+import SmartfileChecks = require("./smartfile.checks");
+import SmartfileSimple = require("./smartfile.simple");
 
 
-var smartfile:any = {};
-SmartfileCheck.init(smartfile);
-SmartfileSimple.init(smartfile);
-SmartfileVinyl.init(smartfile);
-SmartfileRequire.init(smartfile);
+var smartfile:any = {
+    copy: SmartfileSimple.copy,
+    checks: SmartfileChecks,
+    readFileToString: SmartfileSimple.readFileToString,
+    readFileToObject: SmartfileSimple.readFileToObject,
+    readFileToVinyl: SmartfileSimple.readFileToVinyl,
+    requireReload: SmartfileSimple.requireReload
+};
 
-
-
-
-module.exports = smartfile;
+export = smartfile;

@@ -2,7 +2,7 @@
   "name": "smartfile",
   "version": "0.0.12",
   "description": "offers smart ways to work with files in nodejs",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "(npmts)",
     "reinstall": "(rm -r node_modules && npm install)",
@@ -25,17 +25,17 @@
   },
   "homepage": "https://github.com/pushrocks/smartfile",
   "dependencies": {
-    "beautylog": "2.0.6",
+    "beautylog": "3.1.2",
     "fs-extra": "0.26.5",
-    "js-yaml": "3.5.2",
-    "q": "^1.4.1",
+    "js-yaml": "3.5.4",
+    "q": "1.4.1",
     "require-reload": "0.2.2",
+    "shelljs": "^0.6.0",
     "vinyl": "1.1.1",
     "vinyl-file": "2.0.0"
   },
   "devDependencies": {
-    "beautylog": "2.0.7",
-    "npmts": "2.2.2",
+    "npmts": "3.4.1",
     "should": "^8.2.2"
   }
 }
