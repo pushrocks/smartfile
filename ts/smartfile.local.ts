@@ -12,7 +12,7 @@ export let toFS = function(options:{from:string,toPath:string}, cb=undefined){
  * @param fileTypeArg
  * @returns {any}
  */
-export let toObject = function(filePath,fileTypeArg = undefined) {
+export let toObjectSync = function(filePath,fileTypeArg = undefined) {
     let fileType;
     if (typeof fileTypeArg == "undefined") {
         fileType = plugins.path.extname(filePath);
@@ -42,7 +42,7 @@ export let toObject = function(filePath,fileTypeArg = undefined) {
  * @param filePath
  * @returns {string|Buffer|any}
  */
-export let toString = function(filePath) {
+export let toStringSync = function(filePath) {
     let fileString;
     fileString = plugins.fs.readFileSync(filePath, "utf8");
     return fileString;
@@ -54,7 +54,7 @@ export let toString = function(filePath) {
  * @param options
  * @returns {number}
  */
-export let toVinyl = function(filePathArg,options = {}) {
+export let toVinylSync = function(filePathArg,options = {}) {
     return plugins.vinylFile.readSync(filePathArg,options);
 };
 

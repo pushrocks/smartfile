@@ -26,8 +26,8 @@
   "homepage": "https://github.com/pushrocks/smartfile",
   "dependencies": {
     "beautylog": "3.1.2",
-    "fs-extra": "0.26.5",
-    "js-yaml": "3.5.4",
+    "fs-extra": "0.26.7",
+    "js-yaml": "3.5.5",
     "q": "1.4.1",
     "request": "^2.69.0",
     "require-reload": "0.2.2",
@@ -36,7 +36,7 @@
     "vinyl-file": "2.0.0"
   },
   "devDependencies": {
-    "npmts": "3.4.1",
+    "npmts": "3.5.0",
     "should": "^8.2.2"
   }
 }

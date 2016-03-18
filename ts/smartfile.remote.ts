@@ -1,26 +1,41 @@
 /// <reference path="./typings/main.d.ts" />
 import plugins = require("./smartfile.plugins");
 
-export let toVar = (options:{from:string,parseJson?:boolean}, cb):any => {
-    var bodyString:string;
-    request.get(options.from, function (error, response, body) {
+export let toString = (fromArg:string) => {
+    let done = plugins.q.defer();
+    plugins.request.get(fromArg, function (error, response, bodyString) {
         if (!error && response.statusCode == 200) {
-            bodyString = body;
-            console.log('successfully requested' + options.from);
-            if (options.parseJson = true) {
-                var jsonObject = JSON.parse(bodyString);
-                return jsonObject;
-            };
+            done.resolve(bodyString);
         } else {
-            console.log('could not get get remote file from ' + options.from);
-            return bodyString = 'could not get file'
+            plugins.beautylog.error('could not get get remote file from ' + fromArg);
+            bodyString = undefined;
+            done.reject(bodyString);
         };
     });
+    return done.promise;
+};
 
-    return bodyString;
-},
+export let toObject = function(fromArg:string){
+    let done = plugins.q.defer();
+    plugins.request.get(fromArg, function (error, response, bodyString) {
+        let jsonObject;
+        if (!error && response.statusCode == 200) {
+            jsonObject = JSON.parse(bodyString);
+            done.resolve(jsonObject);
+        } else {
+            console.log('could not get remote file from ' + fromArg);
+            jsonObject = undefined;
+            done.reject(jsonObject);
+        };
+    });
+    return done.promise;
+};
 
-export let toFS = function(options:{from:string,toPath:string}, cb=undefined) {
-    var stream = request(options.from).pipe(fs.createWriteStream(options.toPath));
-    if (cb != undefined) stream.on('finish',cb);
-}
+export let toFs = function(from:string,toPath:string) {
+    var done = plugins.q.defer();
+    var stream = plugins.request(from).pipe(plugins.fs.createWriteStream(toPath));
+    stream.on('finish',function(){
+        done.resolve(toPath);
+    });
+    return done.promise;
+};

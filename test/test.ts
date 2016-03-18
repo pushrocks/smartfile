@@ -4,39 +4,7 @@ var beautylog = require("beautylog");
 var should = require("should");
 var vinyl = require("vinyl");
 
-describe("smartfile",function(){
-    describe(".readFileToString".yellow,function(){
-        it("should read a file to a string",function(){
-            should.equal(
-                smartfile.readFileToString("./test/mytest.txt"),
-                "Some TestString &&%$"
-            );
-        });
-    });
-    describe(".readFileToObject".yellow,function(){
-        it("should read an " + ".yaml".blue + " file to an object",function(){
-            var testData = smartfile.readFileToObject("./test/mytest.yaml");
-            testData.should.have.property("key1","this works");
-            testData.should.have.property("key2","this works too");
-
-        });
-        it("should state unknown file type for unknown file types",function(){
-            var testData = smartfile.readFileToObject("./test/mytest.txt");
-        });
-        it("should read an " + ".json".blue + " file to an object",function(){
-            var testData = smartfile.readFileToObject("./test/mytest.json");
-            testData.should.have.property("key1","this works");
-            testData.should.have.property("key2","this works too");
-
-        });
-    });
-    describe(".readFileToVinyl".yellow,function(){
-        it("should read an " + ".json OR .yaml".blue + " file to an " + "vinyl file object".cyan,function(){
-            var testData = smartfile.readFileToVinyl("./test/mytest.json");
-            (vinyl.isVinyl(testData)).should.be.true();
-
-        });
-    });
+describe("smartfile".yellow,function(){
     describe(".checks".yellow,function(){
         describe(".fileExistsSync".yellow,function(){
             it("should return an accurate boolean",function(){
@@ -52,15 +20,71 @@ describe("smartfile",function(){
             });
         })
     });
-    describe("copy",function(){
-        it("should copy a directory",function(){
-            smartfile.copy("./test/testfolder/","./test/assets/")
-        });
-        it("should copy a file",function(){
-            smartfile.copy("./test/mytest.yaml","./test/assets/")
-        });
-        it("should copy a file and rename it",function(){
-            smartfile.copy("./test/mytest.yaml","./test/assets/mytestRenamed.yaml")
+    describe(".fsaction".yellow,function(){
+        describe(".copy()".yellow,function(){
+            it("should copy a directory",function(){
+                smartfile.fsaction.copy("./test/testfolder/","./test/assets/")
+            });
+            it("should copy a file",function(){
+                smartfile.fsaction.copy("./test/mytest.yaml","./test/assets/")
+            });
+            it("should copy a file and rename it",function(){
+                smartfile.fsaction.copy("./test/mytest.yaml","./test/assets/mytestRenamed.yaml")
+            });
         });
     });
+    describe(".local".yellow,function(){
+        describe(".toStringSync()".yellow,function(){
+            it("should read a file to a string",function(){
+                should.equal(
+                    smartfile.local.toStringSync("./test/mytest.txt"),
+                    "Some TestString &&%$"
+                );
+            });
+        });
+        describe(".toObjectSync()".yellow,function(){
+            it("should read an " + ".yaml".blue + " file to an object",function(){
+                var testData = smartfile.local.toObjectSync("./test/mytest.yaml");
+                testData.should.have.property("key1","this works");
+                testData.should.have.property("key2","this works too");
+
+            });
+            it("should state unknown file type for unknown file types",function(){
+                var testData = smartfile.local.toObjectSync("./test/mytest.txt");
+            });
+            it("should read an " + ".json".blue + " file to an object",function(){
+                var testData = smartfile.local.toObjectSync("./test/mytest.json");
+                testData.should.have.property("key1","this works");
+                testData.should.have.property("key2","this works too");
+
+            });
+        });
+        describe(".toVinylSync".yellow,function(){
+            it("should read an " + ".json OR .yaml".blue + " file to an " + "vinyl file object".cyan,function(){
+                var testData = smartfile.local.toVinylSync("./test/mytest.json");
+                (vinyl.isVinyl(testData)).should.be.true();
+
+            });
+        });
+    });
+    describe(".remote",function(){
+        describe(".toString()",function(){
+            it("should load a remote file to a variable",function(done){
+                this.timeout(5000);
+                smartfile.remote.toString("https://raw.githubusercontent.com/pushrocks/smartfile/master/test/mytest.txt")
+                    .then(function(responseString){
+                        should.equal(responseString,"Some TestString &&%$");
+                        done();
+                    });
+            });
+            it("should reject a Promise when the link is false",function(done){
+                smartfile.remote.toString("https://push.rocks/doesnotexist.txt")
+                    .then(function(){
+                        throw new Error("this test should not be resolved");
+                    },function(){
+                        done();
+                    })
+            });
+        });
+    })
 });

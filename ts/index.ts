@@ -3,16 +3,16 @@
 import plugins = require("./smartfile.plugins");
 import SmartfileChecks = require("./smartfile.checks");
 import SmartfileFsaction = require("./smartfile.fsaction");
-import SmartfileRead = require("./smartfile.read");
+import SmartfileLocal = require("./smartfile.local");
 import SmartfileRemote = require("./smartfile.remote");
 
 
 var smartfile:any = {
-    copy: SmartfileSimple.copy,
+    fsaction: SmartfileFsaction,
     checks: SmartfileChecks,
-    read: SmartfileRead,
+    local: SmartfileLocal,
     remote: SmartfileRemote,
-    requireReload: SmartfileSimple.requireReload
+    requireReload: SmartfileLocal.requireReload
 };
 
 export = smartfile;
