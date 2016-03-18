@@ -2,19 +2,8 @@
 
 import plugins = require("./smartfile.plugins");
 
-export let copy = function(fromArg:string,toArg:string){
-    plugins.shelljs.cp("-r",fromArg,toArg);
-};
-
-/**
- * reads a file content to a String
- * @param filePath
- * @returns {string|Buffer|any}
- */
-export let readFileToString = function(filePath) {
-    let fileString;
-    fileString = plugins.fs.readFileSync(filePath, "utf8");
-    return fileString;
+export let toFS = function(options:{from:string,toPath:string}, cb=undefined){
+    
 };
 
 /**
@@ -23,7 +12,7 @@ export let readFileToString = function(filePath) {
  * @param fileTypeArg
  * @returns {any}
  */
-export let readFileToObject = function(filePath,fileTypeArg = undefined) {
+export let toObject = function(filePath,fileTypeArg = undefined) {
     let fileType;
     if (typeof fileTypeArg == "undefined") {
         fileType = plugins.path.extname(filePath);
@@ -49,12 +38,23 @@ export let readFileToObject = function(filePath,fileTypeArg = undefined) {
 };
 
 /**
+ * reads a file content to a String
+ * @param filePath
+ * @returns {string|Buffer|any}
+ */
+export let toString = function(filePath) {
+    let fileString;
+    fileString = plugins.fs.readFileSync(filePath, "utf8");
+    return fileString;
+};
+
+/**
  *
  * @param filePathArg
  * @param options
  * @returns {number}
  */
-export let readFileToVinyl = function(filePathArg,options = {}) {
+export let toVinyl = function(filePathArg,options = {}) {
     return plugins.vinylFile.readSync(filePathArg,options);
 };
 

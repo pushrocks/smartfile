@@ -1,0 +1,8 @@
+/// <reference path="./typings/main.d.ts" />
+"use strict";
+var plugins = require("./smartfile.plugins");
+exports.copy = function (fromArg, toArg) {
+    plugins.shelljs.cp("-r", fromArg, toArg);
+};
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNtYXJ0ZmlsZS5mc2FjdGlvbi50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSw0Q0FBNEM7O0FBRTVDLElBQU8sT0FBTyxXQUFXLHFCQUFxQixDQUFDLENBQUM7QUFFckMsWUFBSSxHQUFHLFVBQVMsT0FBYyxFQUFDLEtBQVk7SUFDbEQsT0FBTyxDQUFDLE9BQU8sQ0FBQyxFQUFFLENBQUMsSUFBSSxFQUFDLE9BQU8sRUFBQyxLQUFLLENBQUMsQ0FBQztBQUMzQyxDQUFDLENBQUMiLCJmaWxlIjoic21hcnRmaWxlLmZzYWN0aW9uLmpzIiwic291cmNlc0NvbnRlbnQiOlsiLy8vIDxyZWZlcmVuY2UgcGF0aD1cIi4vdHlwaW5ncy9tYWluLmQudHNcIiAvPlxuXG5pbXBvcnQgcGx1Z2lucyA9IHJlcXVpcmUoXCIuL3NtYXJ0ZmlsZS5wbHVnaW5zXCIpO1xuXG5leHBvcnQgbGV0IGNvcHkgPSBmdW5jdGlvbihmcm9tQXJnOnN0cmluZyx0b0FyZzpzdHJpbmcpe1xuICAgIHBsdWdpbnMuc2hlbGxqcy5jcChcIi1yXCIsZnJvbUFyZyx0b0FyZyk7XG59OyJdLCJzb3VyY2VSb290IjoiL3NvdXJjZS8ifQ==
