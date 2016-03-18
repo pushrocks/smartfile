@@ -1,6 +1,6 @@
 {
   "name": "smartfile",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "offers smart ways to work with files in nodejs",
   "main": "dist/index.js",
   "scripts": {
