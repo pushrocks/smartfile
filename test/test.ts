@@ -1,8 +1,9 @@
 /// <reference path="../ts/typings/main.d.ts" />
-var smartfile = require("../dist/index.js");
-var beautylog = require("beautylog");
-var should = require("should");
-var vinyl = require("vinyl");
+let smartfile = require("../dist/index.js");
+let beautylog = require("beautylog");
+let should = require("should");
+let vinyl = require("vinyl");
+let gFunction = require("gulp-function");
 
 describe("smartfile".yellow,function(){
     describe(".checks".yellow,function(){
@@ -23,17 +24,41 @@ describe("smartfile".yellow,function(){
     describe(".fsaction".yellow,function(){
         describe(".copy()".yellow,function(){
             it("should copy a directory",function(){
-                smartfile.fsaction.copy("./test/testfolder/","./test/assets/")
+                smartfile.fsaction.copy("./test/testfolder/","./test/temp/")
             });
             it("should copy a file",function(){
-                smartfile.fsaction.copy("./test/mytest.yaml","./test/assets/")
+                smartfile.fsaction.copy("./test/mytest.yaml","./test/temp/")
             });
             it("should copy a file and rename it",function(){
-                smartfile.fsaction.copy("./test/mytest.yaml","./test/assets/mytestRenamed.yaml")
+                smartfile.fsaction.copy("./test/mytest.yaml","./test/temp/mytestRenamed.yaml")
             });
         });
     });
     describe(".local".yellow,function(){
+        describe("toGulpStreamSync() and toGulpDestSync",function(){
+            it("should produce a gulp stream",function(done){
+                smartfile.local.toGulpStreamSync("./test/my*")
+                    .pipe(smartfile.local.toGulpDestSync("./test/temp/"))
+                    .pipe(gFunction(done,"atEnd"));
+            });
+        });
+        describe(".toObjectSync()".yellow,function(){
+            it("should read an " + ".yaml".blue + " file to an object",function(){
+                let testData = smartfile.local.toObjectSync("./test/mytest.yaml");
+                testData.should.have.property("key1","this works");
+                testData.should.have.property("key2","this works too");
+
+            });
+            it("should state unknown file type for unknown file types",function(){
+                let testData = smartfile.local.toObjectSync("./test/mytest.txt");
+            });
+            it("should read an " + ".json".blue + " file to an object",function(){
+                let testData = smartfile.local.toObjectSync("./test/mytest.json");
+                testData.should.have.property("key1","this works");
+                testData.should.have.property("key2","this works too");
+
+            });
+        });
         describe(".toStringSync()".yellow,function(){
             it("should read a file to a string",function(){
                 should.equal(
@@ -42,32 +67,22 @@ describe("smartfile".yellow,function(){
                 );
             });
         });
-        describe(".toObjectSync()".yellow,function(){
-            it("should read an " + ".yaml".blue + " file to an object",function(){
-                var testData = smartfile.local.toObjectSync("./test/mytest.yaml");
-                testData.should.have.property("key1","this works");
-                testData.should.have.property("key2","this works too");
-
-            });
-            it("should state unknown file type for unknown file types",function(){
-                var testData = smartfile.local.toObjectSync("./test/mytest.txt");
-            });
-            it("should read an " + ".json".blue + " file to an object",function(){
-                var testData = smartfile.local.toObjectSync("./test/mytest.json");
-                testData.should.have.property("key1","this works");
-                testData.should.have.property("key2","this works too");
-
-            });
-        });
         describe(".toVinylSync".yellow,function(){
             it("should read an " + ".json OR .yaml".blue + " file to an " + "vinyl file object".cyan,function(){
-                var testData = smartfile.local.toVinylSync("./test/mytest.json");
+                let testData = smartfile.local.toVinylSync("./test/mytest.json");
                 (vinyl.isVinyl(testData)).should.be.true();
 
             });
         });
     });
     describe(".remote",function(){
+        describe("toGulpStreamSync()",function(){
+            it("should produce a gulp stream",function(done){
+                smartfile.remote.toGulpStreamSync("mytest.txt","https://raw.githubusercontent.com/pushrocks/smartfile/master/test/")
+                    .pipe(smartfile.local.toGulpDestSync("./test/temp/"))
+                    .pipe(gFunction(done,"atEnd"));
+            });
+        });
         describe(".toString()",function(){
             it("should load a remote file to a variable",function(done){
                 this.timeout(5000);

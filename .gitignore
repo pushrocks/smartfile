@@ -8,5 +8,5 @@ ts/*.js
 ts/*.js.map
 ts/typings/
 
-test/assets/
+test/temp/
 

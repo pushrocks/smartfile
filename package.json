@@ -27,6 +27,8 @@
   "dependencies": {
     "beautylog": "3.1.2",
     "fs-extra": "0.26.7",
+    "gulp": "^3.9.1",
+    "gulp-remote-src": "^0.4.1",
     "js-yaml": "3.5.5",
     "q": "1.4.1",
     "request": "^2.69.0",
@@ -36,6 +38,7 @@
     "vinyl-file": "2.0.0"
   },
   "devDependencies": {
+    "gulp-function": "^1.1.1",
     "npmts": "3.5.0",
     "should": "^8.2.2"
   }
