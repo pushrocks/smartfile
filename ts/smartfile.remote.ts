@@ -1,5 +1,7 @@
 /// <reference path="./typings/main.d.ts" />
 import plugins = require("./smartfile.plugins");
+import SmartfileInterpreter = require("./smartfile.interpreter");
+import SmartfileGet = require("./smartfile.get");
 
 export let toFs = function(from:string,toPath:string) {
     var done = plugins.q.defer();
@@ -30,14 +32,14 @@ export let toGulpStreamSync = function(filePathArg:string,baseArg:string){
 export let toObject = function(fromArg:string){
     let done = plugins.q.defer();
     plugins.request.get(fromArg, function (error, response, bodyString) {
-        let jsonObject;
+        let returnObject;
         if (!error && response.statusCode == 200) {
-            jsonObject = JSON.parse(bodyString);
-            done.resolve(jsonObject);
+            returnObject = SmartfileInterpreter(bodyString,SmartfileGet.filetype(fromArg));
+            done.resolve(returnObject);
         } else {
             console.log('could not get remote file from ' + fromArg);
-            jsonObject = undefined;
-            done.reject(jsonObject);
+            returnObject = undefined;
+            done.reject(returnObject);
         };
     });
     return done.promise;
@@ -54,7 +56,7 @@ export let toString = (fromArg:string) => {
         if (!error && response.statusCode == 200) {
             done.resolve(bodyString);
         } else {
-            plugins.beautylog.error('could not get get remote file from ' + fromArg);
+            plugins.beautylog.error('could not get remote file from ' + fromArg);
             bodyString = undefined;
             done.reject(bodyString);
         };

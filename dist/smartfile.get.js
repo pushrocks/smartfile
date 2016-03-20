@@ -1,0 +1,10 @@
+"use strict";
+/// <reference path="./typings/main.d.ts" />
+var plugins = require("./smartfile.plugins");
+exports.filetype = function (pathArg) {
+    var extName = plugins.path.extname(pathArg);
+    var fileType = extName.replace(/\.([a-z]*)/, "$1"); //remove . form fileType
+    return fileType;
+};
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNtYXJ0ZmlsZS5nZXQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUFBLDRDQUE0QztBQUM1QyxJQUFPLE9BQU8sV0FBVyxxQkFBcUIsQ0FBQyxDQUFDO0FBRXJDLGdCQUFRLEdBQUcsVUFBUyxPQUFjO0lBQ3pDLElBQUksT0FBTyxHQUFHLE9BQU8sQ0FBQyxJQUFJLENBQUMsT0FBTyxDQUFDLE9BQU8sQ0FBQyxDQUFDO0lBQzVDLElBQUksUUFBUSxHQUFHLE9BQU8sQ0FBQyxPQUFPLENBQUMsWUFBWSxFQUFDLElBQUksQ0FBQyxDQUFDLENBQUMsd0JBQXdCO0lBQzNFLE1BQU0sQ0FBQyxRQUFRLENBQUM7QUFDcEIsQ0FBQyxDQUFDIiwiZmlsZSI6InNtYXJ0ZmlsZS5nZXQuanMiLCJzb3VyY2VzQ29udGVudCI6WyIvLy8gPHJlZmVyZW5jZSBwYXRoPVwiLi90eXBpbmdzL21haW4uZC50c1wiIC8+XG5pbXBvcnQgcGx1Z2lucyA9IHJlcXVpcmUoXCIuL3NtYXJ0ZmlsZS5wbHVnaW5zXCIpO1xuXG5leHBvcnQgbGV0IGZpbGV0eXBlID0gZnVuY3Rpb24ocGF0aEFyZzpzdHJpbmcpOnN0cmluZyB7XG4gICAgbGV0IGV4dE5hbWUgPSBwbHVnaW5zLnBhdGguZXh0bmFtZShwYXRoQXJnKTtcbiAgICBsZXQgZmlsZVR5cGUgPSBleHROYW1lLnJlcGxhY2UoL1xcLihbYS16XSopLyxcIiQxXCIpOyAvL3JlbW92ZSAuIGZvcm0gZmlsZVR5cGVcbiAgICByZXR1cm4gZmlsZVR5cGU7XG59OyJdLCJzb3VyY2VSb290IjoiL3NvdXJjZS8ifQ==
