@@ -33,7 +33,6 @@
     "q": "1.4.1",
     "request": "^2.69.0",
     "require-reload": "0.2.2",
-    "shelljs": "^0.6.0",
     "vinyl": "1.1.1",
     "vinyl-file": "2.0.0"
   },

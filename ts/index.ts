@@ -10,6 +10,7 @@ import SmartfileRemote = require("./smartfile.remote");
 
 var smartfile:any = {
     fsaction: SmartfileFsaction,
+    fs: plugins.fs,
     checks: SmartfileChecks,
     get: SmartfileGet,
     local: SmartfileLocal,

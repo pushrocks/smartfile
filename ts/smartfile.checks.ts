@@ -30,3 +30,11 @@ export let fileExists = function(filePath){
     });
     return done.promise;
 };
+
+export let isDirectory = function(pathArg):boolean{
+    return plugins.fs.statSync(pathArg).isDirectory();
+};
+
+export let isFile = function(pathArg):boolean{
+    return plugins.fs.statSync(pathArg).isFile();
+};

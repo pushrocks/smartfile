@@ -33,6 +33,12 @@ describe("smartfile".yellow,function(){
                 smartfile.fsaction.copy("./test/mytest.yaml","./test/temp/mytestRenamed.yaml")
             });
         });
+        describe(".remove()",function(){
+            it("should remove an entire directory",function(){
+
+            });
+            it("should remove single files")
+        });
     });
     describe(".local".yellow,function(){
         describe("toGulpStreamSync() and toGulpDestSync",function(){
