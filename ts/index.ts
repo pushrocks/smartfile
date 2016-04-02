@@ -5,6 +5,7 @@ import SmartfileChecks = require("./smartfile.checks");
 import SmartfileFsaction = require("./smartfile.fsaction");
 import SmartfileGet = require("./smartfile.get");
 import SmartfileLocal = require("./smartfile.local");
+import SmartfileMemory = require("./smartfile.memory");
 import SmartfileRemote = require("./smartfile.remote");
 
 
@@ -14,6 +15,7 @@ var smartfile:any = {
     checks: SmartfileChecks,
     get: SmartfileGet,
     local: SmartfileLocal,
+    memory: SmartfileMemory,
     remote: SmartfileRemote,
     requireReload: SmartfileLocal.requireReload
 };

@@ -1,4 +1,4 @@
 {
   "mode":"default",
-  "coveralls":true
+  "codecov":true
 }

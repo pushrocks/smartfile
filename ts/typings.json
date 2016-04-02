@@ -1,8 +1,8 @@
 {
   "ambientDependencies": {
-    "browserify": "github:DefinitelyTyped/DefinitelyTyped/browserify/browserify.d.ts",
     "colors": "github:DefinitelyTyped/DefinitelyTyped/colors/colors.d.ts",
     "mocha": "github:Bartvds/tsd-deftools/typings/DefinitelyTyped/mocha/mocha.d.ts",
-    "node": "registry:dt/node#4.0.0+20160311162451"
+    "node": "registry:dt/node",
+    "vinyl": "registry:dt/vinyl"
   }
 }

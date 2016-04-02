@@ -37,8 +37,8 @@
     "vinyl-file": "2.0.0"
   },
   "devDependencies": {
-    "gulp-function": "^1.1.1",
-    "npmts": "3.5.0",
-    "should": "^8.2.2"
+    "gulp-function": "^1.2.0",
+    "npmts": "4.0.1",
+    "should": "^8.3.0"
   }
 }

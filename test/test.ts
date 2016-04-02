@@ -37,7 +37,9 @@ describe("smartfile".yellow,function(){
             it("should remove an entire directory",function(){
 
             });
-            it("should remove single files")
+            it("should remove single files",function(){
+                
+            });
         });
     });
     describe(".local".yellow,function(){
@@ -99,6 +101,7 @@ describe("smartfile".yellow,function(){
                     });
             });
             it("should reject a Promise when the link is false",function(done){
+                this.timeout(10000);
                 smartfile.remote.toString("https://push.rocks/doesnotexist.txt")
                     .then(function(){
                         throw new Error("this test should not be resolved");
