@@ -1,9 +1,10 @@
 /// <reference path="../ts/typings/main.d.ts" />
 let smartfile = require("../dist/index.js");
 let beautylog = require("beautylog");
-let should = require("should");
-let vinyl = require("vinyl");
+let gulp = require("gulp");
 let gFunction = require("gulp-function");
+import should = require("should");
+let vinyl = require("vinyl");
 
 describe("smartfile".yellow,function(){
     describe(".checks".yellow,function(){
@@ -21,6 +22,8 @@ describe("smartfile".yellow,function(){
             });
         })
     });
+
+
     describe(".fsaction".yellow,function(){
         describe(".copy()".yellow,function(){
             it("should copy a directory",function(){
@@ -38,10 +41,12 @@ describe("smartfile".yellow,function(){
 
             });
             it("should remove single files",function(){
-                
+
             });
         });
     });
+
+
     describe(".local".yellow,function(){
         describe("toGulpStreamSync() and toGulpDestSync",function(){
             it("should produce a gulp stream",function(done){
@@ -83,6 +88,69 @@ describe("smartfile".yellow,function(){
             });
         });
     });
+
+    describe(".memory",function(){
+        describe(".toGulpStream()",function(){
+            it("should produce a valid gulp stream",function(){
+                let localArray = ["test1","test2","test3"];
+                smartfile.memory.toGulpStream(localArray)
+                    .pipe(gulp.dest("./test/temp/"));
+            });
+        });
+        describe("toVinylFileSync()",function(){
+            it("should produce a vinylFile",function(){
+                let localString = "myString";
+                let localOptions = {filename:"vinylfile2",base:"/someDir"};
+                (smartfile.memory.toVinylFileSync(localString,localOptions) instanceof vinyl).should.be.true();
+            });
+        });
+        describe("toVinylArraySync()",function(){
+            it("should produce a an array of vinylfiles",function(){
+                let localStringArray = ["string1","string2","string3"];
+                let localOptions = {filename:"vinylfile2",base:"/someDir"};
+                let testResult = smartfile.memory.toVinylArraySync(localStringArray,localOptions);
+                testResult.should.be.Array();
+                (testResult.length === 3).should.be.true();
+                for (let myKey in testResult){
+                    (testResult[myKey] instanceof vinyl).should.be.true();
+                }
+            });
+        });
+        describe("toStringSync()",function(){
+            it("should produce a String from vinyl file",function(){
+                let localString = smartfile.memory.toStringSync(new vinyl({
+                    base:"/",
+                    path:"/test.txt",
+                    contents: new Buffer("myString")
+                }));
+                localString.should.equal("myString");
+            });
+        });
+        describe("toFs()",function(){
+            it("should write a file to disk and return a promise",function(done){
+                let localString = "myString";
+                smartfile.memory.toFs(
+                    localString,
+                    {
+                        fileName:"./test/temp/testMemToFs.txt",
+                        filePath:process.cwd()
+                    }
+                ).then(done);
+            });
+        });
+        describe("toFsSync()",function(){
+            it("should write a file to disk and return true if successfull",function(){
+                let localString = "myString";
+                smartfile.memory.toFsSync(
+                    localString,{
+                        fileName:"./test/temp/testMemToFsSync.txt",
+                        filePath:process.cwd()
+                    }
+                );
+            });
+        });
+    });
+
     describe(".remote",function(){
         describe("toGulpStreamSync()",function(){
             it("should produce a gulp stream",function(done){

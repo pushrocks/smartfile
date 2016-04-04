@@ -8,7 +8,7 @@ let Readable = require("stream").Readable;
  * @returns stream.Readable
  * @TODO: make it async;
  */
-export let toGulpStream = function(fileArg:string|string[]|plugins.vinyl|plugins.vinyl[],baseArg?:string){
+export let toGulpStream = function(fileArg:string|string[]|plugins.vinyl|plugins.vinyl[],baseArg:string = "/"){
     let fileArray = [];
 
     if(typeof fileArg === "string" || fileArg instanceof plugins.vinyl){ // make sure we work with an array later on
@@ -25,7 +25,7 @@ export let toGulpStream = function(fileArg:string|string[]|plugins.vinyl|plugins
         let file = fileArray[fileIndexArg];
         file instanceof plugins.vinyl ?
             vinylFileArray.push(file) :
-            vinylFileArray.push(toVinylFileSync(file,{filename:fileIndexArg,base:"/"}));
+            vinylFileArray.push(toVinylFileSync(file,{filename:fileIndexArg,base:baseArg}));
     };
 
     let stream = new Readable({ objectMode: true });
@@ -42,7 +42,7 @@ export let toGulpStream = function(fileArg:string|string[]|plugins.vinyl|plugins
  * @param fileArg
  * @param optionsArg
  */
-export let toVinylFileSync = function(fileArg:string,optionsArg?:{filename:string,base:string,relPath?:string}){
+export let toVinylFileSync = function(fileArg:string,optionsArg?:{filename?:string,base?:string,relPath?:string}){
     optionsArg? void(0) : optionsArg = {filename: "vinylfile", base: "/"};
     optionsArg.filename ? void(0) : optionsArg.filename = "vinylfile";
     optionsArg.base ? void(0) : optionsArg.base = "/";
@@ -60,7 +60,7 @@ export let toVinylFileSync = function(fileArg:string,optionsArg?:{filename:strin
  * @param arrayArg
  * @param optionsArg
  */
-export let toVinylArraySync = function(arrayArg:string[],optionsArg?:{filename:string,base:string,relPath?:string}){
+export let toVinylArraySync = function(arrayArg:string[],optionsArg?:{filename?:string,base?:string,relPath?:string}){
     let vinylArray = [];
     for(let stringIndexArg in arrayArg){
         let myString = arrayArg[stringIndexArg];
@@ -69,14 +69,53 @@ export let toVinylArraySync = function(arrayArg:string[],optionsArg?:{filename:s
     return vinylArray;
 };
 
-
-export let toFs = function(fileArg:string|plugins.vinyl,fileNameArg?:string,fileBaseArg?:string){
-    if (fileArg instanceof plugins.vinyl){
-
-    }
+/**
+ * takes a vinylFile object and converts it to String
+ */
+export let toStringSync = function(fileArg:plugins.vinyl){
+    return fileArg.contents.toString("utf8");
 };
 
-export let toFsSync = function(){
-    
+
+/**
+ * writes string or vinyl file to disk.
+ * @param fileArg
+ * @param fileNameArg
+ * @param fileBaseArg
+ */
+export let toFs = function(fileArg,optionsArg:{fileName:string,filePath:string}){
+    let done = plugins.q.defer();
+
+    //function checks to abort if needed
+    if (!fileArg || !optionsArg || !(typeof optionsArg.fileName === "string"))
+        throw new Error("expected a valid arguments");
+    if (!(typeof optionsArg.filePath === "string")) optionsArg.filePath = "/";
+
+    let filePath:string = plugins.path.join(optionsArg.filePath,optionsArg.fileName);
+    let fileString:string;
+    if (fileArg instanceof plugins.vinyl){
+        fileString = toStringSync(fileArg);
+    } else if (typeof fileArg === "string") {
+        fileString = fileArg;
+    }
+    plugins.fs.writeFile(filePath,fileString,"utf8",done.resolve);
+    return done.promise;
+};
+
+export let toFsSync = function(fileArg,optionsArg:{fileName:string,filePath:string}){
+    //function checks to abort if needed
+    if (!fileArg || !optionsArg || !(typeof optionsArg.fileName === "string"))
+        throw new Error("expected a valid arguments");
+    if (!(typeof optionsArg.filePath === "string")) optionsArg.filePath = "/";
+
+    let filePath = plugins.path.join(optionsArg.filePath,optionsArg.fileName);
+    let fileString:string;
+
+    if (fileArg instanceof plugins.vinyl){
+        fileString = toStringSync(fileArg);
+    } else if (typeof fileArg === "string") {
+        fileString = fileArg;
+    }
+    plugins.fs.writeFileSync(filePath,fileString,"utf8");
 };
 

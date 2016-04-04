@@ -1,4 +1,5 @@
 {
   "mode":"default",
-  "codecov":true
+  "codecov":true,
+  "coverageTreshold":80
 }
