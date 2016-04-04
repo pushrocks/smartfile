@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/pushrocks/smartfile",
   "dependencies": {
-    "beautylog": "^4.1.0",
+    "beautylog": "^4.1.1",
     "fs-extra": "^0.26.7",
     "gulp": "^3.9.1",
     "gulp-remote-src": "^0.4.1",
@@ -37,8 +37,8 @@
     "vinyl-file": "^2.0.0"
   },
   "devDependencies": {
-    "gulp-function": "^1.2.3",
-    "npmts": "^5.0.1",
+    "gulp-function": "^1.2.4",
+    "npmts": "^5.0.3",
     "should": "^8.3.0"
   }
 }
