@@ -1,9 +1,11 @@
 /// <reference path="./typings/main.d.ts" />
 
 import plugins = require("./smartfile.plugins");
+import SmartfileInterpreter = require("./smartfile.interpreter");
 let Readable = require("stream").Readable;
 /**
- * allows you to create a gulp stream from filestring
+ * allows you to create a gulp stream
+ * from String, from an Array of Strings, from Vinyl File, from an Array of VinylFiles
  * @param fileArg
  * @returns stream.Readable
  * @TODO: make it async;
@@ -38,6 +40,16 @@ export let toGulpStream = function(fileArg:string|string[]|plugins.vinyl|plugins
 };
 
 /**
+ * 
+ * @param fileStringArg
+ * @param fileTypeArg
+ * @returns {any|any}
+ */
+export let toObject = function(fileStringArg:string,fileTypeArg:string){
+    return SmartfileInterpreter(fileStringArg,fileTypeArg);
+};
+
+/**
  * takes a string and converts it to vinyl file
  * @param fileArg
  * @param optionsArg
@@ -68,6 +80,7 @@ export let toVinylArraySync = function(arrayArg:string[],optionsArg?:{filename?:
     }
     return vinylArray;
 };
+
 
 /**
  * takes a vinylFile object and converts it to String
