@@ -40,7 +40,7 @@ export let toGulpStream = function(fileArg:string|string[]|plugins.vinyl|plugins
 };
 
 /**
- * 
+ * converts file to Object
  * @param fileStringArg
  * @param fileTypeArg
  * @returns {any|any}
