@@ -46,6 +46,30 @@ describe("smartfile".yellow,function(){
         });
     });
 
+    describe(".get",function(){
+        describe(".filetype()",function(){
+            it("should get the file type from a string",function(){
+                smartfile.get.filetype("./somefolder/data.json").should.equal("json");
+            });
+        });
+        describe(".foldersSync()",function(){
+            it("should get the file type from a string",function(){
+                smartfile.get.foldersSync("./test/").should.containDeep([ "testfolder"]);
+                smartfile.get.foldersSync("./test/").should.not.containDeep([ "notExistentFolder"]);
+            });
+        });
+        describe(".folders()",function(){
+            it("should get the file type from a string",function(done){
+                smartfile.get.folders("./test/")
+                    .then(function(folderArrayArg){
+                        folderArrayArg.should.containDeep([ "testfolder"]);
+                        folderArrayArg.should.not.containDeep([ "notExistentFolder"]);
+                        done();
+                    });
+            });
+        });
+    });
+
 
     describe(".local".yellow,function(){
         describe("toGulpStreamSync() and toGulpDestSync",function(){
