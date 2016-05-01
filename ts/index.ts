@@ -1,15 +1,15 @@
 /// <reference path="./typings/main.d.ts" />
 
-import plugins = require("./smartfile.plugins");
-import SmartfileChecks = require("./smartfile.checks");
-import SmartfileFsaction = require("./smartfile.fsaction");
-import SmartfileGet = require("./smartfile.get");
-import SmartfileLocal = require("./smartfile.local");
-import SmartfileMemory = require("./smartfile.memory");
-import SmartfileRemote = require("./smartfile.remote");
+import * as plugins from "./smartfile.plugins";
+import * as SmartfileChecks from "./smartfile.checks";
+import * as SmartfileFsaction from "./smartfile.fsaction";
+import * as SmartfileGet from "./smartfile.get";
+import * as SmartfileLocal from "./smartfile.local";
+import * as SmartfileMemory from "./smartfile.memory";
+import * as SmartfileRemote from "./smartfile.remote";
 
 
-var smartfile:any = {
+var smartfile = {
     fsaction: SmartfileFsaction,
     fs: plugins.fs,
     checks: SmartfileChecks,

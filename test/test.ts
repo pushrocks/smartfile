@@ -1,5 +1,5 @@
 /// <reference path="../ts/typings/main.d.ts" />
-let smartfile = require("../dist/index.js");
+import * as smartfile from "../dist/index.js";
 let beautylog = require("beautylog");
 let gulp = require("gulp");
 let gFunction = require("gulp-function");
