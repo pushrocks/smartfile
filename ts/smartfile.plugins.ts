@@ -1,4 +1,4 @@
-/// <reference path="./typings/main.d.ts" />
+/// <reference path="./typings/index.d.ts" />
 export let beautylog = require("beautylog");
 export let fs = require("fs-extra");
 export let gulp = require("gulp");

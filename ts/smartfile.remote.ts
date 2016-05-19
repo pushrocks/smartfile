@@ -1,4 +1,4 @@
-/// <reference path="./typings/main.d.ts" />
+/// <reference path="./typings/index.d.ts" />
 import plugins = require("./smartfile.plugins");
 import SmartfileInterpreter = require("./smartfile.interpreter");
 import SmartfileGet = require("./smartfile.get");

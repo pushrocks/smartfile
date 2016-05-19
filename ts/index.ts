@@ -1,4 +1,4 @@
-/// <reference path="./typings/main.d.ts" />
+/// <reference path="./typings/index.d.ts" />
 
 import * as plugins from "./smartfile.plugins";
 import * as SmartfileChecks from "./smartfile.checks";
@@ -8,16 +8,13 @@ import * as SmartfileLocal from "./smartfile.local";
 import * as SmartfileMemory from "./smartfile.memory";
 import * as SmartfileRemote from "./smartfile.remote";
 
+export {Smartfile} from "./smartfile.classes.smartfile";
 
-var smartfile = {
-    fsaction: SmartfileFsaction,
-    fs: plugins.fs,
-    checks: SmartfileChecks,
-    get: SmartfileGet,
-    local: SmartfileLocal,
-    memory: SmartfileMemory,
-    remote: SmartfileRemote,
-    requireReload: SmartfileLocal.requireReload
-};
-
-export = smartfile;
+export let fsaction = SmartfileFsaction;
+export let fs = plugins.fs;
+export let checks = SmartfileChecks;
+export let get = SmartfileGet;
+export let local = SmartfileLocal;
+export let memory = SmartfileMemory;
+export let remote = SmartfileRemote;
+export let requireReload = SmartfileLocal.requireReload;

@@ -1,5 +1,5 @@
 {
-  "ambientDependencies": {
+  "globalDependencies": {
     "colors": "github:DefinitelyTyped/DefinitelyTyped/colors/colors.d.ts",
     "mocha": "github:Bartvds/tsd-deftools/typings/DefinitelyTyped/mocha/mocha.d.ts",
     "node": "registry:dt/node",
