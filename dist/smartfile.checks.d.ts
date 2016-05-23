@@ -1,3 +1,4 @@
+import "typings-global";
 /**
  *
  * @param filePath

@@ -1,3 +1,4 @@
+import "typings-global";
 export declare let toFS: (options: {
     from: string;
     toPath: string;

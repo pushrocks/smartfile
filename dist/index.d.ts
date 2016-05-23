@@ -1,3 +1,4 @@
+import "typings-global";
 import * as SmartfileChecks from "./smartfile.checks";
 import * as SmartfileFsaction from "./smartfile.fsaction";
 import * as SmartfileGet from "./smartfile.get";

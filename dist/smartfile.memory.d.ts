@@ -1,3 +1,4 @@
+import "typings-global";
 import plugins = require("./smartfile.plugins");
 /**
  * allows you to create a gulp stream

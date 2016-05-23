@@ -1,4 +1,4 @@
-/// <reference path="./typings/index.d.ts" />
+import "typings-global";
 export let beautylog = require("beautylog");
 export let fs = require("fs-extra");
 export let gulp = require("gulp");

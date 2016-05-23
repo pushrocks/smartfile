@@ -1,4 +1,4 @@
-/// <reference path="./typings/index.d.ts" />
+import "typings-global";
 
 import * as plugins from "./smartfile.plugins";
 import * as SmartfileChecks from "./smartfile.checks";

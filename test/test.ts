@@ -1,4 +1,4 @@
-/// <reference path="../ts/typings/index.d.ts" />
+import "typings-test";
 import * as smartfile from "../dist/index.js";
 let beautylog = require("beautylog");
 let gulp = require("gulp");
