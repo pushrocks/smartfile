@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pushrocks/smartfile.git"
+    "url": "https://gitlab.com/pushrocks/smartfile.git"
   },
   "keywords": [
     "filesystem",
@@ -22,9 +22,9 @@
   "author": "Smart Coordination GmbH <office@push.rocks> (https://push.rocks)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pushrocks/smartfile/issues"
+    "url": "https://gitlab.com/pushrocks/smartfile/issues"
   },
-  "homepage": "https://github.com/pushrocks/smartfile",
+  "homepage": "https://gitlab.com/pushrocks/smartfile",
   "dependencies": {
     "beautylog": "^5.0.12",
     "fs-extra": "^0.30.0",
