@@ -1,7 +1,6 @@
 import "typings-global";
 import plugins = require("./smartfile.plugins");
 import SmartfileInterpreter = require("./smartfile.interpreter");
-import SmartfileGet = require("./smartfile.get");
 
 export let toFs = function(from:string,toPath:string) {
     var done = plugins.q.defer();
@@ -34,7 +33,7 @@ export let toObject = function(fromArg:string){
     plugins.request.get(fromArg, function (error, response, bodyString) {
         let returnObject;
         if (!error && response.statusCode == 200) {
-            returnObject = SmartfileInterpreter(bodyString,SmartfileGet.filetype(fromArg));
+            returnObject = SmartfileInterpreter.objectFile(bodyString,SmartfileInterpreter.filetype(fromArg));
             done.resolve(returnObject);
         } else {
             console.log('could not get remote file from ' + fromArg);

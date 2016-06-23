@@ -46,7 +46,7 @@ export let toGulpStream = function(fileArg:string|string[]|plugins.vinyl|plugins
  * @returns {any|any}
  */
 export let toObject = function(fileStringArg:string,fileTypeArg:string){
-    return SmartfileInterpreter(fileStringArg,fileTypeArg);
+    return SmartfileInterpreter.objectFile(fileStringArg,fileTypeArg);
 };
 
 /**

@@ -1,3 +1,3 @@
 import "typings-global";
-declare var _default: (fileStringArg: string, fileTypeArg: any) => any;
-export = _default;
+export declare let filetype: (pathArg: string) => string;
+export declare let objectFile: (fileStringArg: string, fileTypeArg: any) => any;

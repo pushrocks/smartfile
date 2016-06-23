@@ -66,8 +66,8 @@ export let toGulpDestSync = function(folderPathArg:string){
 export let toObjectSync = function(filePathArg,fileTypeArg?) {
     let fileString = plugins.fs.readFileSync(filePathArg, 'utf8');
     let fileType;
-    fileTypeArg ? fileType = fileTypeArg : fileType = filetype(filePathArg);
-    return SmartfileInterpreter(fileString,fileType);
+    fileTypeArg ? fileType = fileTypeArg : fileType = SmartfileInterpreter.filetype(filePathArg);
+    return SmartfileInterpreter.objectFile(fileString,fileType);
 };
 
 /**
@@ -98,12 +98,6 @@ export let toVinylSync = function(filePathArg,options = {}) {
  */
 export let requireReload = function(path:string){
     return plugins.requireReload(path);
-};
-
-export let filetype = function(pathArg:string):string {
-    let extName = plugins.path.extname(pathArg);
-    let fileType = extName.replace(/\.([a-z]*)/,"$1"); //remove . form fileType
-    return fileType;
 };
 
 export let foldersSync = function(pathArg){
