@@ -23,15 +23,15 @@ describe("smartfile".yellow,function(){
                 (smartfile.fs.fileExists("./test/notthere.json")).should.not.be.fulfilled();
             });
         });
-        describe(".foldersSync()",function(){
+        describe(".listFoldersSync()",function(){
             it("should get the file type from a string",function(){
-                smartfile.fs.foldersSync("./test/").should.containDeep([ "testfolder"]);
-                smartfile.fs.foldersSync("./test/").should.not.containDeep([ "notExistentFolder"]);
+                smartfile.fs.listFoldersSync("./test/").should.containDeep([ "testfolder"]);
+                smartfile.fs.listFoldersSync("./test/").should.not.containDeep([ "notExistentFolder"]);
             });
         });
-        describe(".folders()",function(){
+        describe(".listFolders()",function(){
             it("should get the file type from a string",function(done){
-                smartfile.fs.folders("./test/")
+                smartfile.fs.listFolders("./test/")
                     .then(function(folderArrayArg){
                         folderArrayArg.should.containDeep([ "testfolder"]);
                         folderArrayArg.should.not.containDeep([ "notExistentFolder"]);

@@ -7,6 +7,9 @@ import SmartfileInterpreter = require("./smartfile.interpreter");
 ============================ FS ACTIONS =========================
 ===============================================================*/
 
+/**
+ * copies a file from A to B on the local disk
+ */
 export let copy = function(fromArg:string, toArg:string){
     var done = plugins.q.defer();
     plugins.fs.copy(fromArg,toArg,{},function(){
@@ -15,11 +18,17 @@ export let copy = function(fromArg:string, toArg:string){
     return done.promise;
 };
 
+/**
+ * copies a file SYNCHRONOUSLY from A to B on the local disk
+ */
 export let copySync = function(fromArg:string,toArg:string):boolean{
     plugins.fs.copySync(fromArg,toArg);
     return true;
 };
-
+ 
+ /**
+  * removes a file or folder from local disk
+  */
 export let remove = function(pathArg:string){
     var done = plugins.q.defer();
     plugins.fs.remove(pathArg,function(){
@@ -28,6 +37,9 @@ export let remove = function(pathArg:string){
     return done.promise;
 };
 
+/**
+ * removes a file SYNCHRONOUSLY from local disk
+ */
 export let removeSync = function(pathArg:string):boolean{
     plugins.fs.removeSync(pathArg);
     return true;
@@ -100,13 +112,10 @@ export let requireReload = function(path:string){
     return plugins.requireReload(path);
 };
 
-export let foldersSync = function(pathArg){
-    return plugins.fs.readdirSync(pathArg).filter(function(file) {
-        return plugins.fs.statSync(plugins.path.join(pathArg, file)).isDirectory();
-    });
-};
-
-export let folders = function(pathArg:string){
+/**
+ * lists Folders in a directory on local disk
+ */
+export let listFolders = function(pathArg:string){
     let done = plugins.q.defer();
     let folderArray = plugins.fs.readdirSync(pathArg).filter(function(file) {
         return plugins.fs.statSync(plugins.path.join(pathArg, file)).isDirectory();
@@ -115,6 +124,14 @@ export let folders = function(pathArg:string){
     return done.promise;
 };
 
+/**
+ * lists Folders SYNCHRONOUSLY in a directory on local disk
+ */
+export let listFoldersSync = function(pathArg){
+    return plugins.fs.readdirSync(pathArg).filter(function(file) {
+        return plugins.fs.statSync(plugins.path.join(pathArg, file)).isDirectory();
+    });
+};
 
 /**
  *

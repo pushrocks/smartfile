@@ -1,7 +1,19 @@
 import "typings-global";
+/**
+ * copies a file from A to B on the local disk
+ */
 export declare let copy: (fromArg: string, toArg: string) => any;
+/**
+ * copies a file SYNCHRONOUSLY from A to B on the local disk
+ */
 export declare let copySync: (fromArg: string, toArg: string) => boolean;
+/**
+ * removes a file or folder from local disk
+ */
 export declare let remove: (pathArg: string) => any;
+/**
+ * removes a file SYNCHRONOUSLY from local disk
+ */
 export declare let removeSync: (pathArg: string) => boolean;
 export declare let toFS: (options: {
     from: string;
@@ -40,8 +52,14 @@ export declare let toVinylSync: (filePathArg: any, options?: {}) => any;
  * @returns {any}
  */
 export declare let requireReload: (path: string) => any;
-export declare let foldersSync: (pathArg: any) => any;
-export declare let folders: (pathArg: string) => any;
+/**
+ * lists Folders in a directory on local disk
+ */
+export declare let listFolders: (pathArg: string) => any;
+/**
+ * lists Folders SYNCHRONOUSLY in a directory on local disk
+ */
+export declare let listFoldersSync: (pathArg: any) => any;
 /**
  *
  * @param filePath
