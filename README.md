@@ -3,7 +3,6 @@ make files easily accessible for processing in javascript.
 
 ## Status
 [![build status](https://gitlab.com/pushrocks/smartfile/badges/master/build.svg)](https://gitlab.com/pushrocks/smartfile/commits/master)
-[![Build status](https://ci.appveyor.com/api/projects/status/xefmtetv7bxupfby/branch/master?svg=true)](https://ci.appveyor.com/project/philkunz/smartfile/branch/master)
 [![Dependency Status](https://david-dm.org/pushrocks/smartfile.svg)](https://david-dm.org/pushrocks/smartfile)
 [![bitHound Dependencies](https://www.bithound.io/github/pushrocks/smartfile/badges/dependencies.svg)](https://www.bithound.io/github/pushrocks/smartfile/master/dependencies/npm)
 [![bitHound Code](https://www.bithound.io/github/pushrocks/smartfile/badges/code.svg)](https://www.bithound.io/github/pushrocks/smartfile)
