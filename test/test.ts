@@ -3,6 +3,7 @@ import * as smartfile from "../dist/index";
 let beautylog = require("beautylog");
 let gulp = require("gulp");
 let gFunction = require("gulp-function");
+import path = require("path");
 import should = require("should");
 let vinyl = require("vinyl");
 
@@ -153,10 +154,7 @@ describe("smartfile".yellow,function(){
                 let localString = "myString";
                 smartfile.memory.toFs(
                     localString,
-                    {
-                        fileName:"./test/temp/testMemToFs.txt",
-                        filePath:process.cwd()
-                    }
+                    path.join(process.cwd(),"./test/temp/testMemToFs.txt")
                 ).then(done);
             });
         });
@@ -164,10 +162,8 @@ describe("smartfile".yellow,function(){
             it("should write a file to disk and return true if successfull",function(){
                 let localString = "myString";
                 smartfile.memory.toFsSync(
-                    localString,{
-                        fileName:"./test/temp/testMemToFsSync.txt",
-                        filePath:process.cwd()
-                    }
+                    localString,
+                    path.join(process.cwd(),"./test/temp/testMemToFsSync.txt")
                 );
             });
         });

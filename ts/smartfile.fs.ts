@@ -4,6 +4,54 @@ import plugins = require("./smartfile.plugins");
 import SmartfileInterpreter = require("./smartfile.interpreter");
 
 /*===============================================================
+============================ Checks =============================
+===============================================================*/
+
+/**
+ *
+ * @param filePath
+ * @returns {boolean}
+ */
+export let fileExistsSync = function(filePath):boolean {
+    let fileExistsBool:boolean = false;
+    try {
+        plugins.fs.readFileSync(filePath);
+        fileExistsBool = true
+    }
+    catch(err){
+        fileExistsBool = false;
+    }
+    return fileExistsBool;
+};
+
+/**
+ *
+ * @param filePath
+ * @returns {any}
+ */
+export let fileExists = function(filePath){
+    let done = plugins.q.defer();
+    plugins.fs.access(filePath, plugins.fs.R_OK, function (err) {
+        err ? done.reject() : done.resolve();
+    });
+    return done.promise;
+};
+
+/**
+ * Checks if given path points to an existing directory
+ */
+export let isDirectory = function(pathArg):boolean{
+    return plugins.fs.statSync(pathArg).isDirectory();
+};
+
+/**
+ * Checks if a given path points to an existing file
+ */
+export let isFile = function(pathArg):boolean{
+    return plugins.fs.statSync(pathArg).isFile();
+};
+
+/*===============================================================
 ============================ FS ACTIONS =========================
 ===============================================================*/
 
@@ -49,11 +97,6 @@ export let removeSync = function(pathArg:string):boolean{
 /*===============================================================
 ============================ Write/Read =========================
 ===============================================================*/
-
-
-export let toFS = function(options:{from:string,toPath:string}, cb=undefined){
-    
-};
 
 /**
  *
@@ -131,42 +174,4 @@ export let listFoldersSync = function(pathArg){
     return plugins.fs.readdirSync(pathArg).filter(function(file) {
         return plugins.fs.statSync(plugins.path.join(pathArg, file)).isDirectory();
     });
-};
-
-/**
- *
- * @param filePath
- * @returns {boolean}
- */
-export let fileExistsSync = function(filePath):boolean {
-    let fileExistsBool:boolean = false;
-    try {
-        plugins.fs.readFileSync(filePath);
-        fileExistsBool = true
-    }
-    catch(err){
-        fileExistsBool = false;
-    }
-    return fileExistsBool;
-};
-
-/**
- *
- * @param filePath
- * @returns {any}
- */
-export let fileExists = function(filePath){
-    let done = plugins.q.defer();
-    plugins.fs.access(filePath, plugins.fs.R_OK, function (err) {
-        err ? done.reject() : done.resolve();
-    });
-    return done.promise;
-};
-
-export let isDirectory = function(pathArg):boolean{
-    return plugins.fs.statSync(pathArg).isDirectory();
-};
-
-export let isFile = function(pathArg):boolean{
-    return plugins.fs.statSync(pathArg).isFile();
 };

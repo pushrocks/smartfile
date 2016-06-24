@@ -2,6 +2,7 @@ import "typings-global";
 
 import plugins = require("./smartfile.plugins");
 import SmartfileInterpreter = require("./smartfile.interpreter");
+import vinyl = require("vinyl");
 let Readable = require("stream").Readable;
 /**
  * allows you to create a gulp stream
@@ -96,33 +97,31 @@ export let toStringSync = function(fileArg:plugins.vinyl){
  * @param fileNameArg
  * @param fileBaseArg
  */
-export let toFs = function(fileArg,optionsArg:{fileName:string,filePath:string}){
+export let toFs = function(fileContentArg:string|vinyl,filePathArg){
     let done = plugins.q.defer();
 
     //function checks to abort if needed
-    if (!fileArg || !optionsArg || !(typeof optionsArg.fileName === "string"))
-        throw new Error("expected a valid arguments");
-    if (!(typeof optionsArg.filePath === "string")) optionsArg.filePath = "/";
+    if (!fileContentArg || !filePathArg) throw new Error("expected valid arguments");
 
-    let filePath:string = plugins.path.join(optionsArg.filePath,optionsArg.fileName);
+    // prepare actual write action
     let fileString:string;
-    if (fileArg instanceof plugins.vinyl){
-        fileString = toStringSync(fileArg);
-    } else if (typeof fileArg === "string") {
-        fileString = fileArg;
+    let filePath:string = filePathArg;
+    if (fileContentArg instanceof plugins.vinyl){
+        fileString = toStringSync(fileContentArg);
+    } else if (typeof fileContentArg === "string") {
+        fileString = fileContentArg;
     }
     plugins.fs.writeFile(filePath,fileString,"utf8",done.resolve);
     return done.promise;
 };
 
-export let toFsSync = function(fileArg,optionsArg:{fileName:string,filePath:string}){
+export let toFsSync = function(fileArg,filePathArg:string){
     //function checks to abort if needed
-    if (!fileArg || !optionsArg || !(typeof optionsArg.fileName === "string"))
-        throw new Error("expected a valid arguments");
-    if (!(typeof optionsArg.filePath === "string")) optionsArg.filePath = "/";
+    if (!fileArg || !filePathArg) throw new Error("expected a valid arguments");
 
-    let filePath = plugins.path.join(optionsArg.filePath,optionsArg.fileName);
+    // prepare actual write action
     let fileString:string;
+    let filePath:string = filePathArg;
 
     if (fileArg instanceof plugins.vinyl){
         fileString = toStringSync(fileArg);

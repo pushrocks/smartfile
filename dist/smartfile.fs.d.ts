@@ -1,5 +1,25 @@
 import "typings-global";
 /**
+ *
+ * @param filePath
+ * @returns {boolean}
+ */
+export declare let fileExistsSync: (filePath: any) => boolean;
+/**
+ *
+ * @param filePath
+ * @returns {any}
+ */
+export declare let fileExists: (filePath: any) => any;
+/**
+ * Checks if given path points to an existing directory
+ */
+export declare let isDirectory: (pathArg: any) => boolean;
+/**
+ * Checks if a given path points to an existing file
+ */
+export declare let isFile: (pathArg: any) => boolean;
+/**
  * copies a file from A to B on the local disk
  */
 export declare let copy: (fromArg: string, toArg: string) => any;
@@ -15,10 +35,6 @@ export declare let remove: (pathArg: string) => any;
  * removes a file SYNCHRONOUSLY from local disk
  */
 export declare let removeSync: (pathArg: string) => boolean;
-export declare let toFS: (options: {
-    from: string;
-    toPath: string;
-}, cb?: any) => void;
 /**
  *
  * @param filePathArg
@@ -60,17 +76,3 @@ export declare let listFolders: (pathArg: string) => any;
  * lists Folders SYNCHRONOUSLY in a directory on local disk
  */
 export declare let listFoldersSync: (pathArg: any) => any;
-/**
- *
- * @param filePath
- * @returns {boolean}
- */
-export declare let fileExistsSync: (filePath: any) => boolean;
-/**
- *
- * @param filePath
- * @returns {any}
- */
-export declare let fileExists: (filePath: any) => any;
-export declare let isDirectory: (pathArg: any) => boolean;
-export declare let isFile: (pathArg: any) => boolean;

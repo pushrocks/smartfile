@@ -45,11 +45,5 @@ export declare let toStringSync: (fileArg: plugins.vinyl) => string;
  * @param fileNameArg
  * @param fileBaseArg
  */
-export declare let toFs: (fileArg: any, optionsArg: {
-    fileName: string;
-    filePath: string;
-}) => any;
-export declare let toFsSync: (fileArg: any, optionsArg: {
-    fileName: string;
-    filePath: string;
-}) => void;
+export declare let toFs: (fileContentArg: string | plugins.vinyl, filePathArg: any) => any;
+export declare let toFsSync: (fileArg: any, filePathArg: string) => void;
