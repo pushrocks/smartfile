@@ -56,6 +56,22 @@ export let isFile = function(pathArg):boolean{
 ===============================================================*/
 
 /**
+ * ensures that a directory is in place
+ */
+export let ensureDir = (dirPathArg:string) => {
+    let done = plugins.q.defer();
+    plugins.fs.ensureDir(dirPathArg,done.resolve);
+    return done.promise;
+}
+
+/**
+ * ensures that a directory is in place
+ */
+export let ensureDirSync = (dirPathArg:string) => {
+    plugins.fs.ensureDirSync(dirPathArg);
+}
+
+/**
  * copies a file from A to B on the local disk
  */
 export let copy = function(fromArg:string, toArg:string){
@@ -157,6 +173,7 @@ export let requireReload = function(path:string){
 
 /**
  * lists Folders in a directory on local disk
+ * @returns Promise
  */
 export let listFolders = function(pathArg:string){
     let done = plugins.q.defer();
@@ -169,8 +186,9 @@ export let listFolders = function(pathArg:string){
 
 /**
  * lists Folders SYNCHRONOUSLY in a directory on local disk
+ * @returns an array with the folder names as strings
  */
-export let listFoldersSync = function(pathArg){
+export let listFoldersSync = function(pathArg):string[]{
     return plugins.fs.readdirSync(pathArg).filter(function(file) {
         return plugins.fs.statSync(plugins.path.join(pathArg, file)).isDirectory();
     });

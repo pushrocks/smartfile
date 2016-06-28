@@ -20,6 +20,14 @@ export declare let isDirectory: (pathArg: any) => boolean;
  */
 export declare let isFile: (pathArg: any) => boolean;
 /**
+ * ensures that a directory is in place
+ */
+export declare let ensureDir: (dirPathArg: string) => any;
+/**
+ * ensures that a directory is in place
+ */
+export declare let ensureDirSync: (dirPathArg: string) => void;
+/**
  * copies a file from A to B on the local disk
  */
 export declare let copy: (fromArg: string, toArg: string) => any;
@@ -70,9 +78,11 @@ export declare let toVinylSync: (filePathArg: any, options?: {}) => any;
 export declare let requireReload: (path: string) => any;
 /**
  * lists Folders in a directory on local disk
+ * @returns Promise
  */
 export declare let listFolders: (pathArg: string) => any;
 /**
  * lists Folders SYNCHRONOUSLY in a directory on local disk
+ * @returns an array with the folder names as strings
  */
-export declare let listFoldersSync: (pathArg: any) => any;
+export declare let listFoldersSync: (pathArg: any) => string[];
