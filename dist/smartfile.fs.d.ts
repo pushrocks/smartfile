@@ -80,9 +80,29 @@ export declare let requireReload: (path: string) => any;
  * lists Folders in a directory on local disk
  * @returns Promise
  */
-export declare let listFolders: (pathArg: string) => any;
+export declare let listFolders: (pathArg: string, regexFilter?: RegExp) => any;
 /**
  * lists Folders SYNCHRONOUSLY in a directory on local disk
  * @returns an array with the folder names as strings
  */
-export declare let listFoldersSync: (pathArg: any) => string[];
+export declare let listFoldersSync: (pathArg: string, regexFilter?: RegExp) => string[];
+/**
+ * lists Files in a directory on local disk
+ * @returns Promise
+ */
+export declare let listFiles: (pathArg: string, regexFilter?: RegExp) => any;
+/**
+ * lists Files SYNCHRONOUSLY in a directory on local disk
+ * @returns an array with the folder names as strings
+ */
+export declare let listFilesSync: (pathArg: string, regexFilter?: RegExp) => string[];
+/**
+ * lists all items (folders AND files) in a directory on local disk
+ * @returns Promise
+ */
+export declare let listAllItems: (pathArg: string, regexFilter?: RegExp) => any;
+/**
+ * lists all items (folders AND files) SYNCHRONOUSLY in a directory on local disk
+ * @returns an array with the folder names as strings
+ */
+export declare let listAllItemsSync: (pathArg: string, regexFilter?: RegExp) => string[];

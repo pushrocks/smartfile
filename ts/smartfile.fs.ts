@@ -175,11 +175,16 @@ export let requireReload = function(path:string){
  * lists Folders in a directory on local disk
  * @returns Promise
  */
-export let listFolders = function(pathArg:string){
+export let listFolders = function(pathArg:string,regexFilter?:RegExp){
     let done = plugins.q.defer();
     let folderArray = plugins.fs.readdirSync(pathArg).filter(function(file) {
         return plugins.fs.statSync(plugins.path.join(pathArg, file)).isDirectory();
     });
+    if(regexFilter){
+        folderArray = folderArray.filter((fileItem) => {
+            regexFilter.test(fileItem);
+        });
+    }
     done.resolve(folderArray);
     return done.promise;
 };
@@ -188,8 +193,83 @@ export let listFolders = function(pathArg:string){
  * lists Folders SYNCHRONOUSLY in a directory on local disk
  * @returns an array with the folder names as strings
  */
-export let listFoldersSync = function(pathArg):string[]{
-    return plugins.fs.readdirSync(pathArg).filter(function(file) {
+export let listFoldersSync = function(pathArg:string,regexFilter?:RegExp):string[]{
+    let folderArray = plugins.fs.readdirSync(pathArg).filter(function(file) {
         return plugins.fs.statSync(plugins.path.join(pathArg, file)).isDirectory();
     });
+    if(regexFilter){
+        folderArray = folderArray.filter((fileItem) => {
+            regexFilter.test(fileItem);
+        });
+    };
+    return folderArray;
 };
+
+
+/**
+ * lists Files in a directory on local disk
+ * @returns Promise
+ */
+export let listFiles = function(pathArg:string, regexFilter?:RegExp){
+    let done = plugins.q.defer();
+    let fileArray = plugins.fs.readdirSync(pathArg).filter(function(file) {
+        return plugins.fs.statSync(plugins.path.join(pathArg, file)).isFile();
+    });
+    if(regexFilter){
+        fileArray = fileArray.filter((fileItem) => {
+            regexFilter.test(fileItem);
+        });
+    };
+    done.resolve(fileArray);
+    return done.promise();
+};
+
+/**
+ * lists Files SYNCHRONOUSLY in a directory on local disk
+ * @returns an array with the folder names as strings
+ */
+export let listFilesSync = function(pathArg:string, regexFilter?:RegExp):string[]{
+    let fileArray = plugins.fs.readdirSync(pathArg).filter(function(file) {
+        return plugins.fs.statSync(plugins.path.join(pathArg, file)).isFile();
+    });
+    if(regexFilter){
+        fileArray = fileArray.filter((fileItem) => {
+            regexFilter.test(fileItem);
+        });
+    };
+    return fileArray;
+};
+
+/**
+ * lists all items (folders AND files) in a directory on local disk
+ * @returns Promise
+ */
+export let listAllItems = function(pathArg:string, regexFilter?:RegExp){
+    let done = plugins.q.defer();
+    let allItmesArray = plugins.fs.readdirSync(pathArg);
+    if(regexFilter){
+        allItmesArray = allItmesArray.filter((fileItem) => {
+            regexFilter.test(fileItem);
+        });
+    };
+    done.resolve(allItmesArray);
+    return done.promise();
+};
+
+/**
+ * lists all items (folders AND files) SYNCHRONOUSLY in a directory on local disk
+ * @returns an array with the folder names as strings
+ */
+export let listAllItemsSync = function(pathArg:string, regexFilter?:RegExp):string[]{
+    let allItmesArray = plugins.fs.readdirSync(pathArg).filter(function(file) {
+        return plugins.fs.statSync(plugins.path.join(pathArg, file)).isFile();
+    });
+    if(regexFilter){
+        allItmesArray = allItmesArray.filter((fileItem) => {
+            regexFilter.test(fileItem);
+        });
+    };
+    return allItmesArray;
+};
+
+
