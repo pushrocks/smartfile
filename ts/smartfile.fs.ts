@@ -182,7 +182,7 @@ export let listFolders = function(pathArg:string,regexFilter?:RegExp){
     });
     if(regexFilter){
         folderArray = folderArray.filter((fileItem) => {
-            regexFilter.test(fileItem);
+            return regexFilter.test(fileItem);
         });
     }
     done.resolve(folderArray);
@@ -199,7 +199,7 @@ export let listFoldersSync = function(pathArg:string,regexFilter?:RegExp):string
     });
     if(regexFilter){
         folderArray = folderArray.filter((fileItem) => {
-            regexFilter.test(fileItem);
+            return regexFilter.test(fileItem);
         });
     };
     return folderArray;
@@ -217,11 +217,11 @@ export let listFiles = function(pathArg:string, regexFilter?:RegExp){
     });
     if(regexFilter){
         fileArray = fileArray.filter((fileItem) => {
-            regexFilter.test(fileItem);
+            return regexFilter.test(fileItem);
         });
     };
     done.resolve(fileArray);
-    return done.promise();
+    return done.promise;
 };
 
 /**
@@ -234,7 +234,7 @@ export let listFilesSync = function(pathArg:string, regexFilter?:RegExp):string[
     });
     if(regexFilter){
         fileArray = fileArray.filter((fileItem) => {
-            regexFilter.test(fileItem);
+            return regexFilter.test(fileItem);
         });
     };
     return fileArray;
@@ -249,11 +249,11 @@ export let listAllItems = function(pathArg:string, regexFilter?:RegExp){
     let allItmesArray = plugins.fs.readdirSync(pathArg);
     if(regexFilter){
         allItmesArray = allItmesArray.filter((fileItem) => {
-            regexFilter.test(fileItem);
+            return regexFilter.test(fileItem);
         });
     };
     done.resolve(allItmesArray);
-    return done.promise();
+    return done.promise;
 };
 
 /**
@@ -266,7 +266,7 @@ export let listAllItemsSync = function(pathArg:string, regexFilter?:RegExp):stri
     });
     if(regexFilter){
         allItmesArray = allItmesArray.filter((fileItem) => {
-            regexFilter.test(fileItem);
+            return regexFilter.test(fileItem);
         });
     };
     return allItmesArray;

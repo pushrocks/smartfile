@@ -40,6 +40,24 @@ describe("smartfile".yellow,function(){
                     });
             });
         });
+        describe(".listFilesSync()",function(){
+            it("should get the file type from a string",function(){
+                smartfile.fs.listFilesSync("./test/").should.containDeep([ "mytest.json"]);
+                smartfile.fs.listFilesSync("./test/").should.not.containDeep([ "notExistentFile"]);
+                smartfile.fs.listFilesSync("./test/",/mytest\.json/).should.containDeep([ "mytest.json"]);
+                smartfile.fs.listFilesSync("./test/",/mytests.json/).should.not.containDeep([ "mytest.json"]);
+            });
+        });
+        describe(".listFiles()",function(){
+            it("should get the file type from a string",function(done){
+                smartfile.fs.listFiles("./test/")
+                    .then(function(folderArrayArg){
+                        folderArrayArg.should.containDeep([ "mytest.json"]);
+                        folderArrayArg.should.not.containDeep([ "notExistentFile"]);
+                        done();
+                    });
+            });
+        });
         describe(".copy()".yellow,function(){
             it("should copy a directory",function(){
                 smartfile.fs.copy("./test/testfolder/","./test/temp/")
