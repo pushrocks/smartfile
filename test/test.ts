@@ -8,8 +8,6 @@ import should = require("should");
 let vinyl = require("vinyl");
 
 describe("smartfile".yellow,function(){
-
-
     describe(".fs".yellow,function(){
         describe(".fileExistsSync".yellow,function(){
             it("should return an accurate boolean",function(){
@@ -54,6 +52,16 @@ describe("smartfile".yellow,function(){
                     .then(function(folderArrayArg){
                         folderArrayArg.should.containDeep([ "mytest.json"]);
                         folderArrayArg.should.not.containDeep([ "notExistentFile"]);
+                        done();
+                    });
+            });
+        });
+        describe(".listFileTree()",function(){
+            it("should get a file tree",function(done){
+                smartfile.fs.listFileTree(path.resolve("./test/"),"**/*.txt")
+                    .then(function(folderArrayArg){
+                        folderArrayArg.should.containDeep([ "testfolder/testfile1.txt"]);
+                        folderArrayArg.should.not.containDeep([ "mytest.json"]);
                         done();
                     });
             });

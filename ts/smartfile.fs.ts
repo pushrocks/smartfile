@@ -272,4 +272,17 @@ export let listAllItemsSync = function(pathArg:string, regexFilter?:RegExp):stri
     return allItmesArray;
 };
 
-
+export let listFileTree = (dirPath:string, miniMatchFilter:string) => {
+    let done = plugins.q.defer();
+    let options = {
+        cwd:dirPath
+    }
+    plugins.glob(miniMatchFilter,options,(err,files:string[]) => {
+        if(err){
+            console.log(err);
+            done.reject();
+        };
+        done.resolve(files);
+    });
+    return done.promise;
+};

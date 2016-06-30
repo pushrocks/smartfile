@@ -106,3 +106,4 @@ export declare let listAllItems: (pathArg: string, regexFilter?: RegExp) => any;
  * @returns an array with the folder names as strings
  */
 export declare let listAllItemsSync: (pathArg: string, regexFilter?: RegExp) => string[];
+export declare let listFileTree: (dirPath: string, miniMatchFilter: string) => any;
