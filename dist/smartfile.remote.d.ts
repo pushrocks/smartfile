@@ -1,5 +1,7 @@
+/// <reference types="q" />
 import "typings-global";
-export declare let toFs: (from: string, toPath: string) => any;
+import plugins = require("./smartfile.plugins");
+export declare let toFs: (from: string, toPath: string) => plugins.Q.Promise<{}>;
 /**
  *
  * @param filePathArg
@@ -11,10 +13,10 @@ export declare let toGulpStreamSync: (filePathArg: string, baseArg: string) => a
  * @param fromArg
  * @returns {any}
  */
-export declare let toObject: (fromArg: string) => any;
+export declare let toObject: (fromArg: string) => plugins.Q.Promise<{}>;
 /**
  *
  * @param fromArg
  * @returns {any}
  */
-export declare let toString: (fromArg: string) => any;
+export declare let toString: (fromArg: string) => plugins.Q.Promise<{}>;

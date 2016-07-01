@@ -27,6 +27,7 @@
   "homepage": "https://gitlab.com/pushrocks/smartfile",
   "dependencies": {
     "@types/glob": "^5.0.22-alpha",
+    "@types/q": "0.0.21-alpha",
     "beautylog": "^5.0.12",
     "fs-extra": "^0.30.0",
     "glob": "^7.0.5",
