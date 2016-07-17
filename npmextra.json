@@ -1,0 +1,6 @@
+{
+  "npmts":{
+    "mode":"default",
+    "coverageTreshold":70
+  }
+}
