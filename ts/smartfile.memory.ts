@@ -111,7 +111,7 @@ export let toFs = function(fileContentArg:string|vinyl,filePathArg){
     } else if (typeof fileContentArg === "string") {
         fileString = fileContentArg;
     }
-    plugins.fs.writeFile(filePath,fileString,"utf8",done.resolve);
+    plugins.fsExtra.writeFile(filePath,fileString,"utf8",done.resolve);
     return done.promise;
 };
 
@@ -128,6 +128,6 @@ export let toFsSync = function(fileArg,filePathArg:string){
     } else if (typeof fileArg === "string") {
         fileString = fileArg;
     }
-    plugins.fs.writeFileSync(filePath,fileString,"utf8");
+    plugins.fsExtra.writeFileSync(filePath,fileString,"utf8");
 };
 

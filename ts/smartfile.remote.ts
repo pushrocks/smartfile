@@ -4,7 +4,7 @@ import SmartfileInterpreter = require("./smartfile.interpreter");
 
 export let toFs = function(from:string,toPath:string) {
     var done = plugins.Q.defer();
-    var stream = plugins.request(from).pipe(plugins.fs.createWriteStream(toPath));
+    var stream = plugins.request(from).pipe(plugins.fsExtra.createWriteStream(toPath));
     stream.on('finish',function(){
         done.resolve(toPath);
     });

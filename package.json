@@ -26,6 +26,7 @@
   },
   "homepage": "https://gitlab.com/pushrocks/smartfile",
   "dependencies": {
+    "@types/fs-extra": "^0.0.28",
     "@types/glob": "^5.0.29",
     "@types/q": "^0.0.27",
     "beautylog": "^5.0.14",
@@ -44,7 +45,7 @@
   "devDependencies": {
     "gulp-function": "^1.3.6",
     "npmts-g": "^5.2.6",
-    "should": "^9.0.2",
+    "should": "^10.0.0",
     "typings-test": "^1.0.1"
   }
 }

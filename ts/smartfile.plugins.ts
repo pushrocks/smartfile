@@ -1,6 +1,7 @@
 import "typings-global";
 export import beautylog = require("beautylog");
-export let fs = require("fs-extra");
+export import fs = require("fs");
+export import fsExtra = require("fs-extra");
 export let gulp = require("gulp");
 export import glob = require("glob");
 export let g = {

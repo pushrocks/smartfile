@@ -15,7 +15,7 @@ import SmartfileInterpreter = require("./smartfile.interpreter");
 export let fileExistsSync = function(filePath):boolean {
     let fileExistsBool:boolean = false;
     try {
-        plugins.fs.readFileSync(filePath);
+        plugins.fsExtra.readFileSync(filePath);
         fileExistsBool = true
     }
     catch(err){
@@ -41,14 +41,14 @@ export let fileExists = function(filePath){
  * Checks if given path points to an existing directory
  */
 export let isDirectory = function(pathArg):boolean{
-    return plugins.fs.statSync(pathArg).isDirectory();
+    return plugins.fsExtra.statSync(pathArg).isDirectory();
 };
 
 /**
  * Checks if a given path points to an existing file
  */
 export let isFile = function(pathArg):boolean{
-    return plugins.fs.statSync(pathArg).isFile();
+    return plugins.fsExtra.statSync(pathArg).isFile();
 };
 
 /*===============================================================
@@ -60,7 +60,7 @@ export let isFile = function(pathArg):boolean{
  */
 export let ensureDir = (dirPathArg:string) => {
     let done = plugins.Q.defer();
-    plugins.fs.ensureDir(dirPathArg,done.resolve);
+    plugins.fsExtra.ensureDir(dirPathArg,done.resolve);
     return done.promise;
 }
 
@@ -68,7 +68,7 @@ export let ensureDir = (dirPathArg:string) => {
  * ensures that a directory is in place
  */
 export let ensureDirSync = (dirPathArg:string) => {
-    plugins.fs.ensureDirSync(dirPathArg);
+    plugins.fsExtra.ensureDirSync(dirPathArg);
 }
 
 /**
@@ -76,7 +76,7 @@ export let ensureDirSync = (dirPathArg:string) => {
  */
 export let copy = function(fromArg:string, toArg:string){
     var done = plugins.Q.defer();
-    plugins.fs.copy(fromArg,toArg,{},function(){
+    plugins.fsExtra.copy(fromArg,toArg,{},function(){
         done.resolve();
     });
     return done.promise;
@@ -86,7 +86,7 @@ export let copy = function(fromArg:string, toArg:string){
  * copies a file SYNCHRONOUSLY from A to B on the local disk
  */
 export let copySync = function(fromArg:string,toArg:string):boolean{
-    plugins.fs.copySync(fromArg,toArg);
+    plugins.fsExtra.copySync(fromArg,toArg);
     return true;
 };
  
@@ -95,7 +95,7 @@ export let copySync = function(fromArg:string,toArg:string):boolean{
   */
 export let remove = function(pathArg:string){
     var done = plugins.Q.defer();
-    plugins.fs.remove(pathArg,function(){
+    plugins.fsExtra.remove(pathArg,function(){
         done.resolve();
     });
     return done.promise;
@@ -105,7 +105,7 @@ export let remove = function(pathArg:string){
  * removes a file SYNCHRONOUSLY from local disk
  */
 export let removeSync = function(pathArg:string):boolean{
-    plugins.fs.removeSync(pathArg);
+    plugins.fsExtra.removeSync(pathArg);
     return true;
 };
 
@@ -135,7 +135,7 @@ export let toGulpDestSync = function(folderPathArg:string){
  * @returns {any}
  */
 export let toObjectSync = function(filePathArg,fileTypeArg?) {
-    let fileString = plugins.fs.readFileSync(filePathArg, 'utf8');
+    let fileString = plugins.fsExtra.readFileSync(filePathArg, 'utf8');
     let fileType;
     fileTypeArg ? fileType = fileTypeArg : fileType = SmartfileInterpreter.filetype(filePathArg);
     return SmartfileInterpreter.objectFile(fileString,fileType);
@@ -148,7 +148,7 @@ export let toObjectSync = function(filePathArg,fileTypeArg?) {
  */
 export let toStringSync = function(filePath) {
     let fileString;
-    fileString = plugins.fs.readFileSync(filePath, "utf8");
+    fileString = plugins.fsExtra.readFileSync(filePath, "utf8");
     return fileString;
 };
 
@@ -177,8 +177,8 @@ export let requireReload = function(path:string){
  */
 export let listFolders = function(pathArg:string,regexFilter?:RegExp){
     let done = plugins.Q.defer();
-    let folderArray = plugins.fs.readdirSync(pathArg).filter(function(file) {
-        return plugins.fs.statSync(plugins.path.join(pathArg, file)).isDirectory();
+    let folderArray = plugins.fsExtra.readdirSync(pathArg).filter(function(file) {
+        return plugins.fsExtra.statSync(plugins.path.join(pathArg, file)).isDirectory();
     });
     if(regexFilter){
         folderArray = folderArray.filter((fileItem) => {
@@ -194,8 +194,8 @@ export let listFolders = function(pathArg:string,regexFilter?:RegExp){
  * @returns an array with the folder names as strings
  */
 export let listFoldersSync = function(pathArg:string,regexFilter?:RegExp):string[]{
-    let folderArray = plugins.fs.readdirSync(pathArg).filter(function(file) {
-        return plugins.fs.statSync(plugins.path.join(pathArg, file)).isDirectory();
+    let folderArray = plugins.fsExtra.readdirSync(pathArg).filter(function(file) {
+        return plugins.fsExtra.statSync(plugins.path.join(pathArg, file)).isDirectory();
     });
     if(regexFilter){
         folderArray = folderArray.filter((fileItem) => {
@@ -212,8 +212,8 @@ export let listFoldersSync = function(pathArg:string,regexFilter?:RegExp):string
  */
 export let listFiles = function(pathArg:string, regexFilter?:RegExp){
     let done = plugins.Q.defer();
-    let fileArray = plugins.fs.readdirSync(pathArg).filter(function(file) {
-        return plugins.fs.statSync(plugins.path.join(pathArg, file)).isFile();
+    let fileArray = plugins.fsExtra.readdirSync(pathArg).filter(function(file) {
+        return plugins.fsExtra.statSync(plugins.path.join(pathArg, file)).isFile();
     });
     if(regexFilter){
         fileArray = fileArray.filter((fileItem) => {
@@ -229,8 +229,8 @@ export let listFiles = function(pathArg:string, regexFilter?:RegExp){
  * @returns an array with the folder names as strings
  */
 export let listFilesSync = function(pathArg:string, regexFilter?:RegExp):string[]{
-    let fileArray = plugins.fs.readdirSync(pathArg).filter(function(file) {
-        return plugins.fs.statSync(plugins.path.join(pathArg, file)).isFile();
+    let fileArray = plugins.fsExtra.readdirSync(pathArg).filter(function(file) {
+        return plugins.fsExtra.statSync(plugins.path.join(pathArg, file)).isFile();
     });
     if(regexFilter){
         fileArray = fileArray.filter((fileItem) => {
@@ -246,7 +246,7 @@ export let listFilesSync = function(pathArg:string, regexFilter?:RegExp):string[
  */
 export let listAllItems = function(pathArg:string, regexFilter?:RegExp){
     let done = plugins.Q.defer();
-    let allItmesArray = plugins.fs.readdirSync(pathArg);
+    let allItmesArray = plugins.fsExtra.readdirSync(pathArg);
     if(regexFilter){
         allItmesArray = allItmesArray.filter((fileItem) => {
             return regexFilter.test(fileItem);
@@ -261,8 +261,8 @@ export let listAllItems = function(pathArg:string, regexFilter?:RegExp){
  * @returns an array with the folder names as strings
  */
 export let listAllItemsSync = function(pathArg:string, regexFilter?:RegExp):string[]{
-    let allItmesArray = plugins.fs.readdirSync(pathArg).filter(function(file) {
-        return plugins.fs.statSync(plugins.path.join(pathArg, file)).isFile();
+    let allItmesArray = plugins.fsExtra.readdirSync(pathArg).filter(function(file) {
+        return plugins.fsExtra.statSync(plugins.path.join(pathArg, file)).isFile();
     });
     if(regexFilter){
         allItmesArray = allItmesArray.filter((fileItem) => {
