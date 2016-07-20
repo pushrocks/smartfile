@@ -1,6 +1,6 @@
 import "typings-test";
 import * as smartfile from "../dist/index";
-let beautylog = require("beautylog");
+import beautylog = require("beautylog");
 let gulp = require("gulp");
 let gFunction = require("gulp-function");
 import path = require("path");
