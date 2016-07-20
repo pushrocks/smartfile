@@ -2,5 +2,8 @@
   "npmts":{
     "mode":"default",
     "coverageTreshold":70
+  },
+  "npmdocker":{
+    
   }
 }
