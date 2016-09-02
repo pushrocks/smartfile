@@ -3,13 +3,13 @@ export import beautylog = require("beautylog");
 export import fs = require("fs");
 export import fsExtra = require("fs-extra");
 export let gulp = require("gulp");
-export import glob = require("glob");
+export let glob = require("glob");
 export let g = {
     remoteSrc: require("gulp-remote-src")
 };
 export import path = require("path");
 export import Q = require("q");
-export import vinyl = require("vinyl");
+export let vinyl = require("vinyl");
 export let vinylFile = require("vinyl-file");
 export let yaml = require("js-yaml");
 export let request = require("request");

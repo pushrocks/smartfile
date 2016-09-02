@@ -1,4 +1,3 @@
-/// <reference types="vinyl" />
 /// <reference types="q" />
 import "typings-global";
 import plugins = require("./smartfile.plugins");
@@ -9,7 +8,7 @@ import plugins = require("./smartfile.plugins");
  * @returns stream.Readable
  * @TODO: make it async;
  */
-export declare let toGulpStream: (fileArg: string | string[] | plugins.vinyl | plugins.vinyl[], baseArg?: string) => any;
+export declare let toGulpStream: (fileArg: any, baseArg?: string) => any;
 /**
  * converts file to Object
  * @param fileStringArg
@@ -26,7 +25,7 @@ export declare let toVinylFileSync: (fileArg: string, optionsArg?: {
     filename?: string;
     base?: string;
     relPath?: string;
-}) => plugins.vinyl;
+}) => any;
 /**
  * takes a string array and some options and returns a vinylfile array
  * @param arrayArg
@@ -40,12 +39,12 @@ export declare let toVinylArraySync: (arrayArg: string[], optionsArg?: {
 /**
  * takes a vinylFile object and converts it to String
  */
-export declare let toStringSync: (fileArg: plugins.vinyl) => string;
+export declare let toStringSync: (fileArg: any) => any;
 /**
  * writes string or vinyl file to disk.
  * @param fileArg
  * @param fileNameArg
  * @param fileBaseArg
  */
-export declare let toFs: (fileContentArg: string | plugins.vinyl, filePathArg: any) => plugins.Q.Promise<{}>;
+export declare let toFs: (fileContentArg: any, filePathArg: any) => plugins.Q.Promise<{}>;
 export declare let toFsSync: (fileArg: any, filePathArg: string) => void;
