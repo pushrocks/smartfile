@@ -3,7 +3,7 @@ export import beautylog = require("beautylog");
 export import fs = require("fs");
 export import fsExtra = require("fs-extra");
 export let gulp = require("gulp");
-export import glob = require("glob");
+export let glob = require("glob");
 export let g = {
     remoteSrc: require("gulp-remote-src")
 };
