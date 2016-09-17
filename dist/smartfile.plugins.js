@@ -9,7 +9,7 @@ exports.g = {
     remoteSrc: require("gulp-remote-src")
 };
 exports.path = require("path");
-exports.Q = require("q");
+exports.q = require("q");
 exports.vinyl = require("vinyl");
 exports.vinylFile = require("vinyl-file");
 exports.yaml = require("js-yaml");

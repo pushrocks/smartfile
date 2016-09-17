@@ -8,7 +8,7 @@ export let g = {
     remoteSrc: require("gulp-remote-src")
 };
 export import path = require("path");
-export import Q = require("q");
+export import q = require("q");
 export let vinyl = require("vinyl");
 export let vinylFile = require("vinyl-file");
 export let yaml = require("js-yaml");

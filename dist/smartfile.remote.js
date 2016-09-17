@@ -3,7 +3,7 @@ require("typings-global");
 const plugins = require("./smartfile.plugins");
 const SmartfileInterpreter = require("./smartfile.interpreter");
 exports.toFs = function (from, toPath) {
-    var done = plugins.Q.defer();
+    var done = plugins.q.defer();
     var stream = plugins.request(from).pipe(plugins.fsExtra.createWriteStream(toPath));
     stream.on('finish', function () {
         done.resolve(toPath);
@@ -27,7 +27,7 @@ exports.toGulpStreamSync = function (filePathArg, baseArg) {
  * @returns {any}
  */
 exports.toObject = function (fromArg) {
-    let done = plugins.Q.defer();
+    let done = plugins.q.defer();
     plugins.request.get(fromArg, function (error, response, bodyString) {
         let returnObject;
         if (!error && response.statusCode == 200) {
@@ -49,7 +49,7 @@ exports.toObject = function (fromArg) {
  * @returns {any}
  */
 exports.toString = (fromArg) => {
-    let done = plugins.Q.defer();
+    let done = plugins.q.defer();
     plugins.request.get(fromArg, function (error, response, bodyString) {
         if (!error && response.statusCode == 200) {
             done.resolve(bodyString);

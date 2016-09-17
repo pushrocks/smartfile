@@ -98,7 +98,7 @@ export let toStringSync = function(fileArg:plugins.vinyl){
  * @param fileBaseArg
  */
 export let toFs = function(fileContentArg:string|vinyl,filePathArg){
-    let done = plugins.Q.defer();
+    let done = plugins.q.defer();
 
     //function checks to abort if needed
     if (!fileContentArg || !filePathArg) throw new Error("expected valid arguments");

@@ -8,7 +8,7 @@ export declare let g: {
     remoteSrc: any;
 };
 export import path = require("path");
-export import Q = require("q");
+export import q = require("q");
 export declare let vinyl: any;
 export declare let vinylFile: any;
 export declare let yaml: any;

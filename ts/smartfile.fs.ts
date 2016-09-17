@@ -30,7 +30,7 @@ export let fileExistsSync = function(filePath):boolean {
  * @returns {any}
  */
 export let fileExists = function(filePath){
-    let done = plugins.Q.defer();
+    let done = plugins.q.defer();
     plugins.fs.access(filePath, plugins.fs.R_OK, function (err) {
         err ? done.reject(err) : done.resolve();
     });
@@ -59,7 +59,7 @@ export let isFile = function(pathArg):boolean{
  * ensures that a directory is in place
  */
 export let ensureDir = (dirPathArg:string) => {
-    let done = plugins.Q.defer();
+    let done = plugins.q.defer();
     plugins.fsExtra.ensureDir(dirPathArg,done.resolve);
     return done.promise;
 }
@@ -75,7 +75,7 @@ export let ensureDirSync = (dirPathArg:string) => {
  * copies a file from A to B on the local disk
  */
 export let copy = function(fromArg:string, toArg:string){
-    var done = plugins.Q.defer();
+    var done = plugins.q.defer();
     plugins.fsExtra.copy(fromArg,toArg,{},function(){
         done.resolve();
     });
@@ -94,7 +94,7 @@ export let copySync = function(fromArg:string,toArg:string):boolean{
   * removes a file or folder from local disk
   */
 export let remove = function(pathArg:string){
-    var done = plugins.Q.defer();
+    var done = plugins.q.defer();
     plugins.fsExtra.remove(pathArg,function(){
         done.resolve();
     });
@@ -176,7 +176,7 @@ export let requireReload = function(path:string){
  * @returns Promise
  */
 export let listFolders = function(pathArg:string,regexFilter?:RegExp){
-    let done = plugins.Q.defer();
+    let done = plugins.q.defer();
     let folderArray = plugins.fsExtra.readdirSync(pathArg).filter(function(file) {
         return plugins.fsExtra.statSync(plugins.path.join(pathArg, file)).isDirectory();
     });
@@ -211,7 +211,7 @@ export let listFoldersSync = function(pathArg:string,regexFilter?:RegExp):string
  * @returns Promise
  */
 export let listFiles = function(pathArg:string, regexFilter?:RegExp){
-    let done = plugins.Q.defer();
+    let done = plugins.q.defer();
     let fileArray = plugins.fsExtra.readdirSync(pathArg).filter(function(file) {
         return plugins.fsExtra.statSync(plugins.path.join(pathArg, file)).isFile();
     });
@@ -242,10 +242,10 @@ export let listFilesSync = function(pathArg:string, regexFilter?:RegExp):string[
 
 /**
  * lists all items (folders AND files) in a directory on local disk
- * @returns Promise
+ * @returns Promise<string[]>
  */
-export let listAllItems = function(pathArg:string, regexFilter?:RegExp){
-    let done = plugins.Q.defer();
+export let listAllItems = function(pathArg:string, regexFilter?:RegExp): plugins.q.Promise<string[]> {
+    let done = plugins.q.defer<string[]>();
     let allItmesArray = plugins.fsExtra.readdirSync(pathArg);
     if(regexFilter){
         allItmesArray = allItmesArray.filter((fileItem) => {
@@ -257,8 +257,9 @@ export let listAllItems = function(pathArg:string, regexFilter?:RegExp){
 };
 
 /**
- * lists all items (folders AND files) SYNCHRONOUSLY in a directory on local disk
+ * lists all items (folders AND files) in a directory on local disk
  * @returns an array with the folder names as strings
+ * @executes SYNC
  */
 export let listAllItemsSync = function(pathArg:string, regexFilter?:RegExp):string[]{
     let allItmesArray = plugins.fsExtra.readdirSync(pathArg).filter(function(file) {
@@ -272,8 +273,12 @@ export let listAllItemsSync = function(pathArg:string, regexFilter?:RegExp):stri
     return allItmesArray;
 };
 
-export let listFileTree = (dirPath:string, miniMatchFilter:string) => {
-    let done = plugins.Q.defer();
+/**
+ * lists a file tree using a miniMatch filter
+ * @returns Promise<string[]> string array with the absolute paths of all matching files
+ */
+export let listFileTree = (dirPath:string, miniMatchFilter:string): plugins.q.Promise<string[]> => {
+    let done = plugins.q.defer<string[]>();
     let options = {
         cwd:dirPath
     }
