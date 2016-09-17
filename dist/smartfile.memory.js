@@ -90,7 +90,7 @@ exports.toStringSync = function (fileArg) {
  * @param fileBaseArg
  */
 exports.toFs = function (fileContentArg, filePathArg) {
-    let done = plugins.Q.defer();
+    let done = plugins.q.defer();
     //function checks to abort if needed
     if (!fileContentArg || !filePathArg)
         throw new Error("expected valid arguments");

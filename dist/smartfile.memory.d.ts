@@ -46,5 +46,5 @@ export declare let toStringSync: (fileArg: any) => any;
  * @param fileNameArg
  * @param fileBaseArg
  */
-export declare let toFs: (fileContentArg: any, filePathArg: any) => plugins.Q.Promise<{}>;
+export declare let toFs: (fileContentArg: any, filePathArg: any) => plugins.q.Promise<{}>;
 export declare let toFsSync: (fileArg: any, filePathArg: string) => void;

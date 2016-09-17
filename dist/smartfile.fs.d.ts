@@ -12,7 +12,7 @@ export declare let fileExistsSync: (filePath: any) => boolean;
  * @param filePath
  * @returns {any}
  */
-export declare let fileExists: (filePath: any) => plugins.Q.Promise<{}>;
+export declare let fileExists: (filePath: any) => plugins.q.Promise<{}>;
 /**
  * Checks if given path points to an existing directory
  */
@@ -24,7 +24,7 @@ export declare let isFile: (pathArg: any) => boolean;
 /**
  * ensures that a directory is in place
  */
-export declare let ensureDir: (dirPathArg: string) => plugins.Q.Promise<{}>;
+export declare let ensureDir: (dirPathArg: string) => plugins.q.Promise<{}>;
 /**
  * ensures that a directory is in place
  */
@@ -32,7 +32,7 @@ export declare let ensureDirSync: (dirPathArg: string) => void;
 /**
  * copies a file from A to B on the local disk
  */
-export declare let copy: (fromArg: string, toArg: string) => plugins.Q.Promise<{}>;
+export declare let copy: (fromArg: string, toArg: string) => plugins.q.Promise<{}>;
 /**
  * copies a file SYNCHRONOUSLY from A to B on the local disk
  */
@@ -40,7 +40,7 @@ export declare let copySync: (fromArg: string, toArg: string) => boolean;
 /**
  * removes a file or folder from local disk
  */
-export declare let remove: (pathArg: string) => plugins.Q.Promise<{}>;
+export declare let remove: (pathArg: string) => plugins.q.Promise<{}>;
 /**
  * removes a file SYNCHRONOUSLY from local disk
  */
@@ -82,7 +82,7 @@ export declare let requireReload: (path: string) => any;
  * lists Folders in a directory on local disk
  * @returns Promise
  */
-export declare let listFolders: (pathArg: string, regexFilter?: RegExp) => plugins.Q.Promise<{}>;
+export declare let listFolders: (pathArg: string, regexFilter?: RegExp) => plugins.q.Promise<{}>;
 /**
  * lists Folders SYNCHRONOUSLY in a directory on local disk
  * @returns an array with the folder names as strings
@@ -92,7 +92,7 @@ export declare let listFoldersSync: (pathArg: string, regexFilter?: RegExp) => s
  * lists Files in a directory on local disk
  * @returns Promise
  */
-export declare let listFiles: (pathArg: string, regexFilter?: RegExp) => plugins.Q.Promise<{}>;
+export declare let listFiles: (pathArg: string, regexFilter?: RegExp) => plugins.q.Promise<{}>;
 /**
  * lists Files SYNCHRONOUSLY in a directory on local disk
  * @returns an array with the folder names as strings
@@ -100,12 +100,17 @@ export declare let listFiles: (pathArg: string, regexFilter?: RegExp) => plugins
 export declare let listFilesSync: (pathArg: string, regexFilter?: RegExp) => string[];
 /**
  * lists all items (folders AND files) in a directory on local disk
- * @returns Promise
+ * @returns Promise<string[]>
  */
-export declare let listAllItems: (pathArg: string, regexFilter?: RegExp) => plugins.Q.Promise<{}>;
+export declare let listAllItems: (pathArg: string, regexFilter?: RegExp) => plugins.q.Promise<string[]>;
 /**
- * lists all items (folders AND files) SYNCHRONOUSLY in a directory on local disk
+ * lists all items (folders AND files) in a directory on local disk
  * @returns an array with the folder names as strings
+ * @executes SYNC
  */
 export declare let listAllItemsSync: (pathArg: string, regexFilter?: RegExp) => string[];
-export declare let listFileTree: (dirPath: string, miniMatchFilter: string) => plugins.Q.Promise<{}>;
+/**
+ * lists a file tree using a miniMatch filter
+ * @returns Promise<string[]> string array with the absolute paths of all matching files
+ */
+export declare let listFileTree: (dirPath: string, miniMatchFilter: string) => plugins.q.Promise<string[]>;
