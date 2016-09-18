@@ -198,6 +198,7 @@ describe("smartfile".yellow,function(){
     describe(".remote",function(){
         describe("toGulpStreamSync()",function(){
             it("should produce a gulp stream",function(done){
+                this.timeout(5000)
                 smartfile.remote.toGulpStreamSync("mytest.txt","https://raw.githubusercontent.com/pushrocks/smartfile/master/test/")
                     .pipe(smartfile.fs.toGulpDestSync("./test/temp/"))
                     .pipe(gFunction(done,"atEnd"));
