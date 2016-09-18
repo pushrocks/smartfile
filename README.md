@@ -1,13 +1,36 @@
 # smartfile
 make files easily accessible for processing in javascript.
 
-## Status
+## Availabililty
+[![npm](https://push.rocks/assets/repo-button-npm.svg)](https://www.npmjs.com/package/smartfile)
+[![git](https://push.rocks/assets/repo-button-git.svg)](https://gitlab.com/pushrocks/smartfile)
+[![git](https://push.rocks/assets/repo-button-mirror.svg)](https://github.com/pushrocks/smartfile)
+[![docs](https://push.rocks/assets/repo-button-docs.svg)](https://pushrocks.gitlab.io/smartfile/)
+
+## Status for master
 [![build status](https://gitlab.com/pushrocks/smartfile/badges/master/build.svg)](https://gitlab.com/pushrocks/smartfile/commits/master)
+[![coverage report](https://gitlab.com/pushrocks/smartfile/badges/master/coverage.svg)](https://gitlab.com/pushrocks/smartfile/commits/master)
 [![Dependency Status](https://david-dm.org/pushrocks/smartfile.svg)](https://david-dm.org/pushrocks/smartfile)
 [![bitHound Dependencies](https://www.bithound.io/github/pushrocks/smartfile/badges/dependencies.svg)](https://www.bithound.io/github/pushrocks/smartfile/master/dependencies/npm)
 [![bitHound Code](https://www.bithound.io/github/pushrocks/smartfile/badges/code.svg)](https://www.bithound.io/github/pushrocks/smartfile)
-[![codecov.io](https://codecov.io/github/pushrocks/smartfile/coverage.svg?branch=master)](https://codecov.io/github/pushrocks/smartfile?branch=master)
+[![TypeScript](https://img.shields.io/badge/TypeScript-2.x-blue.svg)](https://nodejs.org/dist/latest-v6.x/docs/api/)
+[![node](https://img.shields.io/badge/node->=%206.x.x-blue.svg)](https://nodejs.org/dist/latest-v6.x/docs/api/)
+[![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
 ## Usage
 smartfile is an approach of being one tool to handle files in diverse environments.
-It can fetch files from remote locations, work with local disks and do pure memory operations.
+
+### Smartfile Sections
+smartfile thinks in sections:
+
+section | description
+--- | ---
+fs | (object) gets data from fs to somewhere
+memory | gets data from memory to somewhere
+remote | gets data from remote locations to somewhere
+interpreter | (object) handles yaml and json
+smartfile | (class) a virtual representation of a file, alternative to vinyl file format
+
+For more information read the docs
+
+[![npm](https://push.rocks/assets/repo-header.svg)](https://push.rocks)
