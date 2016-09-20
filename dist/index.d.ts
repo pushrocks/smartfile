@@ -1,9 +1,9 @@
-import "typings-global";
-import * as SmartfileFs from "./smartfile.fs";
-import * as SmartfileInterpreter from "./smartfile.interpreter";
-import * as SmartfileMemory from "./smartfile.memory";
-import * as SmartfileRemote from "./smartfile.remote";
-export { Smartfile } from "./smartfile.classes.smartfile";
+import 'typings-global';
+import * as SmartfileFs from './smartfile.fs';
+import * as SmartfileInterpreter from './smartfile.interpreter';
+import * as SmartfileMemory from './smartfile.memory';
+import * as SmartfileRemote from './smartfile.remote';
+export { Smartfile } from './smartfile.classes.smartfile';
 export declare let fs: typeof SmartfileFs;
 export declare let interpreter: typeof SmartfileInterpreter;
 export declare let memory: typeof SmartfileMemory;

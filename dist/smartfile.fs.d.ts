@@ -1,6 +1,6 @@
 /// <reference types="q" />
-import "typings-global";
-import plugins = require("./smartfile.plugins");
+import 'typings-global';
+import plugins = require('./smartfile.plugins');
 /**
  *
  * @param filePath
