@@ -2,7 +2,7 @@ import 'typings-global'
 
 import plugins = require('./smartfile.plugins')
 import SmartfileInterpreter = require('./smartfile.interpreter')
-
+import * as memory from './smartfile.memory'
 /*===============================================================
 ============================ Checks =============================
 ===============================================================*/
@@ -55,22 +55,6 @@ export let isFile = function(pathArg): boolean{
 ===============================================================*/
 
 /**
- * ensures that a directory is in place
- */
-export let ensureDir = (dirPathArg: string) => {
-    let done = plugins.q.defer()
-    plugins.fsExtra.ensureDir(dirPathArg,done.resolve)
-    return done.promise
-}
-
-/**
- * ensures that a directory is in place
- */
-export let ensureDirSync = (dirPathArg: string) => {
-    plugins.fsExtra.ensureDirSync(dirPathArg)
-}
-
-/**
  * copies a file from A to B on the local disk
  */
 export let copy = function(fromArg: string, toArg: string){
@@ -89,9 +73,54 @@ export let copySync = function(fromArg: string,toArg: string): boolean{
     return true
 }
 
- /**
-  * removes a file or folder from local disk
-  */
+/**
+ * ensures that a directory is in place
+ */
+export let ensureDir = (dirPathArg: string) => {
+    let done = plugins.q.defer()
+    plugins.fsExtra.ensureDir(dirPathArg,done.resolve)
+    return done.promise
+}
+
+/**
+ * ensures that a directory is in place
+ */
+export let ensureDirSync = (dirPathArg: string) => {
+    plugins.fsExtra.ensureDirSync(dirPathArg)
+}
+
+/**
+ * ensures that a file is on disk
+ * @param filePath the filePath to ensureDir
+ * @param the fileContent to place into a new file in case it doesn't exist yet
+ * @returns Promise<void>
+ * @exec ASYNC
+ */
+export let ensureFile = (filePathArg, initFileStringArg): plugins.q.Promise<void> => {
+    let done = plugins.q.defer<void>()
+    ensureFileSync(filePathArg, initFileStringArg)
+    done.resolve()
+    return done.promise
+}
+
+/**
+ * ensures that a file is on disk
+ * @param filePath the filePath to ensureDir
+ * @param the fileContent to place into a new file in case it doesn't exist yet
+ * @returns Promise<void>
+ * @exec SYNC
+ */
+export let ensureFileSync = (filePathArg: string, initFileStringArg: string): void => {
+    if (fileExistsSync(filePathArg)) {
+        return null
+    } else {
+        memory.toFsSync(initFileStringArg, filePathArg)
+    }
+}
+
+/**
+ * removes a file or folder from local disk
+ */
 export let remove = function(pathArg: string){
     let done = plugins.q.defer()
     plugins.fsExtra.remove(pathArg,function(){

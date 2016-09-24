@@ -22,6 +22,14 @@ export declare let isDirectory: (pathArg: any) => boolean;
  */
 export declare let isFile: (pathArg: any) => boolean;
 /**
+ * copies a file from A to B on the local disk
+ */
+export declare let copy: (fromArg: string, toArg: string) => plugins.q.Promise<{}>;
+/**
+ * copies a file SYNCHRONOUSLY from A to B on the local disk
+ */
+export declare let copySync: (fromArg: string, toArg: string) => boolean;
+/**
  * ensures that a directory is in place
  */
 export declare let ensureDir: (dirPathArg: string) => plugins.q.Promise<{}>;
@@ -30,13 +38,21 @@ export declare let ensureDir: (dirPathArg: string) => plugins.q.Promise<{}>;
  */
 export declare let ensureDirSync: (dirPathArg: string) => void;
 /**
- * copies a file from A to B on the local disk
+ * ensures that a file is on disk
+ * @param filePath the filePath to ensureDir
+ * @param the fileContent to place into a new file in case it doesn't exist yet
+ * @returns Promise<void>
+ * @exec ASYNC
  */
-export declare let copy: (fromArg: string, toArg: string) => plugins.q.Promise<{}>;
+export declare let ensureFile: (filePathArg: any, initFileStringArg: any) => plugins.q.Promise<void>;
 /**
- * copies a file SYNCHRONOUSLY from A to B on the local disk
+ * ensures that a file is on disk
+ * @param filePath the filePath to ensureDir
+ * @param the fileContent to place into a new file in case it doesn't exist yet
+ * @returns Promise<void>
+ * @exec SYNC
  */
-export declare let copySync: (fromArg: string, toArg: string) => boolean;
+export declare let ensureFileSync: (filePathArg: string, initFileStringArg: string) => void;
 /**
  * removes a file or folder from local disk
  */

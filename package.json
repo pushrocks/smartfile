@@ -31,7 +31,7 @@
     "@types/vinyl": "^1.1.29",
     "beautylog": "^5.0.23",
     "fs-extra": "^0.30.0",
-    "glob": "^7.0.6",
+    "glob": "^7.1.0",
     "gulp": "^3.9.1",
     "gulp-remote-src": "^0.4.1",
     "js-yaml": "^3.6.1",
