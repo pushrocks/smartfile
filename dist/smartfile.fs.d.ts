@@ -56,11 +56,19 @@ export declare let ensureFileSync: (filePathArg: string, initFileStringArg: stri
 /**
  * removes a file or folder from local disk
  */
-export declare let remove: (pathArg: string) => plugins.q.Promise<{}>;
+export declare let remove: (pathArg: string) => plugins.q.Promise<void>;
 /**
  * removes a file SYNCHRONOUSLY from local disk
  */
 export declare let removeSync: (pathArg: string) => boolean;
+/**
+ * removes an array of filePaths from disk
+ */
+export declare let removeMany: (filePathArrayArg: string[]) => plugins.q.Promise<void[]>;
+/**
+ * like removeFilePathArray but SYNCHRONOUSLY
+ */
+export declare let removeManySync: (filePathArrayArg: string[]) => boolean;
 /**
  *
  * @param filePathArg

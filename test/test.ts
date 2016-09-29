@@ -79,10 +79,27 @@ describe('smartfile'.yellow, function () {
         })
         describe('.remove()', function () {
             it('should remove an entire directory', function () {
-
+                
             })
-            it('should remove single files', function () {
-
+            it('smartfile.fs.remove -> should remove single files', function (done) {
+                smartfile.fs.remove('./test/temp/mytestRenamed.yaml')
+                    .then(() => { done() })
+            })
+            it('smartfile.fs.removeSync -> should remove single files synchronouly',function() {
+                smartfile.fs.removeSync('./test/temp/testfile1.txt')
+                should(smartfile.fs.fileExistsSync('./test/temp/testfile1.txt')).be.false()
+            })
+            it('smartfile.fs.removeMany -> should remove and array of files',function(done) {
+                smartfile.fs.removeMany(['./test/temp/testfile1.txt','./test/temp/testfile2.txt']).then(() => {
+                    should(smartfile.fs.fileExistsSync('./test/temp/testfile1.txt')).be.false()
+                    should(smartfile.fs.fileExistsSync('./test/temp/testfile2.txt')).be.false()
+                    done()
+                })
+            })
+            it('smartfile.fs.removeManySync -> should remove and array of single files synchronouly',function() {
+                smartfile.fs.removeManySync(['./test/temp/testfile1.txt','./test/temp/testfile2.txt'])
+                should(smartfile.fs.fileExistsSync('./test/temp/testfile1.txt')).be.false()
+                should(smartfile.fs.fileExistsSync('./test/temp/testfile2.txt')).be.false()
             })
         })
     })

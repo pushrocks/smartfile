@@ -121,8 +121,8 @@ export let ensureFileSync = (filePathArg: string, initFileStringArg: string): vo
 /**
  * removes a file or folder from local disk
  */
-export let remove = function(pathArg: string){
-    let done = plugins.q.defer()
+export let remove = function(pathArg: string): plugins.q.Promise<void> {
+    let done = plugins.q.defer<void>()
     plugins.fsExtra.remove(pathArg,function(){
         done.resolve()
     })
@@ -134,6 +134,27 @@ export let remove = function(pathArg: string){
  */
 export let removeSync = function(pathArg: string): boolean{
     plugins.fsExtra.removeSync(pathArg)
+    return true
+}
+
+/**
+ * removes an array of filePaths from disk
+ */
+export let removeMany = function(filePathArrayArg: string[]){
+    let promiseArray: plugins.q.Promise<void>[] = []
+    for (let filePath of filePathArrayArg) {
+        promiseArray.push(remove(filePath))
+    }
+    return plugins.q.all(promiseArray)
+}
+
+/**
+ * like removeFilePathArray but SYNCHRONOUSLY
+ */
+export let removeManySync = function(filePathArrayArg: string[]){
+    for (let filePath of filePathArrayArg) {
+        removeSync(filePath)
+    }
     return true
 }
 
