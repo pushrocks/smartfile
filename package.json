@@ -38,6 +38,7 @@
     "q": "^1.4.1",
     "request": "^2.75.0",
     "require-reload": "0.2.2",
+    "smartpath": "^3.2.2",
     "typings-global": "^1.0.14",
     "vinyl": "^1.2.0",
     "vinyl-file": "^2.0.0"

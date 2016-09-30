@@ -9,8 +9,9 @@ export let g = {
 }
 export import path = require('path')
 export import q = require('q')
+export let request = require('request')
+export let requireReload = require('require-reload')
+export import smartpath = require('smartpath')
 export import vinyl = require('vinyl')
 export let vinylFile = require('vinyl-file')
 export let yaml = require('js-yaml')
-export let request = require('request')
-export let requireReload = require('require-reload')

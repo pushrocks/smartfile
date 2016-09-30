@@ -68,7 +68,7 @@ export declare let removeMany: (filePathArrayArg: string[]) => plugins.q.Promise
 /**
  * like removeFilePathArray but SYNCHRONOUSLY
  */
-export declare let removeManySync: (filePathArrayArg: string[]) => boolean;
+export declare let removeManySync: (filePathArrayArg: string[]) => void;
 /**
  *
  * @param filePathArg
@@ -135,6 +135,7 @@ export declare let listAllItems: (pathArg: string, regexFilter?: RegExp) => plug
 export declare let listAllItemsSync: (pathArg: string, regexFilter?: RegExp) => string[];
 /**
  * lists a file tree using a miniMatch filter
+ * note: if the miniMatch Filter is an absolute path, the cwdArg will be omitted
  * @returns Promise<string[]> string array with the absolute paths of all matching files
  */
-export declare let listFileTree: (dirPath: string, miniMatchFilter: string) => plugins.q.Promise<string[]>;
+export declare let listFileTree: (dirPathArg: string, miniMatchFilter: string) => plugins.q.Promise<string[]>;

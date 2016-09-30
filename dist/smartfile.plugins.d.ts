@@ -9,8 +9,9 @@ export declare let g: {
 };
 export import path = require('path');
 export import q = require('q');
+export declare let request: any;
+export declare let requireReload: any;
+export import smartpath = require('smartpath');
 export import vinyl = require('vinyl');
 export declare let vinylFile: any;
 export declare let yaml: any;
-export declare let request: any;
-export declare let requireReload: any;

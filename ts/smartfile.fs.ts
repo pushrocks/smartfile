@@ -151,11 +151,10 @@ export let removeMany = function(filePathArrayArg: string[]){
 /**
  * like removeFilePathArray but SYNCHRONOUSLY
  */
-export let removeManySync = function(filePathArrayArg: string[]){
+export let removeManySync = function(filePathArrayArg: string[]): void {
     for (let filePath of filePathArrayArg) {
         removeSync(filePath)
     }
-    return true
 }
 
 /*===============================================================
@@ -322,10 +321,20 @@ export let listAllItemsSync = function(pathArg: string, regexFilter?: RegExp): s
 
 /**
  * lists a file tree using a miniMatch filter
+ * note: if the miniMatch Filter is an absolute path, the cwdArg will be omitted
  * @returns Promise<string[]> string array with the absolute paths of all matching files
  */
-export let listFileTree = (dirPath: string, miniMatchFilter: string): plugins.q.Promise<string[]> => {
+export let listFileTree = (dirPathArg: string, miniMatchFilter: string): plugins.q.Promise<string[]> => {
     let done = plugins.q.defer<string[]>()
+
+    // handle absolute miniMatchFilter
+    let dirPath: string
+    if(plugins.path.isAbsolute(miniMatchFilter)){
+        dirPath = '/'
+    } else {
+        dirPath = dirPathArg
+    }
+
     let options = {
         cwd: dirPath
     }
