@@ -329,7 +329,7 @@ export let listFileTree = (dirPathArg: string, miniMatchFilter: string): plugins
 
     // handle absolute miniMatchFilter
     let dirPath: string
-    if(plugins.path.isAbsolute(miniMatchFilter)){
+    if (plugins.path.isAbsolute(miniMatchFilter)) {
         dirPath = '/'
     } else {
         dirPath = dirPathArg
