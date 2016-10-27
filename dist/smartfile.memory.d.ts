@@ -36,7 +36,7 @@ export declare let toVinylArraySync: (arrayArg: string[], optionsArg?: {
     filename?: string;
     base?: string;
     relPath?: string;
-}) => any[];
+}) => plugins.vinyl[];
 /**
  * takes a vinylFile object and converts it to String
  */

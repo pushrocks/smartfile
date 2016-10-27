@@ -161,19 +161,6 @@ export let removeManySync = function(filePathArrayArg: string[]): void {
 ============================ Write/Read =========================
 ===============================================================*/
 
-/**
- *
- * @param filePathArg
- * @returns {*}
- */
-export let toGulpStreamSync = function(filePathArg: string){
-    let stream = plugins.gulp.src(filePathArg)
-    return stream
-}
-
-export let toGulpDestSync = function(folderPathArg: string){
-    return plugins.gulp.dest(folderPathArg)
-}
 
 /**
  *

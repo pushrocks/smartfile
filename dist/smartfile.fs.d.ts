@@ -72,13 +72,6 @@ export declare let removeManySync: (filePathArrayArg: string[]) => void;
 /**
  *
  * @param filePathArg
- * @returns {*}
- */
-export declare let toGulpStreamSync: (filePathArg: string) => any;
-export declare let toGulpDestSync: (folderPathArg: string) => any;
-/**
- *
- * @param filePathArg
  * @param fileTypeArg
  * @returns {any}
  */
@@ -88,7 +81,7 @@ export declare let toObjectSync: (filePathArg: any, fileTypeArg?: any) => any;
  * @param filePath
  * @returns {string|Buffer|any}
  */
-export declare let toStringSync: (filePath: any) => any;
+export declare let toStringSync: (filePath: any) => string;
 /**
  *
  * @param filePathArg

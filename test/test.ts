@@ -1,8 +1,6 @@
 import 'typings-test'
 import * as smartfile from '../dist/index'
 import beautylog = require('beautylog')
-let gulp = require('gulp')
-let gFunction = require('gulp-function')
 import path = require('path')
 import * as should from 'should'
 let vinyl = require('vinyl')
@@ -113,13 +111,6 @@ describe('smartfile'.yellow, function () {
     })
 
     describe('.fs'.yellow, function () {
-        describe('toGulpStreamSync() and toGulpDestSync', function () {
-            it('should produce a gulp stream', function (done) {
-                smartfile.fs.toGulpStreamSync('./test/my*')
-                    .pipe(smartfile.fs.toGulpDestSync('./test/temp/'))
-                    .pipe(gFunction(done, 'atEnd'))
-            })
-        })
         describe('.toObjectSync()'.yellow, function () {
             it('should read an ' + '.yaml'.blue + ' file to an object', function () {
                 let testData = smartfile.fs.toObjectSync('./test/mytest.yaml')
@@ -158,7 +149,6 @@ describe('smartfile'.yellow, function () {
             it('should produce a valid gulp stream', function () {
                 let localArray = ['test1', 'test2', 'test3']
                 smartfile.memory.toGulpStream(localArray)
-                    .pipe(gulp.dest('./test/temp/'))
             })
         })
         describe('toVinylFileSync()', function () {
@@ -211,15 +201,6 @@ describe('smartfile'.yellow, function () {
     })
 
     describe('.remote', function () {
-        describe('toGulpStreamSync()', function () {
-            it('should produce a gulp stream', function (done) {
-                this.timeout(5000)
-                smartfile.remote.toGulpStreamSync(
-                    'mytest.txt', 'https://raw.githubusercontent.com/pushrocks/smartfile/master/test/'
-                ).pipe(smartfile.fs.toGulpDestSync('./test/temp/'))
-                    .pipe(gFunction(done, 'atEnd'))
-            })
-        })
         describe('.toString()', function () {
             it('should load a remote file to a variable', function (done) {
                 this.timeout(5000)

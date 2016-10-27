@@ -13,18 +13,6 @@ export let toFs = function(from: string,toPath: string) {
 
 /**
  *
- * @param filePathArg
- * @returns {*}
- */
-export let toGulpStreamSync = function(filePathArg: string,baseArg: string){
-    let stream = plugins.g.remoteSrc(filePathArg, {
-        base: baseArg
-    })
-    return stream
-}
-
-/**
- *
  * @param fromArg
  * @returns {any}
  */
