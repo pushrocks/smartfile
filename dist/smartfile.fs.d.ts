@@ -38,6 +38,16 @@ export declare let ensureDir: (dirPathArg: string) => plugins.q.Promise<{}>;
  */
 export declare let ensureDirSync: (dirPathArg: string) => void;
 /**
+ * ensure an empty directory
+ * @executes ASYNC
+ */
+export declare let ensureEmptyDir: (dirPathArg: string) => plugins.q.Promise<{}>;
+/**
+ * ensure an empty directory
+ * @executes SYNC
+ */
+export declare let ensureEmptyDirSync: (dirPathArg: string) => void;
+/**
  * ensures that a file is on disk
  * @param filePath the filePath to ensureDir
  * @param the fileContent to place into a new file in case it doesn't exist yet
@@ -81,7 +91,7 @@ export declare let toObjectSync: (filePathArg: any, fileTypeArg?: any) => any;
  * @param filePath
  * @returns {string|Buffer|any}
  */
-export declare let toStringSync: (filePath: any) => string;
+export declare let toStringSync: (filePath: any) => any;
 /**
  *
  * @param filePathArg

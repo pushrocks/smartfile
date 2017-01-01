@@ -8,6 +8,5 @@ export import q = require('q');
 export declare let request: any;
 export declare let requireReload: any;
 export import smartpath = require('smartpath');
-export import vinyl = require('vinyl');
 export declare let vinylFile: any;
 export declare let yaml: any;

@@ -90,6 +90,27 @@ export let ensureDirSync = (dirPathArg: string) => {
 }
 
 /**
+ * ensure an empty directory
+ * @executes ASYNC
+ */
+export let ensureEmptyDir = (dirPathArg: string) => {
+    let done = plugins.q.defer()
+    plugins.fsExtra.ensureDir(dirPathArg,() => {
+        plugins.fsExtra.emptyDir(dirPathArg, done.resolve)
+    })
+    return done.promise
+}
+
+/**
+ * ensure an empty directory
+ * @executes SYNC
+ */
+export let ensureEmptyDirSync = (dirPathArg: string) => {
+    plugins.fsExtra.ensureDirSync(dirPathArg)
+    plugins.fsExtra.emptyDirSync(dirPathArg)
+}
+
+/**
  * ensures that a file is on disk
  * @param filePath the filePath to ensureDir
  * @param the fileContent to place into a new file in case it doesn't exist yet
@@ -160,7 +181,6 @@ export let removeManySync = function(filePathArrayArg: string[]): void {
 /*===============================================================
 ============================ Write/Read =========================
 ===============================================================*/
-
 
 /**
  *

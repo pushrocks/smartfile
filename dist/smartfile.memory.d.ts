@@ -1,7 +1,12 @@
-/// <reference types="vinyl" />
+/// <reference types="node" />
 /// <reference types="q" />
 import 'typings-global';
 import plugins = require('./smartfile.plugins');
+export interface vinyl {
+    contents: Buffer;
+    base: string;
+    path: string;
+}
 /**
  * allows you to create a gulp stream
  * from String, from an Array of Strings, from Vinyl File, from an Array of VinylFiles
@@ -9,7 +14,7 @@ import plugins = require('./smartfile.plugins');
  * @returns stream.Readable
  * @TODO: make it async;
  */
-export declare let toGulpStream: (fileArg: string | string[] | plugins.vinyl | plugins.vinyl[], baseArg?: string) => any;
+export declare let toGulpStream: (fileArg: string | string[] | vinyl | vinyl[], baseArg?: string) => any;
 /**
  * converts file to Object
  * @param fileStringArg
@@ -26,7 +31,7 @@ export declare let toVinylFileSync: (fileArg: string, optionsArg?: {
     filename?: string;
     base?: string;
     relPath?: string;
-}) => plugins.vinyl;
+}) => any;
 /**
  * takes a string array and some options and returns a vinylfile array
  * @param arrayArg
@@ -36,16 +41,16 @@ export declare let toVinylArraySync: (arrayArg: string[], optionsArg?: {
     filename?: string;
     base?: string;
     relPath?: string;
-}) => plugins.vinyl[];
+}) => any[];
 /**
  * takes a vinylFile object and converts it to String
  */
-export declare let toStringSync: (fileArg: plugins.vinyl) => any;
+export declare let vinylToStringSync: (fileArg: vinyl) => string;
 /**
  * writes string or vinyl file to disk.
  * @param fileArg
  * @param fileNameArg
  * @param fileBaseArg
  */
-export declare let toFs: (fileContentArg: string | plugins.vinyl, filePathArg: any) => plugins.q.Promise<{}>;
+export declare let toFs: (fileContentArg: string | vinyl, filePathArg: any) => plugins.q.Promise<{}>;
 export declare let toFsSync: (fileArg: any, filePathArg: string) => void;

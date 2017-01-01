@@ -3,17 +3,17 @@ import * as smartfile from '../dist/index'
 import beautylog = require('beautylog')
 import path = require('path')
 import * as should from 'should'
-let vinyl = require('vinyl')
+import * as vinyl from 'vinyl'
 
-describe('smartfile'.yellow, function () {
-    describe('.fs'.yellow, function () {
-        describe('.fileExistsSync'.yellow, function () {
+describe('smartfile', function () {
+    describe('.fs', function () {
+        describe('.fileExistsSync', function () {
             it('should return an accurate boolean', function () {
                 should(smartfile.fs.fileExistsSync('./test/mytest.json')).be.true()
                 should(smartfile.fs.fileExistsSync('./test/notthere.json')).be.false()
             })
         })
-        describe('.fileExists'.yellow, function () {
+        describe('.fileExists', function () {
             it('should return a working promise', function () {
                 should(smartfile.fs.fileExists('./test/mytest.json')).be.Promise()
                 should(smartfile.fs.fileExists('./test/mytest.json')).be.fulfilled()
@@ -64,7 +64,7 @@ describe('smartfile'.yellow, function () {
                     })
             })
         })
-        describe('.copy()'.yellow, function () {
+        describe('.copy()', function () {
             it('should copy a directory', function () {
                 smartfile.fs.copy('./test/testfolder/', './test/temp/')
             })
@@ -110,9 +110,9 @@ describe('smartfile'.yellow, function () {
         })
     })
 
-    describe('.fs'.yellow, function () {
-        describe('.toObjectSync()'.yellow, function () {
-            it('should read an ' + '.yaml'.blue + ' file to an object', function () {
+    describe('.fs', function () {
+        describe('.toObjectSync()', function () {
+            it('should read an ' + '.yaml' + ' file to an object', function () {
                 let testData = smartfile.fs.toObjectSync('./test/mytest.yaml')
                 should(testData).have.property('key1', 'this works')
                 should(testData).have.property('key2', 'this works too')
@@ -121,14 +121,14 @@ describe('smartfile'.yellow, function () {
             it('should state unknown file type for unknown file types', function () {
                 let testData = smartfile.fs.toObjectSync('./test/mytest.txt')
             })
-            it('should read an ' + '.json'.blue + ' file to an object', function () {
+            it('should read an ' + '.json' + ' file to an object', function () {
                 let testData = smartfile.fs.toObjectSync('./test/mytest.json')
                 should(testData).have.property('key1', 'this works')
                 should(testData).have.property('key2', 'this works too')
 
             })
         })
-        describe('.toStringSync()'.yellow, function () {
+        describe('.toStringSync()', function () {
             it('should read a file to a string', function () {
                 should.equal(
                     smartfile.fs.toStringSync('./test/mytest.txt'),
@@ -136,8 +136,8 @@ describe('smartfile'.yellow, function () {
                 )
             })
         })
-        describe('.toVinylSync'.yellow, function () {
-            it('should read an ' + '.json OR .yaml'.blue + ' file to an ' + 'vinyl file object'.cyan, function () {
+        describe('.toVinylSync', function () {
+            it('should read an ' + '.json OR .yaml' + ' file to an ' + 'vinyl file object', function () {
                 let testData = smartfile.fs.toVinylSync('./test/mytest.json')
                 should(vinyl.isVinyl(testData)).be.true()
             })
@@ -170,9 +170,9 @@ describe('smartfile'.yellow, function () {
                 }
             })
         })
-        describe('toStringSync()', function () {
+        describe('vinylToStringSync()', function () {
             it('should produce a String from vinyl file', function () {
-                let localString = smartfile.memory.toStringSync(new vinyl({
+                let localString = smartfile.memory.vinylToStringSync(new vinyl({
                     base: '/',
                     path: '/test.txt',
                     contents: new Buffer('myString')

@@ -2,9 +2,15 @@ import 'typings-global'
 
 import plugins = require('./smartfile.plugins')
 import SmartfileInterpreter = require('./smartfile.interpreter')
-import vinyl = require('vinyl')
-let Readable = require('stream').Readable
+let vinyl = require('vinyl')
 
+export interface vinyl {
+    contents: Buffer
+    base: string
+    path: string,
+}
+
+let Readable = require('stream').Readable
 
 /**
  * allows you to create a gulp stream
@@ -13,10 +19,10 @@ let Readable = require('stream').Readable
  * @returns stream.Readable
  * @TODO: make it async;
  */
-export let toGulpStream = function(fileArg: string|string[]|plugins.vinyl|plugins.vinyl[],baseArg: string = '/'){
+export let toGulpStream = function(fileArg: string|string[]|vinyl|vinyl[],baseArg: string = '/'){
     let fileArray = []
 
-    if (typeof fileArg === 'string' || fileArg instanceof plugins.vinyl) { // make sure we work with an array later on
+    if (typeof fileArg === 'string' || fileArg instanceof vinyl) { // make sure we work with an array later on
         fileArray.push(fileArg)
     } else if (Array.isArray(fileArg)) {
         fileArray = fileArg
@@ -24,11 +30,11 @@ export let toGulpStream = function(fileArg: string|string[]|plugins.vinyl|plugin
         throw new Error('fileArg has unknown format')
     }
 
-    let vinylFileArray: plugins.vinyl[] = [] // we want to have an array of vinylFiles
+    let vinylFileArray: vinyl[] = [] // we want to have an array of vinylFiles
 
     for (let fileIndexArg in fileArray) { // convert fileArray in vinylArray
         let file = fileArray[fileIndexArg]
-        file instanceof plugins.vinyl ?
+        file instanceof vinyl ?
             vinylFileArray.push(file) :
             vinylFileArray.push(toVinylFileSync(file,{filename: fileIndexArg,base: baseArg}))
     };
@@ -57,25 +63,32 @@ export let toObject = function(fileStringArg: string,fileTypeArg: string){
  * @param fileArg
  * @param optionsArg
  */
-export let toVinylFileSync = function(fileArg: string,optionsArg?: {filename?: string,base?: string,relPath?: string}){
+export let toVinylFileSync = function(fileArg: string,optionsArg?: {filename?: string,base?: string,relPath?: string}) {
     optionsArg ? void(0) : optionsArg = {filename: 'vinylfile', base: '/'}
     optionsArg.filename ? void(0) : optionsArg.filename = 'vinylfile'
     optionsArg.base ? void(0) : optionsArg.base = '/'
     optionsArg.relPath ? void('0') : optionsArg.relPath = ''
-    let vinylFile = new plugins.vinyl({
+    let vinylFile = new vinyl({
         base: optionsArg.base,
         path: plugins.path.join(optionsArg.base,optionsArg.relPath,optionsArg.filename),
         contents: new Buffer(fileArg)
     })
     return vinylFile
-};
+}
 
 /**
  * takes a string array and some options and returns a vinylfile array
  * @param arrayArg
  * @param optionsArg
  */
-export let toVinylArraySync = function(arrayArg: string[],optionsArg?: {filename?: string,base?: string,relPath?: string}){
+export let toVinylArraySync = function(
+    arrayArg: string[],
+    optionsArg?: {
+        filename?: string,
+        base?: string,
+        relPath?: string
+    }
+){
     let vinylArray = []
     for (let stringIndexArg in arrayArg) {
         let myString = arrayArg[stringIndexArg]
@@ -84,14 +97,12 @@ export let toVinylArraySync = function(arrayArg: string[],optionsArg?: {filename
     return vinylArray
 }
 
-
 /**
  * takes a vinylFile object and converts it to String
  */
-export let toStringSync = function(fileArg: plugins.vinyl){
+export let vinylToStringSync = function(fileArg: vinyl){
     return fileArg.contents.toString('utf8')
-};
-
+}
 
 /**
  * writes string or vinyl file to disk.
@@ -109,9 +120,9 @@ export let toFs = function(fileContentArg: string|vinyl,filePathArg){
 
     // prepare actual write action
     let fileString: string
-    let filePath: string = filePathArg;
-    if (fileContentArg instanceof plugins.vinyl) {
-        fileString = toStringSync(fileContentArg)
+    let filePath: string = filePathArg
+    if (fileContentArg instanceof vinyl) {
+        fileString = vinylToStringSync(fileContentArg)
     } else if (typeof fileContentArg === 'string') {
         fileString = fileContentArg
     }
@@ -129,11 +140,10 @@ export let toFsSync = function(fileArg,filePathArg: string){
     let fileString: string
     let filePath: string = filePathArg
 
-    if (fileArg instanceof plugins.vinyl) {
-        fileString = toStringSync(fileArg)
+    if (typeof fileArg !== 'string') {
+        fileString = vinylToStringSync(fileArg)
     } else if (typeof fileArg === 'string') {
         fileString = fileArg
     }
     plugins.fsExtra.writeFileSync(filePath,fileString,'utf8')
 }
-
