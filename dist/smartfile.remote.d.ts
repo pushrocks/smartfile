@@ -1,16 +1,14 @@
-/// <reference types="q" />
 import 'typings-global';
-import plugins = require('./smartfile.plugins');
-export declare let toFs: (from: string, toPath: string) => plugins.q.Promise<{}>;
+export declare let toFs: (from: string, toPath: string) => Promise<{}>;
 /**
  *
  * @param fromArg
  * @returns {any}
  */
-export declare let toObject: (fromArg: string) => plugins.q.Promise<{}>;
+export declare let toObject: (fromArg: string) => Promise<{}>;
 /**
  *
  * @param fromArg
  * @returns {any}
  */
-export declare let toString: (fromArg: string) => plugins.q.Promise<{}>;
+export declare let toString: (fromArg: string) => Promise<{}>;

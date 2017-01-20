@@ -4,7 +4,7 @@ export import fs = require('fs');
 export import fsExtra = require('fs-extra');
 export declare let glob: any;
 export import path = require('path');
-export import q = require('q');
+export import q = require('smartq');
 export declare let request: any;
 export declare let requireReload: any;
 export import smartpath = require('smartpath');

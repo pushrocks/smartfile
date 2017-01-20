@@ -30,7 +30,7 @@ export let fileExistsSync = function(filePath): boolean {
  */
 export let fileExists = function(filePath){
     let done = plugins.q.defer()
-    plugins.fs.access(filePath, plugins.fs.R_OK, function (err) {
+    plugins.fs.access(filePath, 4, function (err) {
         err ? done.reject(err) : done.resolve()
     })
     return done.promise
@@ -117,7 +117,7 @@ export let ensureEmptyDirSync = (dirPathArg: string) => {
  * @returns Promise<void>
  * @exec ASYNC
  */
-export let ensureFile = (filePathArg, initFileStringArg): plugins.q.Promise<void> => {
+export let ensureFile = (filePathArg, initFileStringArg): Promise<void> => {
     let done = plugins.q.defer<void>()
     ensureFileSync(filePathArg, initFileStringArg)
     done.resolve()
@@ -142,7 +142,7 @@ export let ensureFileSync = (filePathArg: string, initFileStringArg: string): vo
 /**
  * removes a file or folder from local disk
  */
-export let remove = function(pathArg: string): plugins.q.Promise<void> {
+export let remove = function(pathArg: string): Promise<void> {
     let done = plugins.q.defer<void>()
     plugins.fsExtra.remove(pathArg,function(){
         done.resolve()
@@ -162,11 +162,11 @@ export let removeSync = function(pathArg: string): boolean{
  * removes an array of filePaths from disk
  */
 export let removeMany = function(filePathArrayArg: string[]){
-    let promiseArray: plugins.q.Promise<void>[] = []
+    let promiseArray: Promise<void>[] = []
     for (let filePath of filePathArrayArg) {
         promiseArray.push(remove(filePath))
     }
-    return plugins.q.all(promiseArray)
+    return Promise.all(promiseArray)
 }
 
 /**
@@ -297,7 +297,7 @@ export let listFilesSync = function(pathArg: string, regexFilter?: RegExp): stri
  * lists all items (folders AND files) in a directory on local disk
  * @returns Promise<string[]>
  */
-export let listAllItems = function(pathArg: string, regexFilter?: RegExp): plugins.q.Promise<string[]> {
+export let listAllItems = function(pathArg: string, regexFilter?: RegExp): Promise<string[]> {
     let done = plugins.q.defer<string[]>()
     let allItmesArray = plugins.fsExtra.readdirSync(pathArg)
     if (regexFilter) {
@@ -331,7 +331,7 @@ export let listAllItemsSync = function(pathArg: string, regexFilter?: RegExp): s
  * note: if the miniMatch Filter is an absolute path, the cwdArg will be omitted
  * @returns Promise<string[]> string array with the absolute paths of all matching files
  */
-export let listFileTree = (dirPathArg: string, miniMatchFilter: string): plugins.q.Promise<string[]> => {
+export let listFileTree = (dirPathArg: string, miniMatchFilter: string): Promise<string[]> => {
     let done = plugins.q.defer<string[]>()
 
     // handle absolute miniMatchFilter

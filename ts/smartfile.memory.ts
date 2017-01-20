@@ -4,7 +4,7 @@ import plugins = require('./smartfile.plugins')
 import SmartfileInterpreter = require('./smartfile.interpreter')
 let vinyl = require('vinyl')
 
-export interface vinyl {
+export interface IVinylFile {
     contents: Buffer
     base: string
     path: string,
@@ -19,10 +19,10 @@ let Readable = require('stream').Readable
  * @returns stream.Readable
  * @TODO: make it async;
  */
-export let toGulpStream = function(fileArg: string|string[]|vinyl|vinyl[],baseArg: string = '/'){
+export let toGulpStream = function(fileArg: string|string[]|IVinylFile|IVinylFile[],baseArg: string = '/'){
     let fileArray = []
 
-    if (typeof fileArg === 'string' || fileArg instanceof vinyl) { // make sure we work with an array later on
+    if (typeof fileArg === 'string' || vinyl.isVinyl(fileArg)) { // make sure we work with an array later on
         fileArray.push(fileArg)
     } else if (Array.isArray(fileArg)) {
         fileArray = fileArg
@@ -30,7 +30,7 @@ export let toGulpStream = function(fileArg: string|string[]|vinyl|vinyl[],baseAr
         throw new Error('fileArg has unknown format')
     }
 
-    let vinylFileArray: vinyl[] = [] // we want to have an array of vinylFiles
+    let vinylFileArray: IVinylFile[] = [] // we want to have an array of vinylFiles
 
     for (let fileIndexArg in fileArray) { // convert fileArray in vinylArray
         let file = fileArray[fileIndexArg]
@@ -100,7 +100,7 @@ export let toVinylArraySync = function(
 /**
  * takes a vinylFile object and converts it to String
  */
-export let vinylToStringSync = function(fileArg: vinyl){
+export let vinylToStringSync = function(fileArg: IVinylFile): string {
     return fileArg.contents.toString('utf8')
 }
 
@@ -110,7 +110,7 @@ export let vinylToStringSync = function(fileArg: vinyl){
  * @param fileNameArg
  * @param fileBaseArg
  */
-export let toFs = function(fileContentArg: string|vinyl,filePathArg){
+export let toFs = function(fileContentArg: string|IVinylFile,filePathArg){
     let done = plugins.q.defer()
 
     // function checks to abort if needed
@@ -121,8 +121,9 @@ export let toFs = function(fileContentArg: string|vinyl,filePathArg){
     // prepare actual write action
     let fileString: string
     let filePath: string = filePathArg
-    if (fileContentArg instanceof vinyl) {
-        fileString = vinylToStringSync(fileContentArg)
+    if (vinyl.isVinyl(fileContentArg)) {
+        let fileContentArg2: any = fileContentArg
+        fileString = vinylToStringSync(fileContentArg2)
     } else if (typeof fileContentArg === 'string') {
         fileString = fileContentArg
     }

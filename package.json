@@ -27,25 +27,23 @@
   "homepage": "https://gitlab.com/pushrocks/smartfile",
   "dependencies": {
     "@types/fs-extra": "0.x.x",
-    "@types/q": "0.x.x",
     "@types/vinyl": "^2.0.0",
     "beautylog": "^6.0.0",
-    "fs-extra": "^1.0.0",
+    "fs-extra": "^2.0.0",
     "glob": "^7.1.1",
     "js-yaml": "^3.7.0",
-    "q": "^1.4.1",
     "request": "^2.79.0",
     "require-reload": "0.2.2",
     "smartpath": "^3.2.7",
+    "smartq": "^1.0.4",
     "typings-global": "^1.0.14",
     "vinyl": "^2.0.1",
-    "vinyl-file": "^2.0.0"
+    "vinyl-file": "^3.0.0"
   },
   "devDependencies": {
-    "@types/should": "^8.1.30",
     "gulp-function": "^2.2.3",
-    "npmts-g": "^5.2.10",
-    "should": "^11.1.2",
+    "npmts-g": "^6.0.0",
+    "smartchai": "^1.0.1",
     "typings-test": "^1.0.3"
   }
 }

@@ -1,8 +1,6 @@
 /// <reference types="node" />
-/// <reference types="q" />
 import 'typings-global';
-import plugins = require('./smartfile.plugins');
-export interface vinyl {
+export interface IVinylFile {
     contents: Buffer;
     base: string;
     path: string;
@@ -14,7 +12,7 @@ export interface vinyl {
  * @returns stream.Readable
  * @TODO: make it async;
  */
-export declare let toGulpStream: (fileArg: string | string[] | vinyl | vinyl[], baseArg?: string) => any;
+export declare let toGulpStream: (fileArg: string | string[] | IVinylFile | IVinylFile[], baseArg?: string) => any;
 /**
  * converts file to Object
  * @param fileStringArg
@@ -45,12 +43,12 @@ export declare let toVinylArraySync: (arrayArg: string[], optionsArg?: {
 /**
  * takes a vinylFile object and converts it to String
  */
-export declare let vinylToStringSync: (fileArg: vinyl) => string;
+export declare let vinylToStringSync: (fileArg: IVinylFile) => string;
 /**
  * writes string or vinyl file to disk.
  * @param fileArg
  * @param fileNameArg
  * @param fileBaseArg
  */
-export declare let toFs: (fileContentArg: string | vinyl, filePathArg: any) => plugins.q.Promise<{}>;
+export declare let toFs: (fileContentArg: string | IVinylFile, filePathArg: any) => Promise<{}>;
 export declare let toFsSync: (fileArg: any, filePathArg: string) => void;
