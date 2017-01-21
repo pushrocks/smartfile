@@ -16,7 +16,7 @@ export let objectFile = (fileStringArg: string, fileTypeArg) => {
         case 'json':
             return JSON.parse(fileStringArg)
         default:
-            plugins.beautylog.error('file type ' + fileTypeArg.blue + ' not supported')
+            console.error('file type ' + fileTypeArg.blue + ' not supported')
             break
     }
 }

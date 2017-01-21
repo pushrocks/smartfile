@@ -43,7 +43,7 @@ export let toString = (fromArg: string) => {
         if (!error && response.statusCode === 200) {
             done.resolve(bodyString)
         } else {
-            plugins.beautylog.error('could not get remote file from ' + fromArg)
+            console.error('could not get remote file from ' + fromArg)
             bodyString = undefined
             done.reject(bodyString)
         }

@@ -1,5 +1,4 @@
 import 'typings-global';
-export import beautylog = require('beautylog');
 export import fs = require('fs');
 export import fsExtra = require('fs-extra');
 export declare let glob: any;

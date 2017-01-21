@@ -1,6 +1,5 @@
 import 'typings-test'
 import * as smartfile from '../dist/index'
-import beautylog = require('beautylog')
 import path = require('path')
 
 import { expect } from 'smartchai'
