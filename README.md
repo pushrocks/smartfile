@@ -31,6 +31,8 @@ remote | gets data from remote locations to somewhere
 interpreter | (object) handles yaml and json
 smartfile | (class) a virtual representation of a file, alternative to vinyl file format
 
-For more information read the docs
+For further information read the linked docs at the top of this README.
+
+> MIT licensed | **&copy;** 2016 - 2017 [Lossless GmbH](https://lossless.gmbh)
 
 [![npm](https://push.rocks/assets/repo-header.svg)](https://push.rocks)
