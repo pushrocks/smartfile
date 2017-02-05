@@ -2,10 +2,10 @@
 make files easily accessible for processing in javascript.
 
 ## Availabililty
-[![npm](https://push.rocks/assets/repo-button-npm.svg)](https://www.npmjs.com/package/smartfile)
-[![git](https://push.rocks/assets/repo-button-git.svg)](https://gitlab.com/pushrocks/smartfile)
-[![git](https://push.rocks/assets/repo-button-mirror.svg)](https://github.com/pushrocks/smartfile)
-[![docs](https://push.rocks/assets/repo-button-docs.svg)](https://pushrocks.gitlab.io/smartfile/)
+[![npm](https://pushrocks.gitlab.io/assets/repo-button-npm.svg)](https://www.npmjs.com/package/smartfile)
+[![git](https://pushrocks.gitlab.io/assets/repo-button-git.svg)](https://gitlab.com/pushrocks/smartfile)
+[![git](https://pushrocks.gitlab.io/assets/repo-button-mirror.svg)](https://github.com/pushrocks/smartfile)
+[![docs](https://pushrocks.gitlab.io/assets/repo-button-docs.svg)](https://pushrocks.gitlab.io/smartfile/)
 
 ## Status for master
 [![build status](https://gitlab.com/pushrocks/smartfile/badges/master/build.svg)](https://gitlab.com/pushrocks/smartfile/commits/master)
@@ -35,4 +35,4 @@ For further information read the linked docs at the top of this README.
 
 > MIT licensed | **&copy;** 2016 - 2017 [Lossless GmbH](https://lossless.gmbh)
 
-[![npm](https://push.rocks/assets/repo-header.svg)](https://push.rocks)
+[![npm](https://pushrocks.gitlab.io/assets/repo-header.svg)](https://push.rocks)
