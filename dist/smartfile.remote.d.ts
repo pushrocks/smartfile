@@ -1,5 +1,4 @@
 import 'typings-global';
-export declare let toFs: (from: string, toPath: string) => Promise<{}>;
 /**
  *
  * @param fromArg

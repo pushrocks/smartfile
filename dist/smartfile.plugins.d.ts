@@ -4,7 +4,7 @@ export import fsExtra = require('fs-extra');
 export declare let glob: any;
 export import path = require('path');
 export import q = require('smartq');
-export declare let request: any;
+export import smartrequest = require('smartrequest');
 export declare let requireReload: any;
 export import smartpath = require('smartpath');
 export declare let vinylFile: any;

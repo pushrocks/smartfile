@@ -31,10 +31,10 @@
     "fs-extra": "^2.0.0",
     "glob": "^7.1.1",
     "js-yaml": "^3.7.0",
-    "request": "^2.79.0",
     "require-reload": "0.2.2",
     "smartpath": "^3.2.7",
     "smartq": "^1.0.4",
+    "smartrequest": "^1.0.4",
     "typings-global": "^1.0.14",
     "vinyl": "^2.0.1",
     "vinyl-file": "^3.0.0"
