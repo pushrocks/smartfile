@@ -1,3 +1,4 @@
+# gitzone standard
 image: hosttoday/ht-docker-node:npmts
 
 stages:
@@ -10,6 +11,7 @@ testLEGACY:
   stage: test
   script:
     - npmci test legacy
+  coverage: /\d+(.\d+)?\%\s*coverage/
   tags:
     - docker
   allow_failure: true
@@ -18,6 +20,7 @@ testLTS:
   stage: test
   script:
     - npmci test lts
+  coverage: /\d+(.\d+)?\%\s*coverage/
   tags:
     - docker
     
@@ -25,6 +28,7 @@ testSTABLE:
   stage: test
   script:
     - npmci test stable
+  coverage: /\d+(.\d+)?\%\s*coverage/
   tags:
     - docker
 
