@@ -33,6 +33,6 @@ smartfile | (class) a virtual representation of a file, alternative to vinyl fil
 
 For further information read the linked docs at the top of this README.
 
-> MIT licensed | **&copy;** 2016 - 2017 [Lossless GmbH](https://lossless.gmbh)
+> MIT licensed | **&copy;** [Lossless GmbH](https://lossless.gmbh)
 
 [![npm](https://pushrocks.gitlab.io/assets/repo-footer.svg)](https://push.rocks)
