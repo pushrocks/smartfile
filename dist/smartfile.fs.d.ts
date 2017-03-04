@@ -1,4 +1,5 @@
 import 'typings-global';
+import { Smartfile } from './smartfile.classes.smartfile';
 /**
  *
  * @param filePath
@@ -90,6 +91,7 @@ export declare let toObjectSync: (filePathArg: any, fileTypeArg?: any) => any;
  * @returns {string|Buffer|any}
  */
 export declare let toStringSync: (filePath: any) => any;
+export declare let fileTreeToObject: (dirPathArg: string, miniMatchFilter: string) => Promise<Smartfile[]>;
 /**
  *
  * @param filePathArg
