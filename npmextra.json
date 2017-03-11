@@ -5,5 +5,10 @@
   },
   "npmdocker":{
     
+  },
+  "npmci": {
+    "globalNpmTools": [
+      "npmts"
+    ]
   }
 }

@@ -41,7 +41,6 @@
   },
   "devDependencies": {
     "gulp-function": "^2.2.3",
-    "npmts-g": "^6.0.0",
     "smartchai": "^1.0.3",
     "typings-test": "^1.0.3"
   }
