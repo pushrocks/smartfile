@@ -90,7 +90,7 @@ export declare let toObjectSync: (filePathArg: any, fileTypeArg?: any) => any;
  * @param filePath
  * @returns {string|Buffer|any}
  */
-export declare let toStringSync: (filePath: any) => any;
+export declare let toStringSync: (filePath: string) => string;
 export declare let fileTreeToObject: (dirPathArg: string, miniMatchFilter: string) => Promise<Smartfile[]>;
 /**
  *

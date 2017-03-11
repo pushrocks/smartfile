@@ -1,5 +1,10 @@
 # gitzone standard
-image: hosttoday/ht-docker-node:npmts
+image: hosttoday/ht-docker-node:npmci
+
+cache:
+  paths:
+  - .yarn/
+  key: "$CI_BUILD_STAGE"
 
 stages:
 - test

@@ -30,10 +30,10 @@
     "@types/vinyl": "^2.0.0",
     "fs-extra": "^2.0.0",
     "glob": "^7.1.1",
-    "js-yaml": "^3.7.0",
+    "js-yaml": "^3.8.2",
     "require-reload": "0.2.2",
-    "smartpath": "^3.2.7",
-    "smartq": "^1.0.4",
+    "smartpath": "^3.2.8",
+    "smartq": "^1.1.1",
     "smartrequest": "^1.0.4",
     "typings-global": "^1.0.14",
     "vinyl": "^2.0.1",
@@ -42,7 +42,7 @@
   "devDependencies": {
     "gulp-function": "^2.2.3",
     "npmts-g": "^6.0.0",
-    "smartchai": "^1.0.1",
+    "smartchai": "^1.0.3",
     "typings-test": "^1.0.3"
   }
 }
