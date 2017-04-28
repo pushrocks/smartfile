@@ -158,7 +158,7 @@ tap.test('.memory.vinylToStringSync() -> should produce a String from vinyl file
 
 tap.test('.memory.toFs() -> should write a file to disk and return a promise', async () => {
   let localString = 'myString'
-  smartfile.memory.toFs(
+  await smartfile.memory.toFs(
     localString,
     path.join(process.cwd(), './test/temp/testMemToFs.txt')
   )
