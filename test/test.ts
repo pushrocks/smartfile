@@ -5,6 +5,10 @@ import { expect, tap } from 'tapbundle'
 
 import * as vinyl from 'vinyl'
 
+// ---------------------------
+// smartfile.fs
+// ---------------------------
+
 tap.test('.fs.fileExistsSync -> should return an accurate boolean', async () => {
   expect(smartfile.fs.fileExistsSync('./test/mytest.json')).to.be.true
   expect(smartfile.fs.fileExistsSync('./test/notthere.json')).be.false
@@ -91,7 +95,7 @@ tap.test('smartfile.fs.removeManySync -> should remove and array of single files
 })
 
 // ---------------------------
-// .interpreter
+// smartfile.interpreter
 // ---------------------------
 
 tap.test('.interpreter.filetype() -> should get the file type from a string', async () => {
@@ -123,11 +127,6 @@ tap.test('.fs.toStringSync() -> should read a file to a string', async () => {
 tap.test('.fs.toVinylSync -> should read an ' + '.json OR .yaml' + ' file to an ' + 'vinyl file object', async () => {
   let testData = smartfile.fs.toVinylSync('./test/mytest.json')
   expect(vinyl.isVinyl(testData)).to.be.true
-})
-
-tap.test('.memory.toGulpStream() -> should produce a valid gulp stream', async () => {
-  let localArray = [ 'test1', 'test2', 'test3' ]
-  smartfile.memory.toGulpStream(localArray)
 })
 
 tap.test('.memory.toVinylFileSync() -> should produce a vinylFile', async () => {

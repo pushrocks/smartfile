@@ -6,14 +6,6 @@ export interface IVinylFile {
     path: string;
 }
 /**
- * allows you to create a gulp stream
- * from String, from an Array of Strings, from Vinyl File, from an Array of VinylFiles
- * @param fileArg
- * @returns stream.Readable
- * @TODO: make it async;
- */
-export declare let toGulpStream: (fileArg: string | string[] | IVinylFile | IVinylFile[], baseArg?: string) => any;
-/**
  * converts file to Object
  * @param fileStringArg
  * @param fileTypeArg
