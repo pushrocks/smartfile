@@ -1,7 +1,7 @@
 /// <reference types="node" />
 export interface ISmartfileConstructorOptions {
     path?: string;
-    contentsString?: string;
+    contentString?: string;
     contentBuffer?: Buffer;
 }
 /**
@@ -14,9 +14,13 @@ export declare class Smartfile {
      */
     path: string;
     /**
-     * The contents of the file as Buffer
+     * gulp-compatibility: alias of this.contentBuffer
      */
     contents: Buffer;
+    /**
+     * the content of the file as Buffer
+     */
+    contentBuffer: Buffer;
     /**
      * The current working directory of the file
      */

@@ -2,7 +2,7 @@ import * as plugins from './smartfile.plugins'
 
 export interface ISmartfileConstructorOptions {
   path?: string
-  contentsString?: string
+  contentString?: string
   contentBuffer?: Buffer
 }
 
@@ -17,9 +17,14 @@ export class Smartfile {
   path: string
 
   /**
-   * The contents of the file as Buffer
+   * gulp-compatibility: alias of this.contentBuffer
    */
   contents: Buffer
+
+  /**
+   * the content of the file as Buffer
+   */
+  contentBuffer: Buffer
 
   /**
    * The current working directory of the file
@@ -37,9 +42,12 @@ export class Smartfile {
    */
   constructor (optionsArg: ISmartfileConstructorOptions) {
     if (optionsArg.contentBuffer) {
+      this.contentBuffer = optionsArg.contentBuffer
       this.contents = optionsArg.contentBuffer
-    } else if (optionsArg.contentsString) {
-      this.contents = new Buffer(optionsArg.contentsString)
+    } else if (optionsArg.contentString) {
+      this.contents = Buffer.from(optionsArg.contentString)
+    } else {
+      console.log('created empty Smartfile?')
     }
     this.path = optionsArg.path
   }
