@@ -3,6 +3,7 @@ export interface ISmartfileConstructorOptions {
     path?: string;
     contentString?: string;
     contentBuffer?: Buffer;
+    cwd?: string;
 }
 /**
  * class Smartfile

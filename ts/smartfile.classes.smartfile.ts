@@ -4,6 +4,7 @@ export interface ISmartfileConstructorOptions {
   path?: string
   contentString?: string
   contentBuffer?: Buffer
+  cwd?: string
 }
 
 /**
@@ -45,11 +46,13 @@ export class Smartfile {
       this.contentBuffer = optionsArg.contentBuffer
       this.contents = optionsArg.contentBuffer
     } else if (optionsArg.contentString) {
+      this.contentBuffer = optionsArg.contentBuffer
       this.contents = Buffer.from(optionsArg.contentString)
     } else {
       console.log('created empty Smartfile?')
     }
     this.path = optionsArg.path
+    this.cwd = optionsArg.cwd
   }
 
   /**
