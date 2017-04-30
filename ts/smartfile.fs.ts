@@ -209,13 +209,21 @@ export let toStringSync = function (filePath: string) {
 }
 
 export let fileTreeToObject = async (dirPathArg: string, miniMatchFilter: string) => {
-  let fileTree = await listFileTree(dirPathArg, miniMatchFilter)
+  // handle absolute miniMatchFilter
+  let dirPath: string
+  if (plugins.path.isAbsolute(miniMatchFilter)) {
+    dirPath = '/'
+  } else {
+    dirPath = dirPathArg
+  }
+
+  let fileTree = await listFileTree(dirPath, miniMatchFilter)
   let smartfileArray: Smartfile[] = []
   for (let filePath of fileTree) {
     smartfileArray.push(new Smartfile({
       path: filePath,
       contentBuffer: new Buffer(toStringSync(
-        plugins.path.join(dirPathArg, filePath)
+        plugins.path.join(dirPath, filePath)
       ))
     }))
   }
