@@ -221,10 +221,11 @@ export let fileTreeToObject = async (dirPathArg: string, miniMatchFilter: string
   let smartfileArray: Smartfile[] = []
   for (let filePath of fileTree) {
     smartfileArray.push(new Smartfile({
-      path: filePath,
       contentBuffer: new Buffer(toStringSync(
         plugins.path.join(dirPath, filePath)
-      ))
+      )),
+      base: dirPath,
+      path: filePath
     }))
   }
   return smartfileArray

@@ -51,7 +51,7 @@ tap.test('.fs.listFileTree() -> should get a file tree', async () => {
   expect(folderArrayArg).to.not.deep.include('mytest.json')
 })
 
-tap.test('.fstoObjectFromFileTree -> should read a file tree into an Object', async () => {
+tap.test('.fs.toObjectFromFileTree -> should read a file tree into an Object', async () => {
   let fileArrayArg = await smartfile.fs.fileTreeToObject(path.resolve('./test/'), '**/*.txt')
   // expect(fileArrayArg[1]).to.be.instanceof(smartfile.Smartfile)
 })
@@ -72,34 +72,26 @@ tap.test('.fs.remove() -> should remove an entire directory', async () => {
 
 })
 
-tap.test('smartfile.fs.remove -> should remove single files', async () => {
+tap.test('.fs.remove -> should remove single files', async () => {
   await expect(smartfile.fs.remove('./test/temp/mytestRenamed.yaml')).to.eventually.be.fulfilled
 })
 
-tap.test('smartfile.fs.removeSync -> should remove single files synchronouly', async () => {
+tap.test('.fs.removeSync -> should remove single files synchronouly', async () => {
   smartfile.fs.removeSync('./test/temp/testfile1.txt')
   expect(smartfile.fs.fileExistsSync('./test/temp/testfile1.txt')).to.be.false
 })
 
-tap.test('smartfile.fs.removeMany -> should remove and array of files', async () => {
+tap.test('.fs.removeMany -> should remove and array of files', async () => {
   smartfile.fs.removeMany([ './test/temp/testfile1.txt', './test/temp/testfile2.txt' ]).then(() => {
     expect(smartfile.fs.fileExistsSync('./test/temp/testfile1.txt')).to.be.false
     expect(smartfile.fs.fileExistsSync('./test/temp/testfile2.txt')).to.be.false
   })
 })
 
-tap.test('smartfile.fs.removeManySync -> should remove and array of single files synchronouly', async () => {
+tap.test('.fs.removeManySync -> should remove and array of single files synchronouly', async () => {
   smartfile.fs.removeManySync([ './test/temp/testfile1.txt', './test/temp/testfile2.txt' ])
   expect(smartfile.fs.fileExistsSync('./test/temp/testfile1.txt')).to.be.false
   expect(smartfile.fs.fileExistsSync('./test/temp/testfile2.txt')).to.be.false
-})
-
-// ---------------------------
-// smartfile.interpreter
-// ---------------------------
-
-tap.test('.interpreter.filetype() -> should get the file type from a string', async () => {
-  expect(smartfile.interpreter.filetype('./somefolder/data.json')).equal('json')
 })
 
 tap.test('.fs.toObjectSync() -> should read an ' + '.yaml' + ' file to an object', async () => {
@@ -128,6 +120,18 @@ tap.test('.fs.toVinylSync -> should read an ' + '.json OR .yaml' + ' file to an 
   let testData = smartfile.fs.toVinylSync('./test/mytest.json')
   expect(vinyl.isVinyl(testData)).to.be.true
 })
+
+// ---------------------------
+// smartfile.interpreter
+// ---------------------------
+
+tap.test('.interpreter.filetype() -> should get the file type from a string', async () => {
+  expect(smartfile.interpreter.filetype('./somefolder/data.json')).equal('json')
+})
+
+// ---------------------------
+// smartfile.memory
+// ---------------------------
 
 tap.test('.memory.toVinylFileSync() -> should produce a vinylFile', async () => {
   let localString = 'myString'
@@ -181,6 +185,20 @@ tap.test('.remote.toString() -> should load a remote file to a variable', async 
 tap.test('.remote.toString() -> should reject a Promise when the link is false', async () => {
   await expect(smartfile.remote.toString('https://push.rocks/doesnotexist.txt'))
     .to.eventually.be.rejected
+})
+
+// ---------------------------
+// smartfile.Smartfile
+// ---------------------------
+
+tap.test('.Smartfile -> should produce vinyl compatible files', async () => {
+  let smartfileArray = await smartfile.fs.fileTreeToObject(process.cwd(), './test/testfolder/**/*')
+  let localSmartfile = smartfileArray[0]
+  expect(localSmartfile).to.be.instanceof(smartfile.Smartfile)
+  expect(localSmartfile.contents).to.be.instanceof(Buffer)
+  expect(localSmartfile.isBuffer()).to.be.true
+  expect(localSmartfile.isDirectory()).to.be.false
+  expect(localSmartfile.isNull()).to.be.false
 })
 
 tap.start()

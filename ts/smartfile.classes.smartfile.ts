@@ -4,7 +4,7 @@ export interface ISmartfileConstructorOptions {
   path?: string
   contentString?: string
   contentBuffer?: Buffer
-  cwd?: string
+  base?: string
 }
 
 /**
@@ -18,11 +18,6 @@ export class Smartfile {
   path: string
 
   /**
-   * gulp-compatibility: alias of this.contentBuffer
-   */
-  contents: Buffer
-
-  /**
    * the content of the file as Buffer
    */
   contentBuffer: Buffer
@@ -30,7 +25,7 @@ export class Smartfile {
   /**
    * The current working directory of the file
    */
-  cwd: string
+  base: string
 
   /**
    * sync the file with disk
@@ -44,23 +39,13 @@ export class Smartfile {
   constructor (optionsArg: ISmartfileConstructorOptions) {
     if (optionsArg.contentBuffer) {
       this.contentBuffer = optionsArg.contentBuffer
-      this.contents = optionsArg.contentBuffer
     } else if (optionsArg.contentString) {
-      this.contentBuffer = optionsArg.contentBuffer
-      this.contents = Buffer.from(optionsArg.contentString)
+      this.setContentsFromString(optionsArg.contentString)
     } else {
       console.log('created empty Smartfile?')
     }
     this.path = optionsArg.path
-    this.cwd = optionsArg.cwd
-  }
-
-  /**
-   * return relative path of file
-   * -> 
-   */
-  get relative () {
-    return ''
+    this.base = optionsArg.base
   }
 
 
@@ -83,5 +68,60 @@ export class Smartfile {
    * read file from disk
    */
   async read () {
+  }
+
+  // -----------------------------------------------
+  // vinyl compatibility
+  // -----------------------------------------------
+  /**
+   * vinyl-compatibility: alias of this.contentBuffer
+   */
+  get contents (): Buffer {
+    return this.contentBuffer
+  }
+  set contents (contentsArg) {
+    this.contentBuffer = contentsArg
+  }
+
+  /**
+   * vinyl-compatibility
+   */
+  get cwd () {
+    return this.base
+  }
+
+  /**
+   * return relative path of file
+   */
+  get relative (): string {
+    return this.path
+  }
+
+  /**
+   * return truw when the file has content
+   */
+  isNull (): boolean {
+    if (!this.contentBuffer) {
+      return true
+    }
+    return false
+  }
+
+  /**
+   * return true if contents are Buffer
+   */
+  isBuffer (): boolean {
+    if (this.contents instanceof Buffer) {
+      return true
+    }
+    return false
+  }
+
+  isDirectory () {
+    return false
+  }
+
+  isStream () {
+    return false
   }
 }
