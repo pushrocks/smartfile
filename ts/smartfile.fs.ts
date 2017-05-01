@@ -205,7 +205,6 @@ export let toObjectSync = function (filePathArg, fileTypeArg?) {
  */
 export let toStringSync = function (filePath: string): string {
   let fileString: any = plugins.fsExtra.readFileSync(filePath, 'utf8')
-  fileString = `${fileString}`
   return fileString
 }
 
