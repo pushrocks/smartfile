@@ -87,7 +87,7 @@ export class Smartfile {
    * vinyl-compatibility
    */
   get cwd () {
-    return this.base
+    return process.cwd()
   }
 
   /**
