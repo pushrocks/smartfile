@@ -94,7 +94,7 @@ export class Smartfile {
    * return relative path of file
    */
   get relative (): string {
-    return this.path
+    return plugins.path.relative(this.base, this.path)
   }
 
   /**
@@ -122,6 +122,10 @@ export class Smartfile {
   }
 
   isStream () {
+    return false
+  }
+
+  isSymbolic () {
     return false
   }
 }

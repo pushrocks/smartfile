@@ -66,4 +66,5 @@ export declare class Smartfile {
     isBuffer(): boolean;
     isDirectory(): boolean;
     isStream(): boolean;
+    isSymbolic(): boolean;
 }
