@@ -40,7 +40,7 @@
     "vinyl-file": "^3.0.0"
   },
   "devDependencies": {
-    "gulp-function": "^2.2.3",
+    "gulp-function": "^2.2.9",
     "tapbundle": "^1.0.10"
   }
 }

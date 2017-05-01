@@ -186,9 +186,9 @@ graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
 
-gulp-function@^2.2.3:
-  version "2.2.6"
-  resolved "https://registry.yarnpkg.com/gulp-function/-/gulp-function-2.2.6.tgz#e14c1eefdab4d4ac11d9f4abfdbe94115a12d10d"
+gulp-function@^2.2.9:
+  version "2.2.9"
+  resolved "https://registry.yarnpkg.com/gulp-function/-/gulp-function-2.2.9.tgz#de513103db9d817e94bb8aab45f30bf286f19ae5"
   dependencies:
     "@types/through2" "^2.0.32"
     smartq "^1.1.1"

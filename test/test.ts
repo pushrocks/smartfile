@@ -51,8 +51,9 @@ tap.test('.fs.listFileTree() -> should get a file tree', async () => {
   expect(folderArrayArg).to.not.deep.include('mytest.json')
 })
 
-tap.test('.fs.toObjectFromFileTree -> should read a file tree into an Object', async () => {
+tap.test('.fs.fileTreeToObject -> should read a file tree into an Object', async () => {
   let fileArrayArg = await smartfile.fs.fileTreeToObject(path.resolve('./test/'), '**/*.txt')
+  expect(fileArrayArg[0].contents.toString()).to.not.be.null
   // expect(fileArrayArg[1]).to.be.instanceof(smartfile.Smartfile)
 })
 
