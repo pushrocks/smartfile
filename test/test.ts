@@ -53,8 +53,8 @@ tap.test('.fs.listFileTree() -> should get a file tree', async () => {
 
 tap.test('.fs.fileTreeToObject -> should read a file tree into an Object', async () => {
   let fileArrayArg = await smartfile.fs.fileTreeToObject(path.resolve('./test/'), '**/*.txt')
-  expect(fileArrayArg[0].contents.toString()).to.not.be.null
-  // expect(fileArrayArg[1]).to.be.instanceof(smartfile.Smartfile)
+  expect(fileArrayArg[0]).to.be.instanceof(smartfile.Smartfile)
+  expect(fileArrayArg[0].contents.toString()).to.equal(fileArrayArg[0].contentBuffer.toString())
 })
 
 tap.test('.fs.copy() -> should copy a directory', async () => {
