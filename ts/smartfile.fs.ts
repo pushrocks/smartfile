@@ -228,7 +228,7 @@ export let fileTreeToObject = async (dirPathArg: string, miniMatchFilter: string
       plugins.path.join(dirPath, filePath)
     )
 
-    // push a read file as Smartfile 
+    // push a read file as Smartfile
     smartfileArray.push(new Smartfile({
       contentBuffer: new Buffer(fileContentString),
       base: dirPath,
@@ -336,7 +336,7 @@ export let listAllItems = function (pathArg: string, regexFilter?: RegExp): Prom
     allItmesArray = allItmesArray.filter((fileItem) => {
       return regexFilter.test(fileItem)
     })
-  };
+  }
   done.resolve(allItmesArray)
   return done.promise
 }
