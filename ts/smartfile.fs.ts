@@ -43,7 +43,11 @@ export let fileExists = function (filePath) {
  * Checks if given path points to an existing directory
  */
 export let isDirectory = function (pathArg): boolean {
-  return plugins.fsExtra.statSync(pathArg).isDirectory()
+  try {
+    return plugins.fsExtra.statSync(pathArg).isDirectory()
+  } catch (err) {
+    return false
+  }
 }
 
 /**
