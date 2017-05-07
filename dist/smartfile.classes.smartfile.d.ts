@@ -1,4 +1,5 @@
 /// <reference types="node" />
+import * as plugins from './smartfile.plugins';
 export interface ISmartfileConstructorOptions {
     path?: string;
     contentString?: string;
@@ -15,11 +16,16 @@ export declare class Smartfile {
      */
     path: string;
     /**
+     *
+     */
+    parsedPath: plugins.path.ParsedPath;
+    /**
      * the content of the file as Buffer
      */
     contentBuffer: Buffer;
     /**
      * The current working directory of the file
+     * Note:this is similar to gulp and different from native node path base
      */
     base: string;
     /**

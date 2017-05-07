@@ -18,12 +18,18 @@ export class Smartfile {
   path: string
 
   /**
+   * 
+   */
+  parsedPath: plugins.path.ParsedPath
+
+  /**
    * the content of the file as Buffer
    */
   contentBuffer: Buffer
 
   /**
    * The current working directory of the file
+   * Note:this is similar to gulp and different from native node path base 
    */
   base: string
 
@@ -36,6 +42,8 @@ export class Smartfile {
    * the constructor of Smartfile
    * @param optionsArg
    */
+
+
   constructor (optionsArg: ISmartfileConstructorOptions) {
     if (optionsArg.contentBuffer) {
       this.contentBuffer = optionsArg.contentBuffer
@@ -45,6 +53,7 @@ export class Smartfile {
       console.log('created empty Smartfile?')
     }
     this.path = optionsArg.path
+    this.parsedPath = plugins.path.parse(this.path)
     this.base = optionsArg.base
   }
 
