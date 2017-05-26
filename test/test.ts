@@ -164,8 +164,11 @@ tap.test('.Smartfile -> should produce vinyl compatible files', async () => {
   let localSmartfile = smartfileArray[ 0 ]
   expect(localSmartfile).to.be.instanceof(smartfile.Smartfile)
   expect(localSmartfile.contents).to.be.instanceof(Buffer)
+  // tslint:disable-next-line:no-unused-expression
   expect(localSmartfile.isBuffer()).to.be.true
+  // tslint:disable-next-line:no-unused-expression
   expect(localSmartfile.isDirectory()).to.be.false
+  // tslint:disable-next-line:no-unused-expression
   expect(localSmartfile.isNull()).to.be.false
 })
 
