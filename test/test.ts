@@ -3,8 +3,6 @@ import path = require('path')
 
 import { expect, tap } from 'tapbundle'
 
-import * as vinyl from 'vinyl'
-
 // ---------------------------
 // smartfile.fs
 // ---------------------------
@@ -53,8 +51,8 @@ tap.test('.fs.listFileTree() -> should get a file tree', async () => {
 
 tap.test('.fs.fileTreeToObject -> should read a file tree into an Object', async () => {
   let fileArrayArg = await smartfile.fs.fileTreeToObject(path.resolve('./test/'), '**/*.txt')
-  expect(fileArrayArg[0]).to.be.instanceof(smartfile.Smartfile)
-  expect(fileArrayArg[0].contents.toString()).to.equal(fileArrayArg[0].contentBuffer.toString())
+  expect(fileArrayArg[ 0 ]).to.be.instanceof(smartfile.Smartfile)
+  expect(fileArrayArg[ 0 ].contents.toString()).to.equal(fileArrayArg[ 0 ].contentBuffer.toString())
 })
 
 tap.test('.fs.copy() -> should copy a directory', async () => {
@@ -117,11 +115,6 @@ tap.test('.fs.toStringSync() -> should read a file to a string', async () => {
     .to.equal('Some TestString &&%$')
 })
 
-tap.test('.fs.toVinylSync -> should read an ' + '.json OR .yaml' + ' file to an ' + 'vinyl file object', async () => {
-  let testData = smartfile.fs.toVinylSync('./test/mytest.json')
-  expect(vinyl.isVinyl(testData)).to.be.true
-})
-
 // ---------------------------
 // smartfile.interpreter
 // ---------------------------
@@ -133,32 +126,6 @@ tap.test('.interpreter.filetype() -> should get the file type from a string', as
 // ---------------------------
 // smartfile.memory
 // ---------------------------
-
-tap.test('.memory.toVinylFileSync() -> should produce a vinylFile', async () => {
-  let localString = 'myString'
-  let localOptions = { filename: 'vinylfile2', base: '/someDir' }
-  expect(smartfile.memory.toVinylFileSync(localString, localOptions) instanceof vinyl).to.be.true
-})
-
-tap.test('.memory.toVinylArraySync() -> should produce a an array of vinylfiles', async () => {
-  let localStringArray = [ 'string1', 'string2', 'string3' ]
-  let localOptions = { filename: 'vinylfile2', base: '/someDir' }
-  let testResult = smartfile.memory.toVinylArraySync(localStringArray, localOptions)
-  expect(testResult).to.be.a('array')
-  expect(testResult.length === 3).to.be.true
-  for (let myKey in testResult) {
-    expect(testResult[ myKey ] instanceof vinyl).to.be.true
-  }
-})
-
-tap.test('.memory.vinylToStringSync() -> should produce a String from vinyl file', async () => {
-  let localString = smartfile.memory.vinylToStringSync(new vinyl({
-    base: '/',
-    path: '/test.txt',
-    contents: new Buffer('myString')
-  }))
-  expect(localString).equal('myString')
-})
 
 tap.test('.memory.toFs() -> should write a file to disk and return a promise', async () => {
   let localString = 'myString'
@@ -194,12 +161,23 @@ tap.test('.remote.toString() -> should reject a Promise when the link is false',
 
 tap.test('.Smartfile -> should produce vinyl compatible files', async () => {
   let smartfileArray = await smartfile.fs.fileTreeToObject(process.cwd(), './test/testfolder/**/*')
-  let localSmartfile = smartfileArray[0]
+  let localSmartfile = smartfileArray[ 0 ]
   expect(localSmartfile).to.be.instanceof(smartfile.Smartfile)
   expect(localSmartfile.contents).to.be.instanceof(Buffer)
   expect(localSmartfile.isBuffer()).to.be.true
   expect(localSmartfile.isDirectory()).to.be.false
   expect(localSmartfile.isNull()).to.be.false
+})
+
+tap.test('should output a smartfile array to disk', async () => {
+  let smartfileArray = await smartfile.fs.fileTreeToObject('./test/testfolder/', '*')
+  for (let smartfile of smartfileArray) {
+    // console.log(smartfile.relative)
+    // console.log(smartfile.path)
+    // console.log(smartfile.base)
+    // console.log(smartfile.parsedPath)
+  }
+  await smartfile.memory.smartfileArrayToFs(smartfileArray, path.resolve('./test/temp/testoutput/'))
 })
 
 tap.start()

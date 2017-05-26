@@ -1,9 +1,18 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 require("typings-global");
 const plugins = require("./smartfile.plugins");
+const smartfile_classes_smartfile_1 = require("./smartfile.classes.smartfile");
+const smartfileFs = require("./smartfile.fs");
 const SmartfileInterpreter = require("./smartfile.interpreter");
-let vinyl = require('vinyl');
 /**
  * converts file to Object
  * @param fileStringArg
@@ -14,66 +23,41 @@ exports.toObject = function (fileStringArg, fileTypeArg) {
     return SmartfileInterpreter.objectFile(fileStringArg, fileTypeArg);
 };
 /**
- * takes a string and converts it to vinyl file
- * @param fileArg
- * @param optionsArg
- */
-exports.toVinylFileSync = function (fileArg, optionsArg) {
-    optionsArg ? void (0) : optionsArg = { filename: 'vinylfile', base: '/' };
-    optionsArg.filename ? void (0) : optionsArg.filename = 'vinylfile';
-    optionsArg.base ? void (0) : optionsArg.base = '/';
-    optionsArg.relPath ? void ('0') : optionsArg.relPath = '';
-    let vinylFile = new vinyl({
-        base: optionsArg.base,
-        path: plugins.path.join(optionsArg.base, optionsArg.relPath, optionsArg.filename),
-        contents: new Buffer(fileArg)
-    });
-    return vinylFile;
-};
-/**
- * takes a string array and some options and returns a vinylfile array
- * @param arrayArg
- * @param optionsArg
- */
-exports.toVinylArraySync = function (arrayArg, optionsArg) {
-    let vinylArray = [];
-    for (let stringIndexArg in arrayArg) {
-        let myString = arrayArg[stringIndexArg];
-        vinylArray.push(exports.toVinylFileSync(myString, optionsArg));
-    }
-    return vinylArray;
-};
-/**
- * takes a vinylFile object and converts it to String
- */
-exports.vinylToStringSync = function (fileArg) {
-    return fileArg.contents.toString('utf8');
-};
-/**
  * writes string or vinyl file to disk.
  * @param fileArg
  * @param fileNameArg
  * @param fileBaseArg
  */
-exports.toFs = function (fileContentArg, filePathArg) {
+exports.toFs = (fileContentArg, filePathArg, optionsArg = {}) => __awaiter(this, void 0, void 0, function* () {
     let done = plugins.q.defer();
-    // function checks to abort if needed
+    // check args
     if (!fileContentArg || !filePathArg) {
         throw new Error('expected valid arguments');
     }
     // prepare actual write action
     let fileString;
     let filePath = filePathArg;
-    if (vinyl.isVinyl(fileContentArg)) {
+    // handle Smartfile
+    if (fileContentArg instanceof smartfile_classes_smartfile_1.Smartfile) {
         let fileContentArg2 = fileContentArg;
-        fileString = exports.vinylToStringSync(fileContentArg2);
+        fileString = fileContentArg.contentBuffer.toString();
+        // handle options
+        optionsArg.respectRelative ? filePath = plugins.path.join(filePath, fileContentArg.path) : null;
     }
     else if (typeof fileContentArg === 'string') {
         fileString = fileContentArg;
     }
+    else {
+        throw new Error('fileContent is neither string nor Smartfile');
+    }
     plugins.fsExtra.writeFile(filePath, fileString, 'utf8', done.resolve);
-    return done.promise;
-};
+    return yield done.promise;
+});
+/**
+ * writes a string or a Smartfile to disk synchronously, only supports string
+ * @param fileArg
+ * @param filePathArg
+ */
 exports.toFsSync = function (fileArg, filePathArg) {
     // function checks to abort if needed
     if (!fileArg || !filePathArg) {
@@ -83,11 +67,19 @@ exports.toFsSync = function (fileArg, filePathArg) {
     let fileString;
     let filePath = filePathArg;
     if (typeof fileArg !== 'string') {
-        fileString = exports.vinylToStringSync(fileArg);
+        throw new Error('fileArg is not of type String.');
     }
     else if (typeof fileArg === 'string') {
         fileString = fileArg;
     }
     plugins.fsExtra.writeFileSync(filePath, fileString, 'utf8');
 };
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic21hcnRmaWxlLm1lbW9yeS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uL3RzL3NtYXJ0ZmlsZS5tZW1vcnkudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSwwQkFBdUI7QUFFdkIsK0NBQStDO0FBQy9DLGdFQUFnRTtBQUNoRSxJQUFJLEtBQUssR0FBRyxPQUFPLENBQUMsT0FBTyxDQUFDLENBQUE7QUFRNUI7Ozs7O0dBS0c7QUFDUSxRQUFBLFFBQVEsR0FBRyxVQUFVLGFBQXFCLEVBQUUsV0FBbUI7SUFDeEUsTUFBTSxDQUFDLG9CQUFvQixDQUFDLFVBQVUsQ0FBQyxhQUFhLEVBQUUsV0FBVyxDQUFDLENBQUE7QUFDcEUsQ0FBQyxDQUFBO0FBRUQ7Ozs7R0FJRztBQUNRLFFBQUEsZUFBZSxHQUFHLFVBQVUsT0FBZSxFQUFFLFVBQW1FO0lBQ3pILFVBQVUsR0FBRyxLQUFLLENBQUMsQ0FBQyxDQUFDLEdBQUcsVUFBVSxHQUFHLEVBQUUsUUFBUSxFQUFFLFdBQVcsRUFBRSxJQUFJLEVBQUUsR0FBRyxFQUFFLENBQUE7SUFDekUsVUFBVSxDQUFDLFFBQVEsR0FBRyxLQUFLLENBQUMsQ0FBQyxDQUFDLEdBQUcsVUFBVSxDQUFDLFFBQVEsR0FBRyxXQUFXLENBQUE7SUFDbEUsVUFBVSxDQUFDLElBQUksR0FBRyxLQUFLLENBQUMsQ0FBQyxDQUFDLEdBQUcsVUFBVSxDQUFDLElBQUksR0FBRyxHQUFHLENBQUE7SUFDbEQsVUFBVSxDQUFDLE9BQU8sR0FBRyxLQUFLLENBQUMsR0FBRyxDQUFDLEdBQUcsVUFBVSxDQUFDLE9BQU8sR0FBRyxFQUFFLENBQUE7SUFDekQsSUFBSSxTQUFTLEdBQUcsSUFBSSxLQUFLLENBQUM7UUFDeEIsSUFBSSxFQUFFLFVBQVUsQ0FBQyxJQUFJO1FBQ3JCLElBQUksRUFBRSxPQUFPLENBQUMsSUFBSSxDQUFDLElBQUksQ0FBQyxVQUFVLENBQUMsSUFBSSxFQUFFLFVBQVUsQ0FBQyxPQUFPLEVBQUUsVUFBVSxD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
+exports.smartfileArrayToFs = (smartfileArrayArg, dirArg) => __awaiter(this, void 0, void 0, function* () {
+    yield smartfileFs.ensureDir(dirArg);
+    for (let smartfile of smartfileArrayArg) {
+        yield exports.toFs(smartfile, dirArg, {
+            respectRelative: true
+        });
+    }
+});
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic21hcnRmaWxlLm1lbW9yeS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uL3RzL3NtYXJ0ZmlsZS5tZW1vcnkudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUFBLDBCQUF1QjtBQUV2QiwrQ0FBK0M7QUFDL0MsK0VBQXlEO0FBQ3pELDhDQUE2QztBQUc3QyxnRUFBZ0U7QUFFaEU7Ozs7O0dBS0c7QUFDUSxRQUFBLFFBQVEsR0FBRyxVQUFVLGFBQXFCLEVBQUUsV0FBbUI7SUFDeEUsTUFBTSxDQUFDLG9CQUFvQixDQUFDLFVBQVUsQ0FBQyxhQUFhLEVBQUUsV0FBVyxDQUFDLENBQUE7QUFDcEUsQ0FBQyxDQUFBO0FBTUQ7Ozs7O0dBS0c7QUFDUSxRQUFBLElBQUksR0FBRyxDQUFPLGNBQWtDLEVBQUUsV0FBVyxFQUFFLGFBQTJCLEVBQUU7SUFDckcsSUFBSSxJQUFJLEdBQUcsT0FBTyxDQUFDLENBQUMsQ0FBQyxLQUFLLEVBQUUsQ0FBQTtJQUU1QixhQUFhO0lBQ2IsRUFBRSxDQUFDLENBQUMsQ0FBQyxjQUFjLElBQUksQ0FBQyxXQUFXLENBQUMsQ0FBQyxDQUFDO1FBQ3BDLE1BQU0sSUFBSSxLQUFLLENBQUMsMEJBQTBCLENBQUMsQ0FBQTtJQUM3QyxDQUFDO0lBRUQsOEJBQThCO0lBQzlCLElBQUksVUFBa0IsQ0FBQTtJQUN0QixJQUFJLFFBQVEsR0FBVyxXQUFXLENBQUE7SUFFbEMsbUJBQW1CO0lBQ25CLEVBQUUsQ0FBQyxDQUFDLGNBQWMsWUFBWSx1Q0FBUyxDQUFDLENBQUMsQ0FBQztRQUN4QyxJQUFJLGVBQWUsR0FBUSxjQUFjLENBQUE7UUFDekMsVUFBVSxHQUFHLGNBQWMsQ0FBQyxhQUFhLENBQUMsUUFBUSxFQUFFLENBQUE7UUFFcEQsaUJBQWlCO1FBQ2pCLFVBQVUsQ0FBQyxlQUFlLEdBQUcsUUFBUSxHQUFHLE9BQU8sQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLFFBQVEsRUFBRSxjQUFjLENBQUMsSUFBSSxDQUFDLEdBQUcsSUFBSSxDQUFBO0lBQ2pHLENBQUM7SUFBQyxJQUFJLENBQUMsRUFBRSxDQUFDLENBQUMsT0FBTyxjQUFjLEtBQUssUUFBUSxDQUFDLENBQUMsQ0FBQztRQUM5QyxVQUFVLEdBQUcsY0FBYyxDQUFBO0lBQzdCLENBQUM7SUFBQyxJQUFJLENBQUMsQ0FBQztRQUNOLE1BQU0sSUFBSSxLQUFLLENBQUMsNkNBQTZDLENBQUMsQ0FBQTtJQUNoRSxDQUFDO0lBQ0QsT0FBTyxDQUFDLE9BQU8sQ0FBQyxTQUFTLENBQUMsUUFBUSxFQUFFLFVBQVUsRUFBRSxNQUFNLEVBQUUsSUFBSSxDQUFDLE9BQU8sQ0FBQyxDQUFBO0lBQ3JFLE1BQU0sQ0FBQyxNQUFNLElBQUksQ0FBQyxPQUFPLENBQUE7QUFDM0IsQ0FBQyxDQUFBLENBQUE7QUFFRDs7OztHQUlHO0FBQ1EsUUFBQSxRQUFRLEdBQUcsVUFBVSxPQUFlLEVBQUUsV0FBbUI7SUFDbEUscUNBQXFDO0lBQ3JDLEVBQUUsQ0FBQyxDQUFDLENBQUMsT0FBTyxJQUFJLENBQUMsV0FBVyxDQUFDLENBQUMsQ0FBQztRQUM3QixNQUFNLElBQUksS0FBSyxDQUFDLDRCQUE0QixDQUFDLENBQUE7SUFDL0MsQ0FBQztJQUVELDhCQUE4QjtJQUM5QixJQUFJLFVBQWtCLENBQUE7SUFDdEIsSUFBSSxRQUFRLEdBQVcsV0FBVyxDQUFBO0lBRWxDLEVBQUUsQ0FBQyxDQUFDLE9BQU8sT0FBTyxLQUFLLFFBQVEsQ0FBQyxDQUFDLENBQUM7UUFDaEMsTUFBTSxJQUFJLEtBQUssQ0FBQyxnQ0FBZ0MsQ0FBQyxDQUFBO0lBQ25ELENBQUM7SUFBQyxJQUFJLENBQUMsRUFBRSxDQUFDLENBQUMsT0FBTyxPQUFPLEtBQUssUUFBUSxDQUFDLENBQUMsQ0FBQztRQUN2QyxVQUFVLEdBQUcsT0FBTyxDQUFBO0lBQ3RCLENBQUM7SUFDRCxPQUFPLENBQUMsT0FBTyxDQUFDLGFBQWEsQ0FBQyxRQUFRLEVBQUUsVUFBVSxFQUFFLE1BQU0sQ0FBQyxDQUFBO0FBQzdELENBQUMsQ0FBQTtBQUVVLFFBQUEsa0JBQWtCLEdBQUcsQ0FBTyxpQkFBOEIsRUFBRSxNQUFjO0lBQ25GLE1BQU0sV0FBVyxDQUFDLFNBQVMsQ0FBQyxNQUFNLENBQUMsQ0FBQTtJQUNuQyxHQUFHLENBQUEsQ0FBQyxJQUFJLFNBQVMsSUFBSSxpQkFBaUIsQ0FBQyxDQUFDLENBQUM7UUFDdkMsTUFBTSxZQUFJLENBQUMsU0FBUyxFQUFFLE1BQU0sRUFBRTtZQUM1QixlQUFlLEVBQUUsSUFBSTtTQUN0QixDQUFDLENBQUE7SUFDSixDQUFDO0FBQ0gsQ0FBQyxDQUFBLENBQUEifQ==

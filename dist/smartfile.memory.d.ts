@@ -1,10 +1,5 @@
-/// <reference types="node" />
 import 'typings-global';
-export interface IVinylFile {
-    contents: Buffer;
-    base: string;
-    path: string;
-}
+import { Smartfile } from './smartfile.classes.smartfile';
 /**
  * converts file to Object
  * @param fileStringArg
@@ -12,35 +7,20 @@ export interface IVinylFile {
  * @returns {any|any}
  */
 export declare let toObject: (fileStringArg: string, fileTypeArg: string) => any;
-/**
- * takes a string and converts it to vinyl file
- * @param fileArg
- * @param optionsArg
- */
-export declare let toVinylFileSync: (fileArg: string, optionsArg?: {
-    filename?: string;
-    base?: string;
-    relPath?: string;
-}) => any;
-/**
- * takes a string array and some options and returns a vinylfile array
- * @param arrayArg
- * @param optionsArg
- */
-export declare let toVinylArraySync: (arrayArg: string[], optionsArg?: {
-    filename?: string;
-    base?: string;
-    relPath?: string;
-}) => any[];
-/**
- * takes a vinylFile object and converts it to String
- */
-export declare let vinylToStringSync: (fileArg: IVinylFile) => string;
+export interface IToFsOptions {
+    respectRelative?: boolean;
+}
 /**
  * writes string or vinyl file to disk.
  * @param fileArg
  * @param fileNameArg
  * @param fileBaseArg
  */
-export declare let toFs: (fileContentArg: string | IVinylFile, filePathArg: any) => Promise<{}>;
-export declare let toFsSync: (fileArg: any, filePathArg: string) => void;
+export declare let toFs: (fileContentArg: string | Smartfile, filePathArg: any, optionsArg?: IToFsOptions) => Promise<{}>;
+/**
+ * writes a string or a Smartfile to disk synchronously, only supports string
+ * @param fileArg
+ * @param filePathArg
+ */
+export declare let toFsSync: (fileArg: string, filePathArg: string) => void;
+export declare let smartfileArrayToFs: (smartfileArrayArg: Smartfile[], dirArg: string) => Promise<void>;

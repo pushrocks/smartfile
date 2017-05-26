@@ -1,14 +1,11 @@
 import 'typings-global'
 
 import plugins = require('./smartfile.plugins')
-import SmartfileInterpreter = require('./smartfile.interpreter')
-let vinyl = require('vinyl')
+import { Smartfile } from './smartfile.classes.smartfile'
+import * as smartfileFs from './smartfile.fs'
 
-export interface IVinylFile {
-  contents: Buffer
-  base: string
-  path: string,
-}
+
+import SmartfileInterpreter = require('./smartfile.interpreter')
 
 /**
  * converts file to Object
@@ -20,62 +17,20 @@ export let toObject = function (fileStringArg: string, fileTypeArg: string) {
   return SmartfileInterpreter.objectFile(fileStringArg, fileTypeArg)
 }
 
-/**
- * takes a string and converts it to vinyl file
- * @param fileArg
- * @param optionsArg
- */
-export let toVinylFileSync = function (fileArg: string, optionsArg?: { filename?: string, base?: string, relPath?: string }) {
-  optionsArg ? void (0) : optionsArg = { filename: 'vinylfile', base: '/' }
-  optionsArg.filename ? void (0) : optionsArg.filename = 'vinylfile'
-  optionsArg.base ? void (0) : optionsArg.base = '/'
-  optionsArg.relPath ? void ('0') : optionsArg.relPath = ''
-  let vinylFile = new vinyl({
-    base: optionsArg.base,
-    path: plugins.path.join(optionsArg.base, optionsArg.relPath, optionsArg.filename),
-    contents: new Buffer(fileArg)
-  })
-  return vinylFile
-}
-
-/**
- * takes a string array and some options and returns a vinylfile array
- * @param arrayArg
- * @param optionsArg
- */
-export let toVinylArraySync = function (
-  arrayArg: string[],
-  optionsArg?: {
-    filename?: string,
-    base?: string,
-    relPath?: string
-  }
-) {
-  let vinylArray = []
-  for (let stringIndexArg in arrayArg) {
-    let myString = arrayArg[ stringIndexArg ]
-    vinylArray.push(toVinylFileSync(myString, optionsArg))
-  }
-  return vinylArray
-}
-
-/**
- * takes a vinylFile object and converts it to String
- */
-export let vinylToStringSync = function (fileArg: IVinylFile): string {
-  return fileArg.contents.toString('utf8')
+export interface IToFsOptions {
+  respectRelative?: boolean
 }
 
 /**
  * writes string or vinyl file to disk.
- * @param fileArg
+ * @param fileArg 
  * @param fileNameArg
  * @param fileBaseArg
  */
-export let toFs = function (fileContentArg: string | IVinylFile, filePathArg) {
+export let toFs = async (fileContentArg: string | Smartfile, filePathArg, optionsArg: IToFsOptions = {} ) => {
   let done = plugins.q.defer()
 
-  // function checks to abort if needed
+  // check args
   if (!fileContentArg || !filePathArg) {
     throw new Error('expected valid arguments')
   }
@@ -83,17 +38,29 @@ export let toFs = function (fileContentArg: string | IVinylFile, filePathArg) {
   // prepare actual write action
   let fileString: string
   let filePath: string = filePathArg
-  if (vinyl.isVinyl(fileContentArg)) {
+
+  // handle Smartfile
+  if (fileContentArg instanceof Smartfile) {
     let fileContentArg2: any = fileContentArg
-    fileString = vinylToStringSync(fileContentArg2)
+    fileString = fileContentArg.contentBuffer.toString()
+    
+    // handle options
+    optionsArg.respectRelative ? filePath = plugins.path.join(filePath, fileContentArg.path) : null
   } else if (typeof fileContentArg === 'string') {
     fileString = fileContentArg
+  } else {
+    throw new Error('fileContent is neither string nor Smartfile')
   }
   plugins.fsExtra.writeFile(filePath, fileString, 'utf8', done.resolve)
-  return done.promise
+  return await done.promise
 }
 
-export let toFsSync = function (fileArg, filePathArg: string) {
+/**
+ * writes a string or a Smartfile to disk synchronously, only supports string
+ * @param fileArg 
+ * @param filePathArg 
+ */
+export let toFsSync = function (fileArg: string, filePathArg: string) {
   // function checks to abort if needed
   if (!fileArg || !filePathArg) {
     throw new Error('expected a valid arguments')
@@ -104,9 +71,18 @@ export let toFsSync = function (fileArg, filePathArg: string) {
   let filePath: string = filePathArg
 
   if (typeof fileArg !== 'string') {
-    fileString = vinylToStringSync(fileArg)
+    throw new Error('fileArg is not of type String.')
   } else if (typeof fileArg === 'string') {
     fileString = fileArg
   }
   plugins.fsExtra.writeFileSync(filePath, fileString, 'utf8')
+}
+
+export let smartfileArrayToFs = async (smartfileArrayArg: Smartfile[], dirArg: string) => {
+  await smartfileFs.ensureDir(dirArg)
+  for(let smartfile of smartfileArrayArg) {
+    await toFs(smartfile, dirArg, {
+      respectRelative: true
+    })
+  }
 }
