@@ -137,4 +137,10 @@ export class Smartfile {
   isSymbolic () {
     return false
   }
+
+  // update things
+  updateFileName (fileNameArg: string) {
+    let oldFileName = this.parsedPath.base
+    this.path.replace(new RegExp(oldFileName + '$'),fileNameArg)
+  }
 }

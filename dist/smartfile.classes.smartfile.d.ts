@@ -73,4 +73,5 @@ export declare class Smartfile {
     isDirectory(): boolean;
     isStream(): boolean;
     isSymbolic(): boolean;
+    updateFileName(fileNameArg: string): void;
 }

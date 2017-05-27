@@ -175,10 +175,10 @@ tap.test('.Smartfile -> should produce vinyl compatible files', async () => {
 tap.test('should output a smartfile array to disk', async () => {
   let smartfileArray = await smartfile.fs.fileTreeToObject('./test/testfolder/', '*')
   for (let smartfile of smartfileArray) {
-    // console.log(smartfile.relative)
-    // console.log(smartfile.path)
-    // console.log(smartfile.base)
-    // console.log(smartfile.parsedPath)
+    console.log(smartfile.relative)
+    console.log(smartfile.path)
+    console.log(smartfile.base)
+    console.log(smartfile.parsedPath)
   }
   await smartfile.memory.smartfileArrayToFs(smartfileArray, path.resolve('./test/temp/testoutput/'))
 })
