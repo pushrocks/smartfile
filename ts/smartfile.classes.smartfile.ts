@@ -141,6 +141,6 @@ export class Smartfile {
   // update things
   updateFileName (fileNameArg: string) {
     let oldFileName = this.parsedPath.base
-    this.path.replace(new RegExp(oldFileName + '$'),fileNameArg)
+    this.path = this.path.replace(new RegExp(oldFileName + '$'),fileNameArg)
   }
 }
