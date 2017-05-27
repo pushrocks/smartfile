@@ -376,7 +376,8 @@ export let listFileTree = (dirPathArg: string, miniMatchFilter: string): Promise
 
   let options = {
     cwd: dirPath,
-    nodir: true
+    nodir: true,
+    dot: true
   }
   plugins.glob(miniMatchFilter, options, (err, files: string[]) => {
     if (err) {
