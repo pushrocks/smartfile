@@ -53,7 +53,7 @@ export let toFs = async (fileContentArg: string | Smartfile, filePathArg, option
     throw new Error('fileContent is neither string nor Smartfile')
   }
   await smartfileFs.ensureDir(plugins.path.parse(filePath).dir)
-  plugins.fsExtra.writeFile(filePath, fileString, 'utf8', done.resolve)
+  plugins.fsExtra.writeFile(filePath, fileString, {encoding: 'utf8'}, done.resolve)
   return await done.promise
 }
 
@@ -77,7 +77,7 @@ export let toFsSync = function (fileArg: string, filePathArg: string) {
   } else if (typeof fileArg === 'string') {
     fileString = fileArg
   }
-  plugins.fsExtra.writeFileSync(filePath, fileString, 'utf8')
+  plugins.fsExtra.writeFileSync(filePath, fileString, {encoding: 'utf8'})
 }
 
 export let smartfileArrayToFs = async (smartfileArrayArg: Smartfile[], dirArg: string) => {

@@ -1,4 +1,4 @@
-import * as smartfile from '../dist/index'
+import * as smartfile from '../ts/index'
 import path = require('path')
 
 import { expect, tap } from 'tapbundle'
