@@ -11,7 +11,7 @@ export interface IToFsOptions {
     respectRelative?: boolean;
 }
 /**
- * writes string or vinyl file to disk.
+ * writes string or Smartfile to disk.
  * @param fileArg
  * @param fileNameArg
  * @param fileBaseArg

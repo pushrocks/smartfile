@@ -23,7 +23,7 @@ exports.toObject = function (fileStringArg, fileTypeArg) {
     return SmartfileInterpreter.objectFile(fileStringArg, fileTypeArg);
 };
 /**
- * writes string or vinyl file to disk.
+ * writes string or Smartfile to disk.
  * @param fileArg
  * @param fileNameArg
  * @param fileBaseArg

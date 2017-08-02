@@ -22,8 +22,8 @@ export interface IToFsOptions {
 }
 
 /**
- * writes string or vinyl file to disk.
- * @param fileArg 
+ * writes string or Smartfile to disk.
+ * @param fileArg
  * @param fileNameArg
  * @param fileBaseArg
  */

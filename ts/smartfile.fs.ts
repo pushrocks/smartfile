@@ -224,9 +224,14 @@ export let fileTreeToObject = async (dirPathArg: string, miniMatchFilter: string
   let fileTree = await listFileTree(dirPath, miniMatchFilter)
   let smartfileArray: Smartfile[] = []
   for (let filePath of fileTree) {
-    let fileContentString = toStringSync(
-      plugins.path.join(dirPath, filePath)
-    )
+    let readPath = ((): string => {
+      if (!plugins.path.isAbsolute(filePath)) {
+        return plugins.path.join(dirPath, filePath)
+      } else {
+        return readPath
+      }
+    })()
+    let fileContentString = toStringSync(readPath)
 
     // push a read file as Smartfile
     smartfileArray.push(new Smartfile({
