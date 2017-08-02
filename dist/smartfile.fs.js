@@ -218,7 +218,7 @@ exports.fileTreeToObject = (dirPathArg, miniMatchFilter) => __awaiter(this, void
                 return plugins.path.join(dirPath, filePath);
             }
             else {
-                return readPath;
+                return filePath;
             }
         })();
         let fileContentString = exports.toStringSync(readPath);

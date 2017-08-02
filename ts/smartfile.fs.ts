@@ -228,7 +228,7 @@ export let fileTreeToObject = async (dirPathArg: string, miniMatchFilter: string
       if (!plugins.path.isAbsolute(filePath)) {
         return plugins.path.join(dirPath, filePath)
       } else {
-        return readPath
+        return filePath
       }
     })()
     let fileContentString = toStringSync(readPath)
