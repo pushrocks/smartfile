@@ -34,9 +34,7 @@ testLEGACY:
 testStableWindows:
   stage: test
   script:
-  - yarn global add npmts
-  - yarn install
-  - yarn test
+  - yarn global add npmts && yarn install && yarn test
   coverage: /\d+.?\d+?\%\s*coverage/
   tags:
   - windows
