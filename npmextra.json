@@ -7,7 +7,7 @@
     
   },
   "npmci": {
-    "globalNpmTools": [
+    "npmGlobalTools": [
       "npmts"
     ]
   }
