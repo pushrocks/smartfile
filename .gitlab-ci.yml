@@ -9,6 +9,7 @@ cache:
 stages:
 - mirror
 - test
+- external
 - release
 - trigger
 - pages
