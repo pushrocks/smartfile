@@ -34,7 +34,7 @@ testLEGACY:
 testStableWindows:
   stage: test
   script:
-  - yarn global add npmts && yarn install && yarn test
+  - yarn global add npmts && cd C:\\gitlab_runner\builds\326a2ffb\0\pushrocks\smartfile && yarn install && yarn test
   coverage: /\d+.?\d+?\%\s*coverage/
   tags:
   - windows
