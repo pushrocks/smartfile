@@ -9,7 +9,6 @@ cache:
 stages:
 - mirror
 - test
-- external
 - release
 - trigger
 - pages
@@ -31,6 +30,17 @@ testLEGACY:
   tags:
   - docker
   allow_failure: true
+
+testStableWindows:
+  stage: test
+  script:
+  - yarn global add npmts
+  - yarn install
+  - yarn test
+  coverage: /\d+.?\d+?\%\s*coverage/
+  tags:
+  - windows
+  allow_failure: false
 
 testLTS:
   stage: test
