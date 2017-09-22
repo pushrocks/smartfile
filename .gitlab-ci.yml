@@ -38,7 +38,7 @@ testStableWindows:
   coverage: /\d+.?\d+?\%\s*coverage/
   tags:
   - windows
-  allow_failure: false
+  allow_failure: true
 
 testLTS:
   stage: test
