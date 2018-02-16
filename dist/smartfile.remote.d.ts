@@ -1,4 +1,3 @@
-import 'typings-global';
 /**
  *
  * @param fromArg

@@ -1,4 +1,3 @@
-import 'typings-global';
 import * as SmartfileFs from './smartfile.fs';
 import * as SmartfileInterpreter from './smartfile.interpreter';
 import * as SmartfileMemory from './smartfile.memory';

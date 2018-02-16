@@ -1,5 +1,3 @@
-import 'typings-global'
-
 import plugins = require('./smartfile.plugins')
 
 export let filetype = (pathArg: string): string => {

@@ -1,5 +1,3 @@
-import 'typings-global'
-
 import plugins = require('./smartfile.plugins')
 import { Smartfile } from './smartfile.classes.smartfile'
 import * as smartfileFs from './smartfile.fs'

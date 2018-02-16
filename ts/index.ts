@@ -1,5 +1,3 @@
-import 'typings-global'
-
 import * as plugins from './smartfile.plugins'
 import * as SmartfileFs from './smartfile.fs'
 import * as SmartfileInterpreter from './smartfile.interpreter'

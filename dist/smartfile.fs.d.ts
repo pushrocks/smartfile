@@ -1,4 +1,3 @@
-import 'typings-global';
 import { Smartfile } from './smartfile.classes.smartfile';
 /**
  *

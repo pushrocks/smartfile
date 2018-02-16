@@ -1,5 +1,3 @@
-import 'typings-global'
-
 import plugins = require('./smartfile.plugins')
 import SmartfileInterpreter = require('./smartfile.interpreter')
 
