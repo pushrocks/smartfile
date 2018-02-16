@@ -1,4 +1,3 @@
-import 'typings-global'
 export import fs = require('fs')
 export import fsExtra = require('fs-extra')
 export let glob = require('glob')

@@ -12,41 +12,43 @@ tap.test('.fs.fileExistsSync -> should return an accurate boolean', async () => 
   expect(smartfile.fs.fileExistsSync('./test/notthere.json')).be.false
 })
 
-tap.test('.fs.fileExists should resolve or reject a promise', async () => {
+tap.test('.fs.fileExists -> should resolve or reject a promise', async () => {
   expect(smartfile.fs.fileExists('./test/mytest.json')).to.be.instanceof(Promise)
-  await expect(smartfile.fs.fileExists('./test/mytest.json')).to.eventually.be.fulfilled
-  await expect(smartfile.fs.fileExists('./test/notthere.json')).to.eventually.be.rejected
+  await smartfile.fs.fileExists('./test/mytest.json')
+  await smartfile.fs.fileExists('./test/notthere.json').catch(err => {
+    return expect(err.message).to.equal("ENOENT: no such file or directory, access './test/notthere.json'")
+  });
 })
 
 tap.test('.fs.listFoldersSync() -> should get the file type from a string', async () => {
-  expect(smartfile.fs.listFoldersSync('./test/')).to.deep.include('testfolder')
-  expect(smartfile.fs.listFoldersSync('./test/')).to.not.deep.include('notExistentFolder')
+  expect(smartfile.fs.listFoldersSync('./test/')).to.include('testfolder')
+  expect(smartfile.fs.listFoldersSync('./test/')).to.not.include('notExistentFolder')
 })
 
 tap.test('.fs.listFolders() -> should get the file type from a string', async () => {
   let folderArrayArg = await smartfile.fs.listFolders('./test/')
-  expect(folderArrayArg).to.deep.include('testfolder')
-  expect(folderArrayArg).to.not.deep.include('notExistentFolder')
+  expect(folderArrayArg).to.include('testfolder')
+  expect(folderArrayArg).to.not.include('notExistentFolder')
 })
 
 
 tap.test('.fs.listFilesSync() -> should get the file type from a string', async () => {
-  expect(smartfile.fs.listFilesSync('./test/')).to.deep.include('mytest.json')
-  expect(smartfile.fs.listFilesSync('./test/')).to.not.deep.include('notExistentFile')
-  expect(smartfile.fs.listFilesSync('./test/', /mytest\.json/)).to.deep.include('mytest.json')
-  expect(smartfile.fs.listFilesSync('./test/', /mytests.json/)).to.not.deep.include('mytest.json')
+  expect(smartfile.fs.listFilesSync('./test/')).to.include('mytest.json')
+  expect(smartfile.fs.listFilesSync('./test/')).to.not.include('notExistentFile')
+  expect(smartfile.fs.listFilesSync('./test/', /mytest\.json/)).to.include('mytest.json')
+  expect(smartfile.fs.listFilesSync('./test/', /mytests.json/)).to.not.include('mytest.json')
 })
 
 tap.test('.fs.listFiles() -> should get the file type from a string', async () => {
   let folderArrayArg = await smartfile.fs.listFiles('./test/')
-  expect(folderArrayArg).to.deep.include('mytest.json')
-  expect(folderArrayArg).to.not.deep.include('notExistentFile')
+  expect(folderArrayArg).to.include('mytest.json')
+  expect(folderArrayArg).to.not.include('notExistentFile')
 })
 
 tap.test('.fs.listFileTree() -> should get a file tree', async () => {
   let folderArrayArg = await smartfile.fs.listFileTree(path.resolve('./test/'), '**/*.txt')
-  expect(folderArrayArg).to.deep.include('testfolder/testfile1.txt')
-  expect(folderArrayArg).to.not.deep.include('mytest.json')
+  expect(folderArrayArg).to.include('testfolder/testfile1.txt')
+  expect(folderArrayArg).to.not.include('mytest.json')
 })
 
 tap.test('.fs.fileTreeToObject -> should read a file tree into an Object', async () => {
@@ -72,7 +74,7 @@ tap.test('.fs.remove() -> should remove an entire directory', async () => {
 })
 
 tap.test('.fs.remove -> should remove single files', async () => {
-  await expect(smartfile.fs.remove('./test/temp/mytestRenamed.yaml')).to.eventually.be.fulfilled
+  await smartfile.fs.remove('./test/temp/mytestRenamed.yaml')
 })
 
 tap.test('.fs.removeSync -> should remove single files synchronouly', async () => {
@@ -95,8 +97,8 @@ tap.test('.fs.removeManySync -> should remove and array of single files synchron
 
 tap.test('.fs.toObjectSync() -> should read an ' + '.yaml' + ' file to an object', async () => {
   let testData = smartfile.fs.toObjectSync('./test/mytest.yaml')
-  expect(testData).have.property('key1', 'this works')
-  expect(testData).have.property('key2', 'this works too')
+  expect(testData).to.include({'key1': 'this works'})
+  expect(testData).to.include({'key2': 'this works too'})
 
 })
 tap.test('.fs.toObjectSync() -> should state unknown file type for unknown file types', async () => {
@@ -105,8 +107,8 @@ tap.test('.fs.toObjectSync() -> should state unknown file type for unknown file 
 
 tap.test('.fs.toObjectSync() -> should read an ' + '.json' + ' file to an object', async () => {
   let testData = smartfile.fs.toObjectSync('./test/mytest.json')
-  expect(testData).have.property('key1', 'this works')
-  expect(testData).have.property('key2', 'this works too')
+  expect(testData).to.include({'key1': 'this works'})
+  expect(testData).to.include({'key2': 'this works too'})
 })
 
 
@@ -150,9 +152,11 @@ tap.test('.remote.toString() -> should load a remote file to a variable', async 
   expect(responseString).to.equal('Some TestString &&%$')
 })
 
-tap.test('.remote.toString() -> should reject a Promise when the link is false', async () => {
-  await expect(smartfile.remote.toString('https://push.rocks/doesnotexist.txt'))
-    .to.eventually.be.rejected
+tap.test('.remote.toString() -> should reject a Promise when the link is false', async (tools) => {
+  tools.returnError
+  await smartfile.remote.toString('https://push.rocks/doesnotexist.txt').catch(err => {
+    return expect(err.message).to.equal('could not get remote file from https://push.rocks/doesnotexist.txt')
+  })
 })
 
 // ---------------------------

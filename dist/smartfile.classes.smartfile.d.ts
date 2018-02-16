@@ -44,8 +44,10 @@ export declare class Smartfile {
     setContentsFromString(contentString: string): void;
     /**
      * write file to disk
+     * Behaviours:
+     * - no argument write to exactly where the file was picked up
      */
-    write(): Promise<void>;
+    write(pathArg?: string): Promise<void>;
     /**
      * read file from disk
      */

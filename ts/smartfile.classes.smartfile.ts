@@ -1,4 +1,6 @@
 import * as plugins from './smartfile.plugins'
+import * as fs from './smartfile.fs'
+import * as memory from './smartfile.memory'
 
 export interface ISmartfileConstructorOptions {
   path?: string
@@ -68,9 +70,12 @@ export class Smartfile {
 
   /**
    * write file to disk
+   * Behaviours:
+   * - no argument write to exactly where the file was picked up
    */
-  async write () {
-
+  async write (pathArg?: string) {
+    const stringToWrite = this.contentBuffer.toString()
+    await memory.toFs(stringToWrite, this.path)
   }
 
   /**

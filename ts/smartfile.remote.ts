@@ -42,7 +42,6 @@ export let toString = (fromArg: string) => {
     if (res.statusCode === 200) {
       done.resolve(res.body)
     } else {
-      console.error('could not get remote file from ' + fromArg)
       done.reject(new Error('could not get remote file from ' + fromArg))
     }
   })

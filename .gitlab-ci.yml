@@ -8,6 +8,7 @@ cache:
 
 stages:
 - mirror
+- security
 - test
 - release
 - trigger
@@ -20,6 +21,15 @@ mirror:
   tags:
   - docker
 
+security:
+  stage: security
+  script:
+    - npmci command yarn global add snyk
+    - npmci command yarn install --ignore-scripts
+    - npmci command snyk test
+  tags:
+  - docker
+
 testLEGACY:
   stage: test
   script:
@@ -29,15 +39,6 @@ testLEGACY:
   coverage: /\d+.?\d+?\%\s*coverage/
   tags:
   - docker
-  allow_failure: true
-
-testStableWindows:
-  stage: test
-  script:
-  - npm install -g npmts && cd C:\\gitlab_runner\builds\326a2ffb\0\pushrocks\smartfile && npm install && npm test
-  coverage: /\d+.?\d+?\%\s*coverage/
-  tags:
-  - windows
   allow_failure: true
 
 testLTS:
