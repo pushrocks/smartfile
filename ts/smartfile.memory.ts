@@ -26,7 +26,7 @@ export interface IToFsOptions {
  * @param fileBaseArg
  */
 export let toFs = async (fileContentArg: string | Smartfile, filePathArg, optionsArg: IToFsOptions = {} ) => {
-  let done = plugins.q.defer()
+  let done = plugins.smartpromise.defer()
 
   // check args
   if (!fileContentArg || !filePathArg) {

@@ -16,7 +16,7 @@ import SmartfileInterpreter = require('./smartfile.interpreter')
  * @returns {any}
  */
 export let toObject = function (fromArg: string) {
-  let done = plugins.q.defer()
+  let done = plugins.smartpromise.defer()
   plugins.smartrequest.request(fromArg, {
     method: 'get'
   }).then((res: any) => {
@@ -36,7 +36,7 @@ export let toObject = function (fromArg: string) {
  * @returns {any}
  */
 export let toString = (fromArg: string) => {
-  let done = plugins.q.defer()
+  let done = plugins.smartpromise.defer()
   plugins.smartrequest.get(fromArg).then((res: any) => {
     if (res.statusCode === 200) {
       done.resolve(res.body)

@@ -2,7 +2,7 @@ export import fs = require('fs');
 export import fsExtra = require('fs-extra');
 export declare let glob: any;
 export import path = require('path');
-export import q = require('smartq');
+export import smartpromise = require('@pushrocks/smartpromise');
 export import smartrequest = require('smartrequest');
 export declare let requireReload: any;
 export import smartpath = require('smartpath');

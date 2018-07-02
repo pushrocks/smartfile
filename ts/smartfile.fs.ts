@@ -30,7 +30,7 @@ export let fileExistsSync = function (filePath): boolean {
  * @returns {any}
  */
 export let fileExists = function (filePath) {
-  let done = plugins.q.defer()
+  let done = plugins.smartpromise.defer()
   plugins.fs.access(filePath, 4, function (err) {
     err ? done.reject(err) : done.resolve()
   })
@@ -63,7 +63,7 @@ export let isFile = function (pathArg): boolean {
  * copies a file from A to B on the local disk
  */
 export let copy = function (fromArg: string, toArg: string) {
-  let done = plugins.q.defer()
+  let done = plugins.smartpromise.defer()
   plugins.fsExtra.copy(fromArg, toArg, {}, function () {
     done.resolve()
   })
@@ -82,7 +82,7 @@ export let copySync = function (fromArg: string, toArg: string): boolean {
  * ensures that a directory is in place
  */
 export let ensureDir = (dirPathArg: string) => {
-  let done = plugins.q.defer()
+  let done = plugins.smartpromise.defer()
   plugins.fsExtra.ensureDir(dirPathArg, done.resolve)
   return done.promise
 }
@@ -99,7 +99,7 @@ export let ensureDirSync = (dirPathArg: string) => {
  * @executes ASYNC
  */
 export let ensureEmptyDir = (dirPathArg: string) => {
-  let done = plugins.q.defer()
+  let done = plugins.smartpromise.defer()
   plugins.fsExtra.ensureDir(dirPathArg, () => {
     plugins.fsExtra.emptyDir(dirPathArg, done.resolve)
   })
@@ -123,7 +123,7 @@ export let ensureEmptyDirSync = (dirPathArg: string) => {
  * @exec ASYNC
  */
 export let ensureFile = (filePathArg, initFileStringArg): Promise<void> => {
-  let done = plugins.q.defer<void>()
+  let done = plugins.smartpromise.defer<void>()
   ensureFileSync(filePathArg, initFileStringArg)
   done.resolve()
   return done.promise
@@ -148,7 +148,7 @@ export let ensureFileSync = (filePathArg: string, initFileStringArg: string): vo
  * removes a file or folder from local disk
  */
 export let remove = function (pathArg: string): Promise<void> {
-  let done = plugins.q.defer<void>()
+  let done = plugins.smartpromise.defer<void>()
   plugins.fsExtra.remove(pathArg, function () {
     done.resolve()
   })
@@ -265,7 +265,7 @@ export let requireReload = function (path: string) {
  * @returns Promise
  */
 export let listFolders = function (pathArg: string, regexFilter?: RegExp) {
-  let done = plugins.q.defer()
+  let done = plugins.smartpromise.defer()
   let folderArray = plugins.fsExtra.readdirSync(pathArg).filter(function (file) {
     return plugins.fsExtra.statSync(plugins.path.join(pathArg, file)).isDirectory()
   })
@@ -299,7 +299,7 @@ export let listFoldersSync = function (pathArg: string, regexFilter?: RegExp): s
  * @returns Promise
  */
 export let listFiles = function (pathArg: string, regexFilter?: RegExp) {
-  let done = plugins.q.defer()
+  let done = plugins.smartpromise.defer()
   let fileArray = plugins.fsExtra.readdirSync(pathArg).filter(function (file) {
     return plugins.fsExtra.statSync(plugins.path.join(pathArg, file)).isFile()
   })
@@ -333,7 +333,7 @@ export let listFilesSync = function (pathArg: string, regexFilter?: RegExp): str
  * @returns Promise<string[]>
  */
 export let listAllItems = function (pathArg: string, regexFilter?: RegExp): Promise<string[]> {
-  let done = plugins.q.defer<string[]>()
+  let done = plugins.smartpromise.defer<string[]>()
   let allItmesArray = plugins.fsExtra.readdirSync(pathArg)
   if (regexFilter) {
     allItmesArray = allItmesArray.filter((fileItem) => {
@@ -367,7 +367,7 @@ export let listAllItemsSync = function (pathArg: string, regexFilter?: RegExp): 
  * @returns Promise<string[]> string array with the absolute paths of all matching files
  */
 export let listFileTree = (dirPathArg: string, miniMatchFilter: string): Promise<string[]> => {
-  let done = plugins.q.defer<string[]>()
+  let done = plugins.smartpromise.defer<string[]>()
 
   // handle absolute miniMatchFilter
   let dirPath: string
