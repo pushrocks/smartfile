@@ -254,15 +254,6 @@ export let toVinylSync = function(filePathArg, options = {}) {
 };
 
 /**
- * lets you reload files hot.
- * @param path
- * @returns {any}
- */
-export let requireReload = function(path: string) {
-  return plugins.requireReload(path);
-};
-
-/**
  * lists Folders in a directory on local disk
  * @returns Promise
  */

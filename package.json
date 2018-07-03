@@ -6,12 +6,12 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "test": "(npmts)",
+    "test": "(tsrun test/test.ts)",
     "reinstall": "(rm -r node_modules && npm install)",
     "release": "(git pull origin master && npm version patch && git push origin master && git checkout release && git merge master && git push origin release && git checkout master)",
     "update": "(git checkout master && git pull origin master && npm install)",
     "upgrade": "(npm run update) && (ncu upgradeAll && npm install)",
-    "build": "echo \"Not needed for now\""
+    "build": "(npmts)"
   },
   "repository": {
     "type": "git",
@@ -29,17 +29,17 @@
   "homepage": "https://gitlab.com/pushrocks/smartfile",
   "dependencies": {
     "@pushrocks/smartpromise": "^2.0.5",
+    "@pushrocks/smartrequest": "^1.0.15",
     "@types/fs-extra": "^5.0.3",
     "@types/vinyl": "^2.0.2",
     "fs-extra": "^6.0.1",
     "glob": "^7.1.2",
     "js-yaml": "^3.10.0",
-    "require-reload": "0.2.2",
     "smartpath": "^3.2.8",
-    "smartrequest": "^1.0.13",
     "vinyl-file": "^3.0.0"
   },
   "devDependencies": {
+    "@gitzone/tsrun": "^1.1.1",
     "@types/node": "^10.5.1",
     "gulp-function": "^2.2.14",
     "tapbundle": "^2.0.2"

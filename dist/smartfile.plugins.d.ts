@@ -3,7 +3,7 @@ export import fsExtra = require('fs-extra');
 export declare let glob: any;
 export import path = require('path');
 export import smartpromise = require('@pushrocks/smartpromise');
-export import smartrequest = require('smartrequest');
+export import smartrequest = require('@pushrocks/smartrequest');
 export declare let requireReload: any;
 export import smartpath = require('smartpath');
 export declare let vinylFile: any;

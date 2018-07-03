@@ -39,7 +39,7 @@ export let toObject = function(fromArg: string) {
  */
 export let toString = (fromArg: string) => {
   let done = plugins.smartpromise.defer();
-  plugins.smartrequest.get(fromArg).then((res: any) => {
+  plugins.smartrequest.getBinary(fromArg).then((res: any) => {
     if (res.statusCode === 200) {
       done.resolve(res.body);
     } else {

@@ -10,4 +10,3 @@ export let fs = SmartfileFs;
 export let interpreter = SmartfileInterpreter;
 export let memory = SmartfileMemory;
 export let remote = SmartfileRemote;
-export let requireReload = SmartfileFs.requireReload;
