@@ -1,4 +1,4 @@
-# smartfile
+# @pushrocks/smartfile
 
 make files easily accessible for processing in javascript.
 

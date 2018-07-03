@@ -28,7 +28,7 @@
   },
   "homepage": "https://gitlab.com/pushrocks/smartfile",
   "dependencies": {
-    "@pushrocks/smartpromise": "^2.0.2",
+    "@pushrocks/smartpromise": "^2.0.5",
     "@types/fs-extra": "^5.0.3",
     "@types/vinyl": "^2.0.2",
     "fs-extra": "^6.0.1",
