@@ -1,12 +1,12 @@
-import * as plugins from './smartfile.plugins'
-import * as fs from './smartfile.fs'
-import * as memory from './smartfile.memory'
+import * as plugins from './smartfile.plugins';
+import * as fs from './smartfile.fs';
+import * as memory from './smartfile.memory';
 
 export interface ISmartfileConstructorOptions {
-  path?: string
-  contentString?: string
-  contentBuffer?: Buffer
-  base?: string
+  path?: string;
+  contentString?: string;
+  contentBuffer?: Buffer;
+  base?: string;
 }
 
 /**
@@ -17,55 +17,53 @@ export class Smartfile {
   /**
    * the full path of the file on disk
    */
-  path: string
+  path: string;
 
   /**
-   * 
+   *
    */
-  parsedPath: plugins.path.ParsedPath
+  parsedPath: plugins.path.ParsedPath;
 
   /**
    * the content of the file as Buffer
    */
-  contentBuffer: Buffer
+  contentBuffer: Buffer;
 
   /**
    * The current working directory of the file
-   * Note:this is similar to gulp and different from native node path base 
+   * Note:this is similar to gulp and different from native node path base
    */
-  base: string
+  base: string;
 
   /**
    * sync the file with disk
    */
-  sync: boolean
+  sync: boolean;
 
   /**
    * the constructor of Smartfile
    * @param optionsArg
    */
 
-
-  constructor (optionsArg: ISmartfileConstructorOptions) {
+  constructor(optionsArg: ISmartfileConstructorOptions) {
     if (optionsArg.contentBuffer) {
-      this.contentBuffer = optionsArg.contentBuffer
+      this.contentBuffer = optionsArg.contentBuffer;
     } else if (optionsArg.contentString) {
-      this.setContentsFromString(optionsArg.contentString)
+      this.setContentsFromString(optionsArg.contentString);
     } else {
-      console.log('created empty Smartfile?')
+      console.log('created empty Smartfile?');
     }
-    this.path = optionsArg.path
-    this.parsedPath = plugins.path.parse(this.path)
-    this.base = optionsArg.base
+    this.path = optionsArg.path;
+    this.parsedPath = plugins.path.parse(this.path);
+    this.base = optionsArg.base;
   }
-
 
   /**
    * set contents from string
    * @param contentString
    */
   setContentsFromString(contentString: string) {
-    this.contents = new Buffer(contentString)
+    this.contents = new Buffer(contentString);
   }
 
   /**
@@ -73,16 +71,15 @@ export class Smartfile {
    * Behaviours:
    * - no argument write to exactly where the file was picked up
    */
-  async write (pathArg?: string) {
-    const stringToWrite = this.contentBuffer.toString()
-    await memory.toFs(stringToWrite, this.path)
+  async write(pathArg?: string) {
+    const stringToWrite = this.contentBuffer.toString();
+    await memory.toFs(stringToWrite, this.path);
   }
 
   /**
    * read file from disk
    */
-  async read () {
-  }
+  async read() {}
 
   // -----------------------------------------------
   // vinyl compatibility
@@ -90,62 +87,62 @@ export class Smartfile {
   /**
    * vinyl-compatibility: alias of this.contentBuffer
    */
-  get contents (): Buffer {
-    return this.contentBuffer
+  get contents(): Buffer {
+    return this.contentBuffer;
   }
-  set contents (contentsArg) {
-    this.contentBuffer = contentsArg
+  set contents(contentsArg) {
+    this.contentBuffer = contentsArg;
   }
 
   /**
    * vinyl-compatibility
    */
-  get cwd () {
-    return process.cwd()
+  get cwd() {
+    return process.cwd();
   }
 
   /**
    * return relative path of file
    */
-  get relative (): string {
-    return plugins.path.relative(this.base, this.path)
+  get relative(): string {
+    return plugins.path.relative(this.base, this.path);
   }
 
   /**
    * return truw when the file has content
    */
-  isNull (): boolean {
+  isNull(): boolean {
     if (!this.contentBuffer) {
-      return true
+      return true;
     }
-    return false
+    return false;
   }
 
   /**
    * return true if contents are Buffer
    */
-  isBuffer (): boolean {
+  isBuffer(): boolean {
     if (this.contents instanceof Buffer) {
-      return true
+      return true;
     }
-    return false
+    return false;
   }
 
-  isDirectory () {
-    return false
+  isDirectory() {
+    return false;
   }
 
-  isStream () {
-    return false
+  isStream() {
+    return false;
   }
 
-  isSymbolic () {
-    return false
+  isSymbolic() {
+    return false;
   }
 
   // update things
-  updateFileName (fileNameArg: string) {
-    let oldFileName = this.parsedPath.base
-    this.path = this.path.replace(new RegExp(oldFileName + '$'),fileNameArg)
+  updateFileName(fileNameArg: string) {
+    let oldFileName = this.parsedPath.base;
+    this.path = this.path.replace(new RegExp(oldFileName + '$'), fileNameArg);
   }
 }
