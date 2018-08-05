@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "test": "(tsrun test/test.ts)",
+    "test": "(tstest test/)",
     "reinstall": "(rm -r node_modules && npm install)",
     "release": "(git pull origin master && npm version patch && git push origin master && git checkout release && git merge master && git push origin release && git checkout master)",
     "update": "(git checkout master && git pull origin master && npm install)",
@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "@gitzone/tsrun": "^1.1.1",
+    "@gitzone/tstest": "^1.0.12",
     "@types/node": "^10.5.1",
     "gulp-function": "^2.2.14",
     "tapbundle": "^2.0.2"
