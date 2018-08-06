@@ -11,7 +11,7 @@
     "release": "(git pull origin master && npm version patch && git push origin master && git checkout release && git merge master && git push origin release && git checkout master)",
     "update": "(git checkout master && git pull origin master && npm install)",
     "upgrade": "(npm run update) && (ncu upgradeAll && npm install)",
-    "build": "(npmts)"
+    "build": "(tsbuild)"
   },
   "repository": {
     "type": "git",
@@ -39,6 +39,7 @@
     "vinyl-file": "^3.0.0"
   },
   "devDependencies": {
+    "@gitzone/tsbuild": "^2.0.21",
     "@gitzone/tsrun": "^1.1.1",
     "@gitzone/tstest": "^1.0.12",
     "@types/node": "^10.5.1",
