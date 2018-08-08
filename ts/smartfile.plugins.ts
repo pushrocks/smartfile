@@ -4,6 +4,6 @@ export let glob = require('glob');
 export import path = require('path');
 export import smartpromise = require('@pushrocks/smartpromise');
 export import smartrequest = require('@pushrocks/smartrequest');
-export import smartpath = require('smartpath');
+export import smartpath = require('@pushrocks/smartpath');
 export let vinylFile = require('vinyl-file');
 export let yaml = require('js-yaml');

@@ -28,21 +28,21 @@
   },
   "homepage": "https://gitlab.com/pushrocks/smartfile",
   "dependencies": {
+    "@pushrocks/smartpath": "^4.0.1",
     "@pushrocks/smartpromise": "^2.0.5",
-    "@pushrocks/smartrequest": "^1.0.15",
-    "@types/fs-extra": "^5.0.3",
+    "@pushrocks/smartrequest": "^1.1.12",
+    "@types/fs-extra": "^5.0.4",
     "@types/vinyl": "^2.0.2",
-    "fs-extra": "^6.0.1",
+    "fs-extra": "^7.0.0",
     "glob": "^7.1.2",
     "js-yaml": "^3.10.0",
-    "smartpath": "^3.2.8",
     "vinyl-file": "^3.0.0"
   },
   "devDependencies": {
     "@gitzone/tsbuild": "^2.0.21",
-    "@gitzone/tsrun": "^1.1.1",
+    "@gitzone/tsrun": "^1.1.9",
     "@gitzone/tstest": "^1.0.12",
-    "@types/node": "^10.5.1",
+    "@types/node": "^10.5.7",
     "gulp-function": "^2.2.14",
     "tapbundle": "^2.0.2"
   }
