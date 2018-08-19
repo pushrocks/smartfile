@@ -30,7 +30,7 @@
   "dependencies": {
     "@pushrocks/smartpath": "^4.0.1",
     "@pushrocks/smartpromise": "^2.0.5",
-    "@pushrocks/smartrequest": "^1.1.12",
+    "@pushrocks/smartrequest": "^1.1.14",
     "@types/fs-extra": "^5.0.4",
     "@types/vinyl": "^2.0.2",
     "fs-extra": "^7.0.0",
@@ -39,10 +39,10 @@
     "vinyl-file": "^3.0.0"
   },
   "devDependencies": {
-    "@gitzone/tsbuild": "^2.0.21",
-    "@gitzone/tsrun": "^1.1.9",
-    "@gitzone/tstest": "^1.0.12",
-    "@types/node": "^10.5.7",
+    "@gitzone/tsbuild": "^2.0.22",
+    "@gitzone/tsrun": "^1.1.12",
+    "@gitzone/tstest": "^1.0.15",
+    "@types/node": "^10.7.1",
     "gulp-function": "^2.2.14",
     "tapbundle": "^2.0.2"
   }
