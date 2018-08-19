@@ -1,7 +1,7 @@
 import * as smartfile from '../ts/index';
 import path = require('path');
 
-import { expect, tap } from 'tapbundle';
+import { expect, tap } from '@pushrocks/tapbundle';
 
 // ---------------------------
 // smartfile.fs
