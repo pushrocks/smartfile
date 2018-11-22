@@ -257,16 +257,9 @@ export let toVinylSync = function(filePathArg, options = {}) {
  * lists Folders in a directory on local disk
  * @returns Promise with an array that contains the folder names
  */
-export let listFolders = function(pathArg: string, regexFilter?: RegExp): Promise<string[]> {
-  let done = plugins.smartpromise.defer<string[]>();
-  let folderArray = plugins.fsExtra.readdirSync(pathArg).filter(function(file) {
-    return plugins.fsExtra.statSync(plugins.path.join(pathArg, file)).isDirectory();
-  });
-  if (regexFilter) {
-    folderArray = folderArray.filter(fileItem => {
-      return regexFilter.test(fileItem);
-    });
-  }
+export let listFolders = (pathArg: string, regexFilter?: RegExp): Promise<string[]> => {
+  const done = plugins.smartpromise.defer<string[]>();
+  const folderArray = listFoldersSync(pathArg, regexFilter);
   done.resolve(folderArray);
   return done.promise;
 };
@@ -275,8 +268,8 @@ export let listFolders = function(pathArg: string, regexFilter?: RegExp): Promis
  * lists Folders SYNCHRONOUSLY in a directory on local disk
  * @returns an array with the folder names as strings
  */
-export let listFoldersSync = function(pathArg: string, regexFilter?: RegExp): string[] {
-  let folderArray = plugins.fsExtra.readdirSync(pathArg).filter(function(file) {
+export let listFoldersSync = (pathArg: string, regexFilter?: RegExp): string[] => {
+  let folderArray = plugins.fsExtra.readdirSync(pathArg).filter((file) => {
     return plugins.fsExtra.statSync(plugins.path.join(pathArg, file)).isDirectory();
   });
   if (regexFilter) {
