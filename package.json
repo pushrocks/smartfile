@@ -1,7 +1,7 @@
 {
   "name": "@pushrocks/smartfile",
   "private": false,
-  "version": "6.0.9",
+  "version": "6.0.10",
   "description": "offers smart ways to work with files in nodejs",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
