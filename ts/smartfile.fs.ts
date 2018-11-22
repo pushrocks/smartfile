@@ -255,10 +255,10 @@ export let toVinylSync = function(filePathArg, options = {}) {
 
 /**
  * lists Folders in a directory on local disk
- * @returns Promise
+ * @returns Promise with an array that contains the folder names
  */
-export let listFolders = function(pathArg: string, regexFilter?: RegExp) {
-  let done = plugins.smartpromise.defer();
+export let listFolders = function(pathArg: string, regexFilter?: RegExp): Promise<string[]> {
+  let done = plugins.smartpromise.defer<string[]>();
   let folderArray = plugins.fsExtra.readdirSync(pathArg).filter(function(file) {
     return plugins.fsExtra.statSync(plugins.path.join(pathArg, file)).isDirectory();
   });
