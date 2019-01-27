@@ -14,6 +14,28 @@ export interface ISmartfileConstructorOptions {
  * -> is vinyl file compatible
  */
 export class Smartfile {
+  // ======
+  // STATIC
+  // ======
+
+  /**
+   * creates a Smartfile from a filePath
+   * @param filePath
+   */
+  public static async fromFilePath (filePath: string) {
+    filePath = plugins.path.resolve(filePath);
+    const fileString = fs.toStringSync(filePath);
+    const smartfile = new Smartfile({
+      path: filePath,
+      contentString: fileString
+    });
+    return smartfile;
+  }
+
+
+  // ========
+  // INSTANCE
+  // ========
   /**
    * the full path of the file on disk
    */

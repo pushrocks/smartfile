@@ -29,9 +29,9 @@ export let fileExistsSync = function(filePath): boolean {
  * @param filePath
  * @returns {any}
  */
-export let fileExists = function(filePath) {
-  let done = plugins.smartpromise.defer();
-  plugins.fs.access(filePath, 4, function(err) {
+export let fileExists = (filePath): Promise<void> => {
+  let done = plugins.smartpromise.defer<void>();
+  plugins.fs.access(filePath, 4, err => {
     err ? done.reject(err) : done.resolve();
   });
   return done.promise;
@@ -194,7 +194,7 @@ export let removeManySync = function(filePathArrayArg: string[]): void {
  * @returns {any}
  */
 export let toObjectSync = function(filePathArg, fileTypeArg?) {
-  let fileString = plugins.fsExtra.readFileSync(filePathArg, 'utf8');
+  const fileString = plugins.fsExtra.readFileSync(filePathArg, 'utf8');
   let fileType;
   fileTypeArg ? (fileType = fileTypeArg) : (fileType = SmartfileInterpreter.filetype(filePathArg));
   return SmartfileInterpreter.objectFile(fileString, fileType);
@@ -206,7 +206,7 @@ export let toObjectSync = function(filePathArg, fileTypeArg?) {
  * @returns {string|Buffer|any}
  */
 export let toStringSync = function(filePath: string): string {
-  let fileString: any = plugins.fsExtra.readFileSync(filePath, 'utf8');
+  const fileString: string = plugins.fsExtra.readFileSync(filePath, 'utf8');
   return fileString;
 };
 
@@ -257,11 +257,8 @@ export let toVinylSync = function(filePathArg, options = {}) {
  * lists Folders in a directory on local disk
  * @returns Promise with an array that contains the folder names
  */
-export let listFolders = (pathArg: string, regexFilter?: RegExp): Promise<string[]> => {
-  const done = plugins.smartpromise.defer<string[]>();
-  const folderArray = listFoldersSync(pathArg, regexFilter);
-  done.resolve(folderArray);
-  return done.promise;
+export let listFolders = async (pathArg: string, regexFilter?: RegExp): Promise<string[]> => {
+  return listFoldersSync(pathArg, regexFilter);
 };
 
 /**
@@ -284,26 +281,16 @@ export let listFoldersSync = (pathArg: string, regexFilter?: RegExp): string[] =
  * lists Files in a directory on local disk
  * @returns Promise
  */
-export let listFiles = function(pathArg: string, regexFilter?: RegExp) {
-  let done = plugins.smartpromise.defer();
-  let fileArray = plugins.fsExtra.readdirSync(pathArg).filter(function(file) {
-    return plugins.fsExtra.statSync(plugins.path.join(pathArg, file)).isFile();
-  });
-  if (regexFilter) {
-    fileArray = fileArray.filter(fileItem => {
-      return regexFilter.test(fileItem);
-    });
-  }
-  done.resolve(fileArray);
-  return done.promise;
+export let listFiles = async (pathArg: string, regexFilter?: RegExp): Promise<string[]> => {
+  return listFilesSync(pathArg, regexFilter);
 };
 
 /**
  * lists Files SYNCHRONOUSLY in a directory on local disk
  * @returns an array with the folder names as strings
  */
-export let listFilesSync = function(pathArg: string, regexFilter?: RegExp): string[] {
-  let fileArray = plugins.fsExtra.readdirSync(pathArg).filter(function(file) {
+export let listFilesSync = (pathArg: string, regexFilter?: RegExp): string[] => {
+  let fileArray = plugins.fsExtra.readdirSync(pathArg).filter(file => {
     return plugins.fsExtra.statSync(plugins.path.join(pathArg, file)).isFile();
   });
   if (regexFilter) {
@@ -318,16 +305,8 @@ export let listFilesSync = function(pathArg: string, regexFilter?: RegExp): stri
  * lists all items (folders AND files) in a directory on local disk
  * @returns Promise<string[]>
  */
-export let listAllItems = function(pathArg: string, regexFilter?: RegExp): Promise<string[]> {
-  let done = plugins.smartpromise.defer<string[]>();
-  let allItmesArray = plugins.fsExtra.readdirSync(pathArg);
-  if (regexFilter) {
-    allItmesArray = allItmesArray.filter(fileItem => {
-      return regexFilter.test(fileItem);
-    });
-  }
-  done.resolve(allItmesArray);
-  return done.promise;
+export let listAllItems = async (pathArg: string, regexFilter?: RegExp): Promise<string[]> => {
+  return listAllItemsSync(pathArg, regexFilter);
 };
 
 /**
@@ -335,7 +314,7 @@ export let listAllItems = function(pathArg: string, regexFilter?: RegExp): Promi
  * @returns an array with the folder names as strings
  * @executes SYNC
  */
-export let listAllItemsSync = function(pathArg: string, regexFilter?: RegExp): string[] {
+export let listAllItemsSync = (pathArg: string, regexFilter?: RegExp): string[] => {
   let allItmesArray = plugins.fsExtra.readdirSync(pathArg).filter(function(file) {
     return plugins.fsExtra.statSync(plugins.path.join(pathArg, file)).isFile();
   });
@@ -353,7 +332,7 @@ export let listAllItemsSync = function(pathArg: string, regexFilter?: RegExp): s
  * @returns Promise<string[]> string array with the absolute paths of all matching files
  */
 export let listFileTree = (dirPathArg: string, miniMatchFilter: string): Promise<string[]> => {
-  let done = plugins.smartpromise.defer<string[]>();
+  const done = plugins.smartpromise.defer<string[]>();
 
   // handle absolute miniMatchFilter
   let dirPath: string;
@@ -363,7 +342,7 @@ export let listFileTree = (dirPathArg: string, miniMatchFilter: string): Promise
     dirPath = dirPathArg;
   }
 
-  let options = {
+  const options = {
     cwd: dirPath,
     nodir: true,
     dot: true
