@@ -29,10 +29,10 @@ export let fileExistsSync = function(filePath): boolean {
  * @param filePath
  * @returns {any}
  */
-export let fileExists = (filePath): Promise<void> => {
-  let done = plugins.smartpromise.defer<void>();
+export let fileExists = (filePath): Promise<boolean> => {
+  const done = plugins.smartpromise.defer<boolean>();
   plugins.fs.access(filePath, 4, err => {
-    err ? done.reject(err) : done.resolve();
+    err ? done.resolve(false) : done.resolve(true);
   });
   return done.promise;
 };
@@ -40,7 +40,7 @@ export let fileExists = (filePath): Promise<void> => {
 /**
  * Checks if given path points to an existing directory
  */
-export let isDirectory = function(pathArg): boolean {
+export let isDirectory = (pathArg): boolean => {
   try {
     return plugins.fsExtra.statSync(pathArg).isDirectory();
   } catch (err) {
