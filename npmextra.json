@@ -1,13 +1,21 @@
 {
-  "npmts":{
-    "mode":"default",
-    "coverageTreshold":70
+  "npmts": {
+    "mode": "default",
+    "coverageTreshold": 70
   },
-  "npmdocker":{
-    
-  },
+  "npmdocker": {},
   "npmci": {
     "npmGlobalTools": [],
     "npmAccessLevel": "public"
+  },
+  "gitzone": {
+    "module": {
+      "githost": "gitlab.com",
+      "gitscope": "pushrocks",
+      "gitrepo": "smartfile",
+      "shortDescription": "smart ways to work with files in nodejs",
+      "npmPackagename": "@pushrocks/smartfile",
+      "license": "MIT"
+    }
   }
 }

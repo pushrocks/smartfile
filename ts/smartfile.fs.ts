@@ -266,7 +266,7 @@ export let listFolders = async (pathArg: string, regexFilter?: RegExp): Promise<
  * @returns an array with the folder names as strings
  */
 export let listFoldersSync = (pathArg: string, regexFilter?: RegExp): string[] => {
-  let folderArray = plugins.fsExtra.readdirSync(pathArg).filter((file) => {
+  let folderArray = plugins.fsExtra.readdirSync(pathArg).filter(file => {
     return plugins.fsExtra.statSync(plugins.path.join(pathArg, file)).isDirectory();
   });
   if (regexFilter) {

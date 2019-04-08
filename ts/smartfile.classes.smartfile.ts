@@ -22,7 +22,7 @@ export class Smartfile {
    * creates a Smartfile from a filePath
    * @param filePath
    */
-  public static async fromFilePath (filePath: string) {
+  public static async fromFilePath(filePath: string) {
     filePath = plugins.path.resolve(filePath);
     const fileString = fs.toStringSync(filePath);
     const smartfile = new Smartfile({
@@ -31,7 +31,6 @@ export class Smartfile {
     });
     return smartfile;
   }
-
 
   // ========
   // INSTANCE
