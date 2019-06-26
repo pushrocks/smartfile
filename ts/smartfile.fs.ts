@@ -210,7 +210,7 @@ export let toStringSync = function(filePath: string): string {
   return fileString;
 };
 
-export let fileTreeToObject = async (dirPathArg: string, miniMatchFilter: string) => {
+export const fileTreeToObject = async (dirPathArg: string, miniMatchFilter: string) => {
   // handle absolute miniMatchFilter
   let dirPath: string;
   if (plugins.path.isAbsolute(miniMatchFilter)) {
@@ -219,8 +219,8 @@ export let fileTreeToObject = async (dirPathArg: string, miniMatchFilter: string
     dirPath = dirPathArg;
   }
 
-  let fileTree = await listFileTree(dirPath, miniMatchFilter);
-  let smartfileArray: Smartfile[] = [];
+  const fileTree = await listFileTree(dirPath, miniMatchFilter);
+  const smartfileArray: Smartfile[] = [];
   for (let filePath of fileTree) {
     let readPath = ((): string => {
       if (!plugins.path.isAbsolute(filePath)) {
@@ -234,7 +234,7 @@ export let fileTreeToObject = async (dirPathArg: string, miniMatchFilter: string
     // push a read file as Smartfile
     smartfileArray.push(
       new Smartfile({
-        contentBuffer: new Buffer(fileContentString),
+        contentBuffer: Buffer.from(fileContentString),
         base: dirPath,
         path: filePath
       })
@@ -331,7 +331,7 @@ export let listAllItemsSync = (pathArg: string, regexFilter?: RegExp): string[] 
  * note: if the miniMatch Filter is an absolute path, the cwdArg will be omitted
  * @returns Promise<string[]> string array with the absolute paths of all matching files
  */
-export let listFileTree = (dirPathArg: string, miniMatchFilter: string): Promise<string[]> => {
+export const listFileTree = async (dirPathArg: string, miniMatchFilter: string, absolutePathsBool: boolean = false): Promise<string[]> => {
   const done = plugins.smartpromise.defer<string[]>();
 
   // handle absolute miniMatchFilter
@@ -354,5 +354,13 @@ export let listFileTree = (dirPathArg: string, miniMatchFilter: string): Promise
     }
     done.resolve(files);
   });
-  return done.promise;
+  
+  let fileList = await done.promise;
+  if (absolutePathsBool) {
+    fileList = fileList.map(filePath => {
+      return plugins.path.resolve(plugins.path.join(dirPath, filePath));
+    });
+  }
+
+  return fileList;
 };

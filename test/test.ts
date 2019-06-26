@@ -8,112 +8,112 @@ import { expect, tap } from '@pushrocks/tapbundle';
 // ---------------------------
 
 tap.test('.fs.fileExistsSync -> should return an accurate boolean', async () => {
-  expect(smartfile.fs.fileExistsSync('./test/mytest.json')).to.be.true;
-  expect(smartfile.fs.fileExistsSync('./test/notthere.json')).be.false;
+  expect(smartfile.fs.fileExistsSync('./test/testassets/mytest.json')).to.be.true;
+  expect(smartfile.fs.fileExistsSync('./test/testassets/notthere.json')).be.false;
 });
 
 tap.test('.fs.fileExists -> should resolve or reject a promise', async () => {
-  expect(smartfile.fs.fileExists('./test/mytest.json')).to.be.instanceof(Promise);
-  await smartfile.fs.fileExists('./test/mytest.json');
-  await smartfile.fs.fileExists('./test/notthere.json').catch(err => {
+  expect(smartfile.fs.fileExists('./test/testassets/mytest.json')).to.be.instanceof(Promise);
+  await smartfile.fs.fileExists('./test/testassets/mytest.json');
+  await smartfile.fs.fileExists('./test/testassets/notthere.json').catch(err => {
     return expect(err.message).to.equal(
-      "ENOENT: no such file or directory, access './test/notthere.json'"
+      "ENOENT: no such file or directory, access './test/testassets/notthere.json'"
     );
   });
 });
 
 tap.test('.fs.listFoldersSync() -> should get the file type from a string', async () => {
-  expect(smartfile.fs.listFoldersSync('./test/')).to.include('testfolder');
-  expect(smartfile.fs.listFoldersSync('./test/')).to.not.include('notExistentFolder');
+  expect(smartfile.fs.listFoldersSync('./test/testassets/')).to.include('testfolder');
+  expect(smartfile.fs.listFoldersSync('./test/testassets/')).to.not.include('notExistentFolder');
 });
 
 tap.test('.fs.listFolders() -> should get the file type from a string', async () => {
-  let folderArrayArg = await smartfile.fs.listFolders('./test/');
+  let folderArrayArg = await smartfile.fs.listFolders('./test/testassets/');
   expect(folderArrayArg).to.include('testfolder');
   expect(folderArrayArg).to.not.include('notExistentFolder');
 });
 
 tap.test('.fs.listFilesSync() -> should get the file type from a string', async () => {
-  expect(smartfile.fs.listFilesSync('./test/')).to.include('mytest.json');
-  expect(smartfile.fs.listFilesSync('./test/')).to.not.include('notExistentFile');
-  expect(smartfile.fs.listFilesSync('./test/', /mytest\.json/)).to.include('mytest.json');
-  expect(smartfile.fs.listFilesSync('./test/', /mytests.json/)).to.not.include('mytest.json');
+  expect(smartfile.fs.listFilesSync('./test/testassets/')).to.include('mytest.json');
+  expect(smartfile.fs.listFilesSync('./test/testassets/')).to.not.include('notExistentFile');
+  expect(smartfile.fs.listFilesSync('./test/testassets/', /mytest\.json/)).to.include('mytest.json');
+  expect(smartfile.fs.listFilesSync('./test/testassets/', /mytests.json/)).to.not.include('mytest.json');
 });
 
 tap.test('.fs.listFiles() -> should get the file type from a string', async () => {
-  let folderArrayArg = await smartfile.fs.listFiles('./test/');
+  let folderArrayArg = await smartfile.fs.listFiles('./test/testassets/');
   expect(folderArrayArg).to.include('mytest.json');
   expect(folderArrayArg).to.not.include('notExistentFile');
 });
 
 tap.test('.fs.listFileTree() -> should get a file tree', async () => {
-  let folderArrayArg = await smartfile.fs.listFileTree(path.resolve('./test/'), '**/*.txt');
+  let folderArrayArg = await smartfile.fs.listFileTree(path.resolve('./test/testassets/'), '**/*.txt');
   expect(folderArrayArg).to.include('testfolder/testfile1.txt');
   expect(folderArrayArg).to.not.include('mytest.json');
 });
 
 tap.test('.fs.fileTreeToObject -> should read a file tree into an Object', async () => {
-  let fileArrayArg = await smartfile.fs.fileTreeToObject(path.resolve('./test/'), '**/*.txt');
+  let fileArrayArg = await smartfile.fs.fileTreeToObject(path.resolve('./test/testassets/'), '**/*.txt');
   expect(fileArrayArg[0]).to.be.instanceof(smartfile.Smartfile);
   expect(fileArrayArg[0].contents.toString()).to.equal(fileArrayArg[0].contentBuffer.toString());
 });
 
 tap.test('.fs.copy() -> should copy a directory', async () => {
-  smartfile.fs.copy('./test/testfolder/', './test/temp/');
+  smartfile.fs.copy('./test/testassets/testfolder/', './test/testassets/temp/');
 });
 
 tap.test('.fs.copy() -> should copy a file', async () => {
-  smartfile.fs.copy('./test/mytest.yaml', './test/temp/');
+  smartfile.fs.copy('./test/testassets/mytest.yaml', './test/testassets/temp/');
 });
 
 tap.test('.fs.copy() -> should copy a file and rename it', async () => {
-  smartfile.fs.copy('./test/mytest.yaml', './test/temp/mytestRenamed.yaml');
+  smartfile.fs.copy('./test/testassets/mytest.yaml', './test/testassets/temp/mytestRenamed.yaml');
 });
 
 tap.test('.fs.remove() -> should remove an entire directory', async () => {});
 
 tap.test('.fs.remove -> should remove single files', async () => {
-  await smartfile.fs.remove('./test/temp/mytestRenamed.yaml');
+  await smartfile.fs.remove('./test/testassets/temp/mytestRenamed.yaml');
 });
 
 tap.test('.fs.removeSync -> should remove single files synchronouly', async () => {
-  smartfile.fs.removeSync('./test/temp/testfile1.txt');
-  expect(smartfile.fs.fileExistsSync('./test/temp/testfile1.txt')).to.be.false;
+  smartfile.fs.removeSync('./test/testassets/temp/testfile1.txt');
+  expect(smartfile.fs.fileExistsSync('./test/testassets/temp/testfile1.txt')).to.be.false;
 });
 
 tap.test('.fs.removeMany -> should remove and array of files', async () => {
-  smartfile.fs.removeMany(['./test/temp/testfile1.txt', './test/temp/testfile2.txt']).then(() => {
-    expect(smartfile.fs.fileExistsSync('./test/temp/testfile1.txt')).to.be.false;
-    expect(smartfile.fs.fileExistsSync('./test/temp/testfile2.txt')).to.be.false;
+  smartfile.fs.removeMany(['./test/testassets/temp/testfile1.txt', './test/testassets/temp/testfile2.txt']).then(() => {
+    expect(smartfile.fs.fileExistsSync('./test/testassets/temp/testfile1.txt')).to.be.false;
+    expect(smartfile.fs.fileExistsSync('./test/testassets/temp/testfile2.txt')).to.be.false;
   });
 });
 
 tap.test('.fs.removeManySync -> should remove and array of single files synchronouly', async () => {
-  smartfile.fs.removeManySync(['./test/temp/testfile1.txt', './test/temp/testfile2.txt']);
-  expect(smartfile.fs.fileExistsSync('./test/temp/testfile1.txt')).to.be.false;
-  expect(smartfile.fs.fileExistsSync('./test/temp/testfile2.txt')).to.be.false;
+  smartfile.fs.removeManySync(['./test/testassets/temp/testfile1.txt', './test/testassets/temp/testfile2.txt']);
+  expect(smartfile.fs.fileExistsSync('./test/testassets/temp/testfile1.txt')).to.be.false;
+  expect(smartfile.fs.fileExistsSync('./test/testassets/temp/testfile2.txt')).to.be.false;
 });
 
 tap.test('.fs.toObjectSync() -> should read an ' + '.yaml' + ' file to an object', async () => {
-  let testData = smartfile.fs.toObjectSync('./test/mytest.yaml');
+  let testData = smartfile.fs.toObjectSync('./test/testassets/mytest.yaml');
   expect(testData).to.include({ key1: 'this works' });
   expect(testData).to.include({ key2: 'this works too' });
 });
 tap.test(
   '.fs.toObjectSync() -> should state unknown file type for unknown file types',
   async () => {
-    let testData = smartfile.fs.toObjectSync('./test/mytest.txt');
+    let testData = smartfile.fs.toObjectSync('./test/testassets/mytest.txt');
   }
 );
 
 tap.test('.fs.toObjectSync() -> should read an ' + '.json' + ' file to an object', async () => {
-  let testData = smartfile.fs.toObjectSync('./test/mytest.json');
+  let testData = smartfile.fs.toObjectSync('./test/testassets/mytest.json');
   expect(testData).to.include({ key1: 'this works' });
   expect(testData).to.include({ key2: 'this works too' });
 });
 
 tap.test('.fs.toStringSync() -> should read a file to a string', async () => {
-  expect(smartfile.fs.toStringSync('./test/mytest.txt')).to.equal('Some TestString &&%$');
+  expect(smartfile.fs.toStringSync('./test/testassets/mytest.txt')).to.equal('Some TestString &&%$');
 });
 
 // ---------------------------
@@ -130,7 +130,7 @@ tap.test('.interpreter.filetype() -> should get the file type from a string', as
 
 tap.test('.memory.toFs() -> should write a file to disk and return a promise', async () => {
   let localString = 'myString';
-  await smartfile.memory.toFs(localString, path.join(process.cwd(), './test/temp/testMemToFs.txt'));
+  await smartfile.memory.toFs(localString, path.join(process.cwd(), './test/testassets/temp/testMemToFs.txt'));
 });
 
 tap.test(
@@ -139,7 +139,7 @@ tap.test(
     let localString = 'myString';
     smartfile.memory.toFsSync(
       localString,
-      path.join(process.cwd(), './test/temp/testMemToFsSync.txt')
+      path.join(process.cwd(), './test/testassets/temp/testMemToFsSync.txt')
     );
   }
 );
@@ -165,7 +165,7 @@ tap.test('.remote.toString() -> should reject a Promise when the link is false',
 // ---------------------------
 
 tap.test('.Smartfile -> should produce vinyl compatible files', async () => {
-  let smartfileArray = await smartfile.fs.fileTreeToObject(process.cwd(), './test/testfolder/**/*');
+  let smartfileArray = await smartfile.fs.fileTreeToObject(process.cwd(), './test/testassets/testfolder/**/*');
   let localSmartfile = smartfileArray[0];
   expect(localSmartfile).to.be.instanceof(smartfile.Smartfile);
   expect(localSmartfile.contents).to.be.instanceof(Buffer);
@@ -178,7 +178,7 @@ tap.test('.Smartfile -> should produce vinyl compatible files', async () => {
 });
 
 tap.test('should output a smartfile array to disk', async () => {
-  let smartfileArray = await smartfile.fs.fileTreeToObject('./test/testfolder/', '*');
+  let smartfileArray = await smartfile.fs.fileTreeToObject('./test/testassets/testfolder/', '*');
   for (let smartfile of smartfileArray) {
     console.log(smartfile.relative);
     console.log(smartfile.path);
@@ -187,7 +187,7 @@ tap.test('should output a smartfile array to disk', async () => {
   }
   await smartfile.memory.smartfileArrayToFs(
     smartfileArray,
-    path.resolve('./test/temp/testoutput/')
+    path.resolve('./test/testassets/temp/testoutput/')
   );
 });
 
