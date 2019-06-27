@@ -13,7 +13,7 @@ import * as memory from './smartfile.memory';
  * @param filePath
  * @returns {boolean}
  */
-export let fileExistsSync = function(filePath): boolean {
+export const fileExistsSync = (filePath): boolean => {
   let fileExistsBool: boolean = false;
   try {
     plugins.fsExtra.readFileSync(filePath);
@@ -29,7 +29,7 @@ export let fileExistsSync = function(filePath): boolean {
  * @param filePath
  * @returns {any}
  */
-export let fileExists = (filePath): Promise<boolean> => {
+export let fileExists = async (filePath): Promise<boolean> => {
   const done = plugins.smartpromise.defer<boolean>();
   plugins.fs.access(filePath, 4, err => {
     err ? done.resolve(false) : done.resolve(true);
@@ -40,7 +40,7 @@ export let fileExists = (filePath): Promise<boolean> => {
 /**
  * Checks if given path points to an existing directory
  */
-export let isDirectory = (pathArg): boolean => {
+export const isDirectory = (pathArg): boolean => {
   try {
     return plugins.fsExtra.statSync(pathArg).isDirectory();
   } catch (err) {
@@ -51,7 +51,7 @@ export let isDirectory = (pathArg): boolean => {
 /**
  * Checks if a given path points to an existing file
  */
-export let isFile = function(pathArg): boolean {
+export const isFile = (pathArg): boolean => {
   return plugins.fsExtra.statSync(pathArg).isFile();
 };
 
@@ -62,10 +62,13 @@ export let isFile = function(pathArg): boolean {
 /**
  * copies a file from A to B on the local disk
  */
-export let copy = function(fromArg: string, toArg: string) {
-  let done = plugins.smartpromise.defer();
-  plugins.fsExtra.copy(fromArg, toArg, {}, function() {
-    done.resolve();
+export const copy = async (fromArg: string, toArg: string): Promise<boolean> => {
+  const done = plugins.smartpromise.defer<boolean>();
+  plugins.fsExtra.copy(fromArg, toArg, {}, (err) => {
+    if (err) {
+      throw new Error(`Could not copy from ${fromArg} to ${toArg}: ${err}`);
+    }
+    done.resolve(true);
   });
   return done.promise;
 };
@@ -73,7 +76,7 @@ export let copy = function(fromArg: string, toArg: string) {
 /**
  * copies a file SYNCHRONOUSLY from A to B on the local disk
  */
-export let copySync = function(fromArg: string, toArg: string): boolean {
+export const copySync = (fromArg: string, toArg: string): boolean => {
   plugins.fsExtra.copySync(fromArg, toArg);
   return true;
 };
@@ -205,7 +208,7 @@ export let toObjectSync = function(filePathArg, fileTypeArg?) {
  * @param filePath
  * @returns {string|Buffer|any}
  */
-export let toStringSync = function(filePath: string): string {
+export const toStringSync = (filePath: string): string => {
   const fileString: string = plugins.fsExtra.readFileSync(filePath, 'utf8');
   return fileString;
 };

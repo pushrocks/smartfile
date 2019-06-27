@@ -59,15 +59,15 @@ tap.test('.fs.fileTreeToObject -> should read a file tree into an Object', async
 });
 
 tap.test('.fs.copy() -> should copy a directory', async () => {
-  smartfile.fs.copy('./test/testassets/testfolder/', './test/testassets/temp/');
+  await smartfile.fs.copy('./test/testassets/testfolder/', './test/testassets/temp/');
 });
 
 tap.test('.fs.copy() -> should copy a file', async () => {
-  smartfile.fs.copy('./test/testassets/mytest.yaml', './test/testassets/temp/');
+  await smartfile.fs.copy('./test/testassets/mytest.yaml', './test/testassets/temp/mytest.yaml');
 });
 
 tap.test('.fs.copy() -> should copy a file and rename it', async () => {
-  smartfile.fs.copy('./test/testassets/mytest.yaml', './test/testassets/temp/mytestRenamed.yaml');
+  await smartfile.fs.copy('./test/testassets/mytest.yaml', './test/testassets/temp/mytestRenamed.yaml');
 });
 
 tap.test('.fs.remove() -> should remove an entire directory', async () => {});
@@ -145,14 +145,13 @@ tap.test(
 );
 
 tap.test('.remote.toString() -> should load a remote file to a variable', async () => {
-  let responseString = await smartfile.remote.toString(
-    'https://raw.githubusercontent.com/pushrocks/smartfile/master/test/mytest.txt'
+  const responseString = await smartfile.remote.toString(
+    'https://raw.githubusercontent.com/pushrocks/smartfile/master/test/testassets/mytest.txt'
   );
   expect(responseString).to.equal('Some TestString &&%$');
 });
 
 tap.test('.remote.toString() -> should reject a Promise when the link is false', async tools => {
-  tools.returnError;
   await smartfile.remote.toString('https://push.rocks/doesnotexist.txt').catch(err => {
     return expect(err.message).to.equal(
       'could not get remote file from https://push.rocks/doesnotexist.txt'
