@@ -38,13 +38,25 @@ snyk:
 # test stage
 # ====================
 
-testLTS:
+testStable:
   stage: test
   script:
   - npmci npm prepare
-  - npmci node install lts
+  - npmci node install stable
   - npmci npm install
   - npmci npm test
+  coverage: /\d+.?\d+?\%\s*coverage/
+  tags:
+  - docker
+  - priv
+
+testBuild:
+  stage: test
+  script:
+  - npmci npm prepare
+  - npmci node install stable
+  - npmci npm install
+  - npmci command npm run build
   coverage: /\d+.?\d+?\%\s*coverage/
   tags:
   - docker
@@ -53,7 +65,7 @@ testLTS:
 release:
   stage: release
   script:
-  - npmci node install lts
+  - npmci node install stable
   - npmci npm publish
   only:
   - tags
@@ -69,6 +81,7 @@ codequality:
   allow_failure: true
   script:
     - npmci command npm install -g tslint typescript
+    - npmci npm prepare
     - npmci npm install
     - npmci command "tslint -c tslint.json ./ts/**/*.ts"
   tags:
@@ -86,7 +99,9 @@ trigger:
   - notpriv
 
 pages:
-  image: hosttoday/ht-docker-node:npmci
+  image: hosttoday/ht-docker-dbase:npmci
+  services:
+   - docker:stable-dind
   stage: metadata
   script:
     - npmci command npm install -g @gitzone/tsdoc

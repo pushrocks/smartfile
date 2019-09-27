@@ -29,7 +29,7 @@ export const fileExistsSync = (filePath): boolean => {
  * @param filePath
  * @returns {any}
  */
-export let fileExists = async (filePath): Promise<boolean> => {
+export const fileExists = async (filePath): Promise<boolean> => {
   const done = plugins.smartpromise.defer<boolean>();
   plugins.fs.access(filePath, 4, err => {
     err ? done.resolve(false) : done.resolve(true);
@@ -64,7 +64,7 @@ export const isFile = (pathArg): boolean => {
  */
 export const copy = async (fromArg: string, toArg: string): Promise<boolean> => {
   const done = plugins.smartpromise.defer<boolean>();
-  plugins.fsExtra.copy(fromArg, toArg, {}, (err) => {
+  plugins.fsExtra.copy(fromArg, toArg, {}, err => {
     if (err) {
       throw new Error(`Could not copy from ${fromArg} to ${toArg}: ${err}`);
     }
@@ -84,16 +84,14 @@ export const copySync = (fromArg: string, toArg: string): boolean => {
 /**
  * ensures that a directory is in place
  */
-export let ensureDir = (dirPathArg: string) => {
-  let done = plugins.smartpromise.defer();
-  plugins.fsExtra.ensureDir(dirPathArg, done.resolve);
-  return done.promise;
+export const ensureDir = async (dirPathArg: string) => {
+  await plugins.fsExtra.ensureDir(dirPathArg);
 };
 
 /**
  * ensures that a directory is in place
  */
-export let ensureDirSync = (dirPathArg: string) => {
+export const ensureDirSync = (dirPathArg: string) => {
   plugins.fsExtra.ensureDirSync(dirPathArg);
 };
 
@@ -101,19 +99,16 @@ export let ensureDirSync = (dirPathArg: string) => {
  * ensure an empty directory
  * @executes ASYNC
  */
-export let ensureEmptyDir = (dirPathArg: string) => {
-  let done = plugins.smartpromise.defer();
-  plugins.fsExtra.ensureDir(dirPathArg, () => {
-    plugins.fsExtra.emptyDir(dirPathArg, done.resolve);
-  });
-  return done.promise;
+export const ensureEmptyDir = async (dirPathArg: string) => {
+  await plugins.fsExtra.ensureDir(dirPathArg);
+  await plugins.fsExtra.emptyDir(dirPathArg);
 };
 
 /**
  * ensure an empty directory
  * @executes SYNC
  */
-export let ensureEmptyDirSync = (dirPathArg: string) => {
+export const ensureEmptyDirSync = (dirPathArg: string) => {
   plugins.fsExtra.ensureDirSync(dirPathArg);
   plugins.fsExtra.emptyDirSync(dirPathArg);
 };
@@ -125,11 +120,8 @@ export let ensureEmptyDirSync = (dirPathArg: string) => {
  * @returns Promise<void>
  * @exec ASYNC
  */
-export let ensureFile = (filePathArg, initFileStringArg): Promise<void> => {
-  let done = plugins.smartpromise.defer<void>();
+export const ensureFile = async (filePathArg, initFileStringArg): Promise<void> => {
   ensureFileSync(filePathArg, initFileStringArg);
-  done.resolve();
-  return done.promise;
 };
 
 /**
@@ -139,7 +131,7 @@ export let ensureFile = (filePathArg, initFileStringArg): Promise<void> => {
  * @returns Promise<void>
  * @exec SYNC
  */
-export let ensureFileSync = (filePathArg: string, initFileStringArg: string): void => {
+export const ensureFileSync = (filePathArg: string, initFileStringArg: string): void => {
   if (fileExistsSync(filePathArg)) {
     return null;
   } else {
@@ -150,38 +142,33 @@ export let ensureFileSync = (filePathArg: string, initFileStringArg: string): vo
 /**
  * removes a file or folder from local disk
  */
-export let remove = function(pathArg: string): Promise<void> {
-  let done = plugins.smartpromise.defer<void>();
-  plugins.fsExtra.remove(pathArg, function() {
-    done.resolve();
-  });
-  return done.promise;
+export const remove = async (pathArg: string): Promise<void> => {
+  await plugins.fsExtra.remove(pathArg);
 };
 
 /**
  * removes a file SYNCHRONOUSLY from local disk
  */
-export let removeSync = function(pathArg: string): boolean {
+export const removeSync = (pathArg: string): void => {
   plugins.fsExtra.removeSync(pathArg);
-  return true;
 };
 
 /**
  * removes an array of filePaths from disk
  */
-export let removeMany = function(filePathArrayArg: string[]) {
-  let promiseArray: Promise<void>[] = [];
-  for (let filePath of filePathArrayArg) {
+export const removeMany = async (filePathArrayArg: string[]) => {
+  const promiseArray: Array<Promise<void>> = [];
+  for (const filePath of filePathArrayArg) {
     promiseArray.push(remove(filePath));
   }
-  return Promise.all(promiseArray);
+  await Promise.all(promiseArray);
 };
 
 /**
  * like removeFilePathArray but SYNCHRONOUSLY
  */
-export let removeManySync = function(filePathArrayArg: string[]): void {
-  for (let filePath of filePathArrayArg) {
+export const removeManySync = (filePathArrayArg: string[]): void => {
+  for (const filePath of filePathArrayArg) {
     removeSync(filePath);
   }
 };
@@ -196,7 +183,7 @@ export let removeManySync = function(filePathArrayArg: string[]): void {
  * @param fileTypeArg
  * @returns {any}
  */
-export let toObjectSync = function(filePathArg, fileTypeArg?) {
+export const toObjectSync = (filePathArg, fileTypeArg?) => {
   const fileString = plugins.fsExtra.readFileSync(filePathArg, 'utf8');
   let fileType;
   fileTypeArg ? (fileType = fileTypeArg) : (fileType = SmartfileInterpreter.filetype(filePathArg));
@@ -213,6 +200,21 @@ export const toStringSync = (filePath: string): string => {
   return fileString;
 };
 
+export const fileTreeToHash = async (dirPathArg: string, miniMatchFilter: string) => {
+  const fileTreeObject = await fileTreeToObject(dirPathArg, miniMatchFilter);
+  let combinedString = '';
+  for (const smartfile of fileTreeObject) {
+    combinedString += smartfile.contentBuffer.toString();
+  }
+  const hash = await plugins.smarthash.sha256FromString(combinedString);
+  return hash;
+};
+
+/**
+ * creates a smartfile array from a directory
+ * @param dirPathArg the directory to start from
+ * @param miniMatchFilter a minimatch filter of what files to include
+ */
 export const fileTreeToObject = async (dirPathArg: string, miniMatchFilter: string) => {
   // handle absolute miniMatchFilter
   let dirPath: string;
@@ -224,15 +226,15 @@ export const fileTreeToObject = async (dirPathArg: string, miniMatchFilter: stri
 
   const fileTree = await listFileTree(dirPath, miniMatchFilter);
   const smartfileArray: Smartfile[] = [];
-  for (let filePath of fileTree) {
-    let readPath = ((): string => {
+  for (const filePath of fileTree) {
+    const readPath = ((): string => {
       if (!plugins.path.isAbsolute(filePath)) {
         return plugins.path.join(dirPath, filePath);
       } else {
         return filePath;
       }
     })();
-    let fileContentString = toStringSync(readPath);
+    const fileContentString = toStringSync(readPath);
 
     // push a read file as Smartfile
     smartfileArray.push(
@@ -247,20 +249,10 @@ export const fileTreeToObject = async (dirPathArg: string, miniMatchFilter: stri
 };
 
 /**
- *
- * @param filePathArg
- * @param options
- * @returns {number}
- */
-export let toVinylSync = function(filePathArg, options = {}) {
-  return plugins.vinylFile.readSync(filePathArg, options);
-};
-
-/**
  * lists Folders in a directory on local disk
  * @returns Promise with an array that contains the folder names
  */
-export let listFolders = async (pathArg: string, regexFilter?: RegExp): Promise<string[]> => {
+export const listFolders = async (pathArg: string, regexFilter?: RegExp): Promise<string[]> => {
   return listFoldersSync(pathArg, regexFilter);
 };
 
@@ -268,7 +260,7 @@ export let listFolders = async (pathArg: string, regexFilter?: RegExp): Promise<
  * lists Folders SYNCHRONOUSLY in a directory on local disk
  * @returns an array with the folder names as strings
  */
-export let listFoldersSync = (pathArg: string, regexFilter?: RegExp): string[] => {
+export const listFoldersSync = (pathArg: string, regexFilter?: RegExp): string[] => {
   let folderArray = plugins.fsExtra.readdirSync(pathArg).filter(file => {
     return plugins.fsExtra.statSync(plugins.path.join(pathArg, file)).isDirectory();
   });
@@ -284,7 +276,7 @@ export let listFoldersSync = (pathArg: string, regexFilter?: RegExp): string[] =
  * lists Files in a directory on local disk
  * @returns Promise
  */
-export let listFiles = async (pathArg: string, regexFilter?: RegExp): Promise<string[]> => {
+export const listFiles = async (pathArg: string, regexFilter?: RegExp): Promise<string[]> => {
   return listFilesSync(pathArg, regexFilter);
 };
 
@@ -292,7 +284,7 @@ export let listFiles = async (pathArg: string, regexFilter?: RegExp): Promise<st
  * lists Files SYNCHRONOUSLY in a directory on local disk
  * @returns an array with the folder names as strings
  */
-export let listFilesSync = (pathArg: string, regexFilter?: RegExp): string[] => {
+export const listFilesSync = (pathArg: string, regexFilter?: RegExp): string[] => {
   let fileArray = plugins.fsExtra.readdirSync(pathArg).filter(file => {
     return plugins.fsExtra.statSync(plugins.path.join(pathArg, file)).isFile();
   });
@@ -308,7 +300,7 @@ export let listFilesSync = (pathArg: string, regexFilter?: RegExp): string[] => 
  * lists all items (folders AND files) in a directory on local disk
  * @returns Promise<string[]>
  */
-export let listAllItems = async (pathArg: string, regexFilter?: RegExp): Promise<string[]> => {
+export const listAllItems = async (pathArg: string, regexFilter?: RegExp): Promise<string[]> => {
   return listAllItemsSync(pathArg, regexFilter);
 };
 
@@ -317,8 +309,8 @@ export let listAllItems = async (pathArg: string, regexFilter?: RegExp): Promise
  * @returns an array with the folder names as strings
  * @executes SYNC
  */
-export let listAllItemsSync = (pathArg: string, regexFilter?: RegExp): string[] => {
-  let allItmesArray = plugins.fsExtra.readdirSync(pathArg).filter(function(file) {
+export const listAllItemsSync = (pathArg: string, regexFilter?: RegExp): string[] => {
+  let allItmesArray = plugins.fsExtra.readdirSync(pathArg).filter(file => {
     return plugins.fsExtra.statSync(plugins.path.join(pathArg, file)).isFile();
   });
   if (regexFilter) {
@@ -334,7 +326,11 @@ export let listAllItemsSync = (pathArg: string, regexFilter?: RegExp): string[] 
  * note: if the miniMatch Filter is an absolute path, the cwdArg will be omitted
  * @returns Promise<string[]> string array with the absolute paths of all matching files
  */
-export const listFileTree = async (dirPathArg: string, miniMatchFilter: string, absolutePathsBool: boolean = false): Promise<string[]> => {
+export const listFileTree = async (
+  dirPathArg: string,
+  miniMatchFilter: string,
+  absolutePathsBool: boolean = false
+): Promise<string[]> => {
   const done = plugins.smartpromise.defer<string[]>();
 
   // handle absolute miniMatchFilter
@@ -357,7 +353,7 @@ export const listFileTree = async (dirPathArg: string, miniMatchFilter: string, 
     }
     done.resolve(files);
   });
-  
+
   let fileList = await done.promise;
   if (absolutePathsBool) {
     fileList = fileList.map(filePath => {
