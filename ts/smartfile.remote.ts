@@ -15,8 +15,8 @@ import SmartfileInterpreter = require('./smartfile.interpreter');
  * @param fromArg
  * @returns {any}
  */
-export let toObject = function(fromArg: string) {
-  let done = plugins.smartpromise.defer();
+export let toObject = (fromArg: string) => {
+  const done = plugins.smartpromise.defer();
   plugins.smartrequest
     .request(fromArg, {
       method: 'get'
@@ -37,11 +37,12 @@ export let toObject = function(fromArg: string) {
  * @param fromArg
  * @returns {any}
  */
-export let toString = (fromArg: string) => {
-  let done = plugins.smartpromise.defer();
+export let toString = (fromArg: string): Promise<string> => {
+  const done = plugins.smartpromise.defer<string>();
   plugins.smartrequest.getBinary(fromArg).then((res: any) => {
     if (res.statusCode === 200) {
-      done.resolve(res.body);
+      const encoding = plugins.smartmime.getEncoding(fromArg);
+      done.resolve(res.body.toString(encoding));
     } else {
       done.reject(new Error('could not get remote file from ' + fromArg));
     }

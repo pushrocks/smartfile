@@ -6,11 +6,12 @@ export { fs, path };
 
 // @pushrocks scope
 import * as smarthash from '@pushrocks/smarthash';
+import * as smartmime from '@pushrocks/smartmime';
 import * as smartpath from '@pushrocks/smartpath';
 import * as smartpromise from '@pushrocks/smartpromise';
 import * as smartrequest from '@pushrocks/smartrequest';
 
-export { smarthash, smartpath, smartpromise, smartrequest };
+export { smarthash, smartmime, smartpath, smartpromise, smartrequest };
 
 // third party scope
 import * as fsExtra from 'fs-extra';

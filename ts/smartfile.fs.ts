@@ -192,13 +192,16 @@ export const toObjectSync = (filePathArg, fileTypeArg?) => {
 
 /**
  * reads a file content to a String
- * @param filePath
- * @returns {string|Buffer|any}
  */
 export const toStringSync = (filePath: string): string => {
-  const fileString: string = plugins.fsExtra.readFileSync(filePath, 'utf8');
+  const encoding = plugins.smartmime.getEncoding(filePath);
+  const fileString: string = plugins.fsExtra.readFileSync(filePath, encoding);
   return fileString;
 };
+
+export const toBufferSync = (filePath: string): Buffer => {
+  return plugins.fsExtra.readFileSync(filePath);
+}
 
 export const fileTreeToHash = async (dirPathArg: string, miniMatchFilter: string) => {
   const fileTreeObject = await fileTreeToObject(dirPathArg, miniMatchFilter);
