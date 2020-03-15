@@ -201,7 +201,7 @@ export const toStringSync = (filePath: string): string => {
 
 export const toBufferSync = (filePath: string): Buffer => {
   return plugins.fsExtra.readFileSync(filePath);
-}
+};
 
 export const fileTreeToHash = async (dirPathArg: string, miniMatchFilter: string) => {
   const fileTreeObject = await fileTreeToObject(dirPathArg, miniMatchFilter);

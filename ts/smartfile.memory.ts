@@ -25,11 +25,11 @@ export interface IToFsOptions {
  * @param fileBaseArg
  */
 export let toFs = async (
-  fileContentArg: string | Smartfile,
-  filePathArg,
+  fileContentArg: string | Buffer | Smartfile,
+  filePathArg: string,
   optionsArg: IToFsOptions = {}
 ) => {
-  let done = plugins.smartpromise.defer();
+  const done = plugins.smartpromise.defer();
 
   // check args
   if (!fileContentArg || !filePathArg) {
@@ -38,23 +38,26 @@ export let toFs = async (
 
   // prepare actual write action
   let fileString: string;
+  let fileEncoding: string = 'utf8';
   let filePath: string = filePathArg;
 
   // handle Smartfile
   if (fileContentArg instanceof Smartfile) {
-    let fileContentArg2: any = fileContentArg;
     fileString = fileContentArg.contentBuffer.toString();
     // handle options
     if (optionsArg.respectRelative) {
       filePath = plugins.path.join(filePath, fileContentArg.path);
     }
+  } else if (Buffer.isBuffer(fileContentArg)) {
+    fileString = fileContentArg.toString('binary');
+    fileEncoding = 'binary';
   } else if (typeof fileContentArg === 'string') {
     fileString = fileContentArg;
   } else {
     throw new Error('fileContent is neither string nor Smartfile');
   }
   await smartfileFs.ensureDir(plugins.path.parse(filePath).dir);
-  plugins.fsExtra.writeFile(filePath, fileString, { encoding: 'utf8' }, done.resolve);
+  plugins.fsExtra.writeFile(filePath, fileString, { encoding: fileEncoding }, done.resolve);
   return await done.promise;
 };
 
