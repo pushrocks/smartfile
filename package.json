@@ -3,8 +3,8 @@
   "private": false,
   "version": "7.0.10",
   "description": "offers smart ways to work with files in nodejs",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "main": "dist_ts/index.js",
+  "typings": "dist_ts/index.d.ts",
   "scripts": {
     "test": "(tstest test/)",
     "reinstall": "(rm -r node_modules && npm install)",
@@ -39,13 +39,13 @@
     "js-yaml": "^3.13.1"
   },
   "devDependencies": {
-    "@gitzone/tsbuild": "^2.1.17",
+    "@gitzone/tsbuild": "^2.1.22",
     "@gitzone/tsrun": "^1.2.8",
     "@gitzone/tstest": "^1.0.28",
-    "@pushrocks/tapbundle": "^3.2.0",
-    "@types/node": "^13.7.7",
+    "@pushrocks/tapbundle": "^3.2.1",
+    "@types/node": "^13.9.1",
     "gulp-function": "^2.2.14",
-    "tslint": "^6.0.0",
+    "tslint": "^6.1.0",
     "tslint-config-prettier": "^1.18.0"
   },
   "files": [
