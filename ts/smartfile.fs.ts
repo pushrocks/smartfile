@@ -31,7 +31,7 @@ export const fileExistsSync = (filePath): boolean => {
  */
 export const fileExists = async (filePath): Promise<boolean> => {
   const done = plugins.smartpromise.defer<boolean>();
-  plugins.fs.access(filePath, 4, err => {
+  plugins.fs.access(filePath, 4, (err) => {
     err ? done.resolve(false) : done.resolve(true);
   });
   return done.promise;
@@ -64,7 +64,7 @@ export const isFile = (pathArg): boolean => {
  */
 export const copy = async (fromArg: string, toArg: string): Promise<boolean> => {
   const done = plugins.smartpromise.defer<boolean>();
-  plugins.fsExtra.copy(fromArg, toArg, {}, err => {
+  plugins.fsExtra.copy(fromArg, toArg, {}, (err) => {
     if (err) {
       throw new Error(`Could not copy from ${fromArg} to ${toArg}: ${err}`);
     }
@@ -244,7 +244,7 @@ export const fileTreeToObject = async (dirPathArg: string, miniMatchFilter: stri
       new Smartfile({
         contentBuffer: Buffer.from(fileContentString),
         base: dirPath,
-        path: filePath
+        path: filePath,
       })
     );
   }
@@ -264,11 +264,11 @@ export const listFolders = async (pathArg: string, regexFilter?: RegExp): Promis
  * @returns an array with the folder names as strings
  */
 export const listFoldersSync = (pathArg: string, regexFilter?: RegExp): string[] => {
-  let folderArray = plugins.fsExtra.readdirSync(pathArg).filter(file => {
+  let folderArray = plugins.fsExtra.readdirSync(pathArg).filter((file) => {
     return plugins.fsExtra.statSync(plugins.path.join(pathArg, file)).isDirectory();
   });
   if (regexFilter) {
-    folderArray = folderArray.filter(fileItem => {
+    folderArray = folderArray.filter((fileItem) => {
       return regexFilter.test(fileItem);
     });
   }
@@ -288,11 +288,11 @@ export const listFiles = async (pathArg: string, regexFilter?: RegExp): Promise<
  * @returns an array with the folder names as strings
  */
 export const listFilesSync = (pathArg: string, regexFilter?: RegExp): string[] => {
-  let fileArray = plugins.fsExtra.readdirSync(pathArg).filter(file => {
+  let fileArray = plugins.fsExtra.readdirSync(pathArg).filter((file) => {
     return plugins.fsExtra.statSync(plugins.path.join(pathArg, file)).isFile();
   });
   if (regexFilter) {
-    fileArray = fileArray.filter(fileItem => {
+    fileArray = fileArray.filter((fileItem) => {
       return regexFilter.test(fileItem);
     });
   }
@@ -313,11 +313,11 @@ export const listAllItems = async (pathArg: string, regexFilter?: RegExp): Promi
  * @executes SYNC
  */
 export const listAllItemsSync = (pathArg: string, regexFilter?: RegExp): string[] => {
-  let allItmesArray = plugins.fsExtra.readdirSync(pathArg).filter(file => {
+  let allItmesArray = plugins.fsExtra.readdirSync(pathArg).filter((file) => {
     return plugins.fsExtra.statSync(plugins.path.join(pathArg, file)).isFile();
   });
   if (regexFilter) {
-    allItmesArray = allItmesArray.filter(fileItem => {
+    allItmesArray = allItmesArray.filter((fileItem) => {
       return regexFilter.test(fileItem);
     });
   }
@@ -347,7 +347,7 @@ export const listFileTree = async (
   const options = {
     cwd: dirPath,
     nodir: true,
-    dot: true
+    dot: true,
   };
   plugins.glob(miniMatchFilter, options, (err, files: string[]) => {
     if (err) {
@@ -359,7 +359,7 @@ export const listFileTree = async (
 
   let fileList = await done.promise;
   if (absolutePathsBool) {
-    fileList = fileList.map(filePath => {
+    fileList = fileList.map((filePath) => {
       return plugins.path.resolve(plugins.path.join(dirPath, filePath));
     });
   }

@@ -19,7 +19,7 @@ export let toObject = (fromArg: string) => {
   const done = plugins.smartpromise.defer();
   plugins.smartrequest
     .request(fromArg, {
-      method: 'get'
+      method: 'get',
     })
     .then((res: any) => {
       if (res.statusCode === 200) {

@@ -10,7 +10,7 @@ import SmartfileInterpreter = require('./smartfile.interpreter');
  * @param fileTypeArg
  * @returns {any|any}
  */
-export let toObject = function(fileStringArg: string, fileTypeArg: string) {
+export let toObject = function (fileStringArg: string, fileTypeArg: string) {
   return SmartfileInterpreter.objectFile(fileStringArg, fileTypeArg);
 };
 
@@ -37,27 +37,27 @@ export let toFs = async (
   }
 
   // prepare actual write action
-  let fileString: string;
-  let fileEncoding: string = 'utf8';
+  let fileContent: string | Buffer;
+  let fileEncoding: 'utf8' | 'binary' = 'utf8';
   let filePath: string = filePathArg;
 
   // handle Smartfile
   if (fileContentArg instanceof Smartfile) {
-    fileString = fileContentArg.contentBuffer.toString();
+    fileContent = fileContentArg.contentBuffer;
     // handle options
     if (optionsArg.respectRelative) {
       filePath = plugins.path.join(filePath, fileContentArg.path);
     }
   } else if (Buffer.isBuffer(fileContentArg)) {
-    fileString = fileContentArg.toString('binary');
+    fileContent = fileContentArg;
     fileEncoding = 'binary';
   } else if (typeof fileContentArg === 'string') {
-    fileString = fileContentArg;
+    fileContent = fileContentArg;
   } else {
     throw new Error('fileContent is neither string nor Smartfile');
   }
   await smartfileFs.ensureDir(plugins.path.parse(filePath).dir);
-  plugins.fsExtra.writeFile(filePath, fileString, { encoding: fileEncoding }, done.resolve);
+  plugins.fsExtra.writeFile(filePath, fileContent, { encoding: fileEncoding }, done.resolve);
   return await done.promise;
 };
 
@@ -66,7 +66,7 @@ export let toFs = async (
  * @param fileArg
  * @param filePathArg
  */
-export let toFsSync = function(fileArg: string, filePathArg: string) {
+export const toFsSync = (fileArg: string, filePathArg: string) => {
   // function checks to abort if needed
   if (!fileArg || !filePathArg) {
     throw new Error('expected a valid arguments');
@@ -74,7 +74,7 @@ export let toFsSync = function(fileArg: string, filePathArg: string) {
 
   // prepare actual write action
   let fileString: string;
-  let filePath: string = filePathArg;
+  const filePath: string = filePathArg;
 
   if (typeof fileArg !== 'string') {
     throw new Error('fileArg is not of type String.');
@@ -86,9 +86,9 @@ export let toFsSync = function(fileArg: string, filePathArg: string) {
 
 export let smartfileArrayToFs = async (smartfileArrayArg: Smartfile[], dirArg: string) => {
   await smartfileFs.ensureDir(dirArg);
-  for (let smartfile of smartfileArrayArg) {
+  for (const smartfile of smartfileArrayArg) {
     await toFs(smartfile, dirArg, {
-      respectRelative: true
+      respectRelative: true,
     });
   }
 };
