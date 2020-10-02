@@ -10,6 +10,7 @@ export class VirtualDirectory {
   public static async fromFsDirPath(pathArg: string) {
     const newVirtualDir = new VirtualDirectory();
     newVirtualDir.addSmartfiles(await fs.fileTreeToObject(pathArg, '**/*'));
+    return newVirtualDir;
   }
 
   constructor() {}
