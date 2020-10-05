@@ -6,12 +6,25 @@ import * as fs from './smartfile.fs';
  * a virtual directory exposes a fs api
  */
 export class VirtualDirectory {
-  private fileArray: Smartfile[] = [];
-  public static async fromFsDirPath(pathArg: string) {
+  // STATIC
+  public static async fromFsDirPath(pathArg: string): Promise<VirtualDirectory> {
     const newVirtualDir = new VirtualDirectory();
     newVirtualDir.addSmartfiles(await fs.fileTreeToObject(pathArg, '**/*'));
     return newVirtualDir;
   }
+
+  public static async fromVirtualDirTransferableObject(
+    virtualDirTransferableObjectArg: plugins.smartfileInterfaces.VirtualDirTransferableObject
+  ): Promise<VirtualDirectory> {
+    const newVirtualDir = new VirtualDirectory();
+    for (const fileArg of virtualDirTransferableObjectArg.files) {
+      newVirtualDir.addSmartfiles([Smartfile.enfoldFromJson(fileArg) as Smartfile]);
+    }
+    return newVirtualDir;
+  }
+
+  // INSTANCE
+  private fileArray: Smartfile[] = [];
 
   constructor() {}
 
@@ -25,6 +38,12 @@ export class VirtualDirectory {
         return smartfile;
       }
     }
+  }
+
+  public async toVirtualDirTransferableObject(): Promise<plugins.smartfileInterfaces.VirtualDirTransferableObject> {
+    return {
+      files: this.fileArray.map(smartfileArg => smartfileArg.foldToJson())
+    };
   }
 
   // TODO implement root shifting to get subdirectories as new virtual directories

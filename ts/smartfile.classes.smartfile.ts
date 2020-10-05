@@ -12,7 +12,7 @@ export interface ISmartfileConstructorOptions {
  * class Smartfile
  * -> is vinyl file compatible
  */
-export class Smartfile {
+export class Smartfile extends plugins.smartjson.Smartjson {
   // ======
   // STATIC
   // ======
@@ -59,6 +59,7 @@ export class Smartfile {
   /**
    * the full path of the file on disk
    */
+  @plugins.smartjson.foldDec()
   public path: string;
 
   /**
@@ -88,6 +89,7 @@ export class Smartfile {
    */
 
   constructor(optionsArg: ISmartfileConstructorOptions) {
+    super();
     if (optionsArg.contentBuffer) {
       this.contentBuffer = optionsArg.contentBuffer;
     } else {

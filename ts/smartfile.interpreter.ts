@@ -1,4 +1,4 @@
-import plugins = require('./smartfile.plugins');
+import * as plugins from './smartfile.plugins';
 
 export let filetype = (pathArg: string): string => {
   const extName = plugins.path.extname(pathArg);

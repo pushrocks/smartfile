@@ -24,7 +24,9 @@
   },
   "homepage": "https://gitlab.com/pushrocks/smartfile",
   "dependencies": {
+    "@pushrocks/smartfile-interfaces": "^1.0.7",
     "@pushrocks/smarthash": "^2.1.6",
+    "@pushrocks/smartjson": "^4.0.3",
     "@pushrocks/smartmime": "^1.0.3",
     "@pushrocks/smartpath": "^4.0.3",
     "@pushrocks/smartpromise": "^3.0.6",

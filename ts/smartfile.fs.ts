@@ -1,5 +1,5 @@
-import plugins = require('./smartfile.plugins');
-import SmartfileInterpreter = require('./smartfile.interpreter');
+import * as plugins from './smartfile.plugins';
+import * as interpreter from './smartfile.interpreter';
 
 import { Smartfile } from './smartfile.classes.smartfile';
 
@@ -186,8 +186,8 @@ export const removeManySync = (filePathArrayArg: string[]): void => {
 export const toObjectSync = (filePathArg, fileTypeArg?) => {
   const fileString = plugins.fsExtra.readFileSync(filePathArg, 'utf8');
   let fileType;
-  fileTypeArg ? (fileType = fileTypeArg) : (fileType = SmartfileInterpreter.filetype(filePathArg));
-  return SmartfileInterpreter.objectFile(fileString, fileType);
+  fileTypeArg ? (fileType = fileTypeArg) : (fileType = interpreter.filetype(filePathArg));
+  return interpreter.objectFile(fileString, fileType);
 };
 
 /**
@@ -195,7 +195,10 @@ export const toObjectSync = (filePathArg, fileTypeArg?) => {
  */
 export const toStringSync = (filePath: string): string => {
   const encoding = plugins.smartmime.getEncoding(filePath);
-  const fileString: string = plugins.fsExtra.readFileSync(filePath, encoding);
+  let fileString: string | Buffer = plugins.fsExtra.readFileSync(filePath, encoding);
+  if (Buffer.isBuffer(fileString)) {
+    fileString = fileString.toString('binary');
+  }
   return fileString;
 };
 
