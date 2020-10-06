@@ -63,24 +63,28 @@ export class Smartfile extends plugins.smartjson.Smartjson {
   public path: string;
 
   /**
-   *
+   * a parsed path
    */
+  @plugins.smartjson.foldDec()
   public parsedPath: plugins.path.ParsedPath;
 
   /**
    * the content of the file as Buffer
    */
+  @plugins.smartjson.foldDec()
   public contentBuffer: Buffer;
 
   /**
    * The current working directory of the file
    * Note:this is similar to gulp and different from native node path base
    */
+  @plugins.smartjson.foldDec()
   public base: string;
 
   /**
    * sync the file with disk
    */
+  @plugins.smartjson.foldDec()
   public sync: boolean;
 
   /**
