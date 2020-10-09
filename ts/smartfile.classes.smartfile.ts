@@ -113,13 +113,32 @@ export class Smartfile extends plugins.smartjson.Smartjson {
   }
 
   /**
-   * write file to disk
+   * write file to disk at its original location
    * Behaviours:
    * - no argument write to exactly where the file was picked up
    */
-  public async write(pathArg?: string) {
-    const stringToWrite = this.contentBuffer.toString();
-    await memory.toFs(stringToWrite, this.path);
+  public async write() {
+    await memory.toFs(this.contentBuffer, this.path);
+  }
+
+  /**
+   * writes the file to path given as argument
+   * @param filePathArg
+   */
+  public async writeToDiskAtPath(filePathArg: string) {
+    if (!plugins.path.isAbsolute(filePathArg)) {
+      filePathArg = plugins.path.join(process.cwd(), filePathArg);
+    }
+    await memory.toFs(this.contentBuffer, filePathArg);
+  }
+
+  public async writeToDir(dirPathArg: string) {
+    if (!plugins.path.isAbsolute(dirPathArg)) {
+      dirPathArg = plugins.path.join(process.cwd(), dirPathArg);
+    }
+    const relativePath = this.relative;
+    const filePath = plugins.path.join(dirPathArg, relativePath);
+    await memory.toFs(this.contentBuffer, filePath);
   }
 
   /**

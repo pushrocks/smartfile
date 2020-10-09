@@ -1,8 +1,7 @@
-import plugins = require('./smartfile.plugins');
+import * as plugins from './smartfile.plugins';
 import { Smartfile } from './smartfile.classes.smartfile';
 import * as smartfileFs from './smartfile.fs';
-
-import SmartfileInterpreter = require('./smartfile.interpreter');
+import * as interpreter from './smartfile.interpreter';
 
 /**
  * converts file to Object
@@ -10,8 +9,8 @@ import SmartfileInterpreter = require('./smartfile.interpreter');
  * @param fileTypeArg
  * @returns {any|any}
  */
-export let toObject = function (fileStringArg: string, fileTypeArg: string) {
-  return SmartfileInterpreter.objectFile(fileStringArg, fileTypeArg);
+export let toObject = (fileStringArg: string, fileTypeArg: string) => {
+  return interpreter.objectFile(fileStringArg, fileTypeArg);
 };
 
 export interface IToFsOptions {

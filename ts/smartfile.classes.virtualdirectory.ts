@@ -46,6 +46,12 @@ export class VirtualDirectory {
     };
   }
 
+  public async saveToDisk() {
+    for (const smartfileArg of this.fileArray) {
+      
+    }
+  }
+
   // TODO implement root shifting to get subdirectories as new virtual directories
   // TODO implement root shifting to combine VirtualDirecotries in a parent virtual directory
 }
