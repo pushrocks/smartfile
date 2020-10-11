@@ -133,12 +133,10 @@ export class Smartfile extends plugins.smartjson.Smartjson {
   }
 
   public async writeToDir(dirPathArg: string) {
-    if (!plugins.path.isAbsolute(dirPathArg)) {
-      dirPathArg = plugins.path.join(process.cwd(), dirPathArg);
-    }
-    const relativePath = this.relative;
-    const filePath = plugins.path.join(dirPathArg, relativePath);
+    dirPathArg = plugins.smartpath.transform.toAbsolute(dirPathArg);
+    const filePath = plugins.path.join(dirPathArg, this.path);
     await memory.toFs(this.contentBuffer, filePath);
+    return filePath;
   }
 
   /**

@@ -24,16 +24,16 @@ export class VirtualDirectory {
   }
 
   // INSTANCE
-  private fileArray: Smartfile[] = [];
+  public smartfileArray: Smartfile[] = [];
 
   constructor() {}
 
   public addSmartfiles(smartfileArrayArg: Smartfile[]) {
-    this.fileArray = this.fileArray.concat(smartfileArrayArg);
+    this.smartfileArray = this.smartfileArray.concat(smartfileArrayArg);
   }
 
   public async getFileByPath(pathArg: string) {
-    for (const smartfile of this.fileArray) {
+    for (const smartfile of this.smartfileArray) {
       if (smartfile.path === pathArg) {
         return smartfile;
       }
@@ -42,13 +42,17 @@ export class VirtualDirectory {
 
   public async toVirtualDirTransferableObject(): Promise<plugins.smartfileInterfaces.VirtualDirTransferableObject> {
     return {
-      files: this.fileArray.map(smartfileArg => smartfileArg.foldToJson())
+      files: this.smartfileArray.map(smartfileArg => smartfileArg.foldToJson())
     };
   }
 
-  public async saveToDisk() {
-    for (const smartfileArg of this.fileArray) {
-      
+  public async saveToDisk(dirArg: string) {
+    console.log(`writing VirtualDirectory with ${this.smartfileArray.length} to directory:
+    --> ${dirArg}`);
+    for (const smartfileArg of this.smartfileArray) {
+      const filePath = await smartfileArg.writeToDir(dirArg);
+      console.log(`wrote ${smartfileArg.relative} to
+        --> ${filePath}`);
     }
   }
 

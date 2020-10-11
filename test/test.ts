@@ -1,5 +1,5 @@
 import * as smartfile from '../ts/index';
-import path = require('path');
+import * as path from 'path';
 
 import { expect, tap } from '@pushrocks/tapbundle';
 
@@ -8,7 +8,9 @@ import { expect, tap } from '@pushrocks/tapbundle';
 // ---------------------------
 
 tap.test('.fs.fileExistsSync -> should return an accurate boolean', async () => {
+  // tslint:disable-next-line: no-unused-expression
   expect(smartfile.fs.fileExistsSync('./test/testassets/mytest.json')).to.be.true;
+  // tslint:disable-next-line: no-unused-expression
   expect(smartfile.fs.fileExistsSync('./test/testassets/notthere.json')).be.false;
 });
 

@@ -227,7 +227,7 @@ export const fileTreeToObject = async (dirPathArg: string, miniMatchFilter: stri
   if (plugins.path.isAbsolute(miniMatchFilter)) {
     dirPath = '/';
   } else {
-    dirPath = dirPathArg;
+    dirPath = plugins.smartpath.transform.toAbsolute(dirPathArg);
   }
 
   const fileTree = await listFileTree(dirPath, miniMatchFilter);
