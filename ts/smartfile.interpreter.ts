@@ -10,7 +10,7 @@ export let objectFile = (fileStringArg: string, fileTypeArg) => {
   switch (fileTypeArg) {
     case 'yml':
     case 'yaml':
-      return plugins.yaml.safeLoad(fileStringArg);
+      return plugins.yaml.load(fileStringArg);
     case 'json':
       return JSON.parse(fileStringArg);
     default:
