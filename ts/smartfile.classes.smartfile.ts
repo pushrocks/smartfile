@@ -53,6 +53,10 @@ export class Smartfile extends plugins.smartjson.Smartjson {
     return smartfile;
   }
 
+  public static async fromFoldedJson(foldedJsonArg: string) {
+    return new Smartfile(plugins.smartjson.parse(foldedJsonArg));
+  }
+
   // ========
   // INSTANCE
   // ========
